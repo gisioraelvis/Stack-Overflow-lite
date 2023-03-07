@@ -24,7 +24,7 @@ RESTful API with:
 - JWT - authentication and authorization
 - Bcrypt - password hashing
 - Dotenv - environment variables
-- Winston Morgan - logging 
+- Winston & Morgan - logging 
 - Joi - dtos validation and sanitization 
 - Postman - API testing and documentation
 
