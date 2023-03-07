@@ -1,5 +1,5 @@
 # Stack Overflow-lite
-Stack Overflow-lite is a web application I [designed](https://www.figma.com/proto/c3OP0QBGhJuXclPwW51eeR/Stackoverflow-Lite-WebApp?node-id=1%3A2&scaling=scale-down&page-id=0%3A1&starting-point-node-id=1%3A2&show-proto-sidebar=1) and developed as part of THEJitu cohort 9 Full-stack web development training program. Allows users to post questions and answers on various tags/topics. Users can upvote/downvote, comment on questions and answers. The application also has an admin dashboard for managing users, questions and answers.
+Stack Overflow-lite is a WebApp I [designed](https://www.figma.com/proto/c3OP0QBGhJuXclPwW51eeR/Stackoverflow-Lite-WebApp?node-id=1%3A2&scaling=scale-down&page-id=0%3A1&starting-point-node-id=1%3A2&show-proto-sidebar=1) and developed as part of THEJitu cohort 9 Full-Stack Web Development Training program. It allows users to post questions and answers on various tags/topics. Users can upvote/downvote, comment on questions and answers. The application also has an admin dashboard for managing users, questions and answers.
 
 ## Tech Stack
 
@@ -77,6 +77,9 @@ Contributions to this project are welcome. For major changes, please open an iss
 ### Acknowledgements
 This project was inspired by Stack Overflow. Special thanks to the Stack Overflow team for creating such a useful resource for developers around the world. 
 
-Thanks to [THJitu](https://thejitu.com) for the opportunity to learn and grow as a developer 🙏🏾. Special thanks to our awesome instructor Mr. [Jonathan Ndambuki](https://www.linkedin.com/in/jonathan-ndambuki-84630a219/) for his guidance and support throughout the program. 🙌🏾
+Special thanks to [THJitu](https://thejitu.com) for the opportunity to learn and grow as a developer and to our instructor during the program Mr. [Jonathan Ndambuki](https://www.linkedin.com/in/jonathan-ndambuki-84630a219/) for his guidance and support throughout the program. 🙏🏾
 
-Shoutout to my fellow cohort 9 trainees for the collaborations, encouragement, friendship and memories we made together. 🤗
+Shoutout to my fellow Cohort 9 trainees for the collaborations, encouragement, friendship and memories we made together. 🤗
+
+Was an awesome experience and I'm glad to have been part of it. 🥳
+We did it! 🎉🎉🎉
