@@ -1,5 +1,5 @@
 # Stack Overflow-lite
-Stack Overflow-lite is a WebApp I [designed](https://www.figma.com/proto/c3OP0QBGhJuXclPwW51eeR/Stackoverflow-Lite-WebApp?node-id=1%3A2&scaling=scale-down&page-id=0%3A1&starting-point-node-id=1%3A2&show-proto-sidebar=1) and developed as part of THEJitu cohort 9 Full-Stack Web Development Training program. It allows users to post questions and answers on various tags/topics. Users can upvote/downvote, comment on questions and answers. The application also has an admin dashboard for managing users, questions and answers.
+Stack Overflow lite is a WebApp I [designed](https://www.figma.com/proto/c3OP0QBGhJuXclPwW51eeR/Stackoverflow-Lite-WebApp?node-id=1%3A2&scaling=scale-down&page-id=0%3A1&starting-point-node-id=1%3A2&show-proto-sidebar=1) and developed as part of THEJitu cohort 9 Full-Stack Web Development Training program. It allows users to post questions and answers on various tags/topics. Users can upvote/downvote, comment on questions and answers. The application also has an admin dashboard for managing users, questions and answers.
 
 ## Tech Stack
 
