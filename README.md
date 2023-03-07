@@ -82,4 +82,5 @@ Special thanks to [THJitu](https://thejitu.com) for the opportunity to learn and
 Shoutout to my fellow Cohort 9 trainees for the collaborations, encouragement, friendship and memories we made together. 🤗
 
 Was an awesome experience and I'm glad to have been part of it. 🥳
+
 We did it! 🎉🎉🎉
