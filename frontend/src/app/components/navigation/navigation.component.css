@@ -1,0 +1,36 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+img {
+  width: 20%;
+  height: 85%;
+  background-color: #f48225;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin: 30px 0 0 0;
+  width: 30%;
+}
+
+.search-icon:hover {
+  scale: 2;
+  color: #f48225;
+}
+
+.sign-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 15%;
+  margin-right: 20px;
+}
+
+button:hover {
+  color: white;
+  background-color: #f48225;
+}
