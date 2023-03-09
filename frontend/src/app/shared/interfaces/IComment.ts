@@ -4,7 +4,6 @@ export interface IComment {
   id: number;
   text: string;
   user: IUser;
-  time: Date;
-  upvotes: number;
-  downvotes: number;
+  createdAt: Date;
+  updatedAt: Date;
 }

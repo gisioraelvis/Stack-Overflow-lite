@@ -1,49 +1,8 @@
-/* 
-<mat-card class="question-card">
-    <div class="question">
-        <div class="voting-answers-section">
-            <div class="voting thumbs-ups">
-                <button mat-icon-button><mat-icon>thumb_up</mat-icon></button>
-                <span class="count">10</span>
-            </div>
-            <div class="answers">
-                <span class="count">5</span>
-                answers
-            </div>
-            <div class="voting thumbs-downs">
-                <button mat-icon-button><mat-icon>thumb_down</mat-icon></button>
-                <span class="count">5</span>
-            </div>
-        </div>
-        <div class="question-content">
-            <a routerLink="/questions/{{question.id}}">
-                <h3>{{question.title}}</h3>
-            </a>
-            <div class="description">
-                <!-- TODO: Add Truncate Pipe  -->
-                {{question.description}}
-            </div>
-            <div class="tags">
-                <span *ngFor="let tag of question.tags">{{tag}}</span>
-            </div>
-            <div class="user-info">
-                <img src="{{question.user.avatar}}" alt="{{question.user.name}}">
-                <!-- TODO: Add Time Ago Pipe -->
-                &nbsp;{{question.user.name}} asked {{question.time | date:'medium'}}
-            </div>
-        </div>
-    </div>
-    <div>
-        <button mat-raised-button color="primary">Answer</button>
-    </div>
-</mat-card>
-*/
-
 .question-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
   margin: 1rem 0;
   border-radius: 5px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
@@ -61,7 +20,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-right: 2rem;
+  margin-right: 1rem;
   width: 15%;
   height: 100%;
 }
@@ -80,9 +39,9 @@
   font-size: 0.8rem;
 }
 
-.answers {
+.answers-count {
+  margin: 1rem 0;
   font-size: 0.8rem;
-  color: #1a1a1a;
 }
 
 .question-content {
@@ -93,33 +52,40 @@
   width: 100%;
 }
 
+.question-content a {
+  color: black;
+}
+
+.question-content .question-title h3 {
+  margin: 0;
+  padding: 0;
+}
+
 .question-content .description {
   margin: 0.5rem 0;
   font-size: 0.8rem;
-  color: #1a1a1a;
 }
 
 .question-content .tags {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 1rem 0;
 }
 
 .question-content .tags span {
   padding: 0.2rem 0.5rem;
   margin-right: 0.5rem;
-  background-color: #0A95FF;
-  color: white;
+  background-color: #cde9fe;
+  color: black;
   font-size: 0.8rem;
 }
 
 .question-content .user-info {
+  width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
   font-size: 0.8rem;
-  color: #1a1a1a;
 }
 
 .question-content .user-info img {
@@ -129,10 +95,18 @@
   margin-right: 0.5rem;
 }
 
-.question-content .user-info a {
-  color: #0a95ff;
+.answer-btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin: 1.5rem 0 0.5rem 0;
 }
 
-.question-content .user-info a:hover {
-  color: #f48225;
+.answer-btn button {
+  color: white;
+  width: 15%;
+}
+
+.answer-btn button:hover {
+  background-color: #f48225;
 }

@@ -1,16 +1,10 @@
 <div class="comment">
-    <div class="voting">
-        <button mat-icon-button><mat-icon>thumb_up</mat-icon></button>
-        <span class="count">{{comment.upvotes}}</span>
-        <button mat-icon-button><mat-icon>thumb_down</mat-icon></button>
-        <span class="count">{{comment.downvotes}}</span>
-    </div>
     <div class="content">
         <p>{{comment.text}}</p>
         <div class="user-info">
             <img src="{{comment.user.avatar}}" alt="{{comment.user.name}}">
-            <!-- TODO: Add Time Ago Pipe -->
-            {{comment.user.name}} commented {{comment.time | date:'medium'}}
+            <!-- TODO: Add Time Ago Pipe, should factor modified date -->
+            {{comment.user.name}} commented {{comment.createdAt | date:'medium'}}
         </div>
     </div>
 </div>
