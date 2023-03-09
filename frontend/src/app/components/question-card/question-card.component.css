@@ -1,0 +1,138 @@
+/* 
+<mat-card class="question-card">
+    <div class="question">
+        <div class="voting-answers-section">
+            <div class="voting thumbs-ups">
+                <button mat-icon-button><mat-icon>thumb_up</mat-icon></button>
+                <span class="count">10</span>
+            </div>
+            <div class="answers">
+                <span class="count">5</span>
+                answers
+            </div>
+            <div class="voting thumbs-downs">
+                <button mat-icon-button><mat-icon>thumb_down</mat-icon></button>
+                <span class="count">5</span>
+            </div>
+        </div>
+        <div class="question-content">
+            <a routerLink="/questions/{{question.id}}">
+                <h3>{{question.title}}</h3>
+            </a>
+            <div class="description">
+                <!-- TODO: Add Truncate Pipe  -->
+                {{question.description}}
+            </div>
+            <div class="tags">
+                <span *ngFor="let tag of question.tags">{{tag}}</span>
+            </div>
+            <div class="user-info">
+                <img src="{{question.user.avatar}}" alt="{{question.user.name}}">
+                <!-- TODO: Add Time Ago Pipe -->
+                &nbsp;{{question.user.name}} asked {{question.time | date:'medium'}}
+            </div>
+        </div>
+    </div>
+    <div>
+        <button mat-raised-button color="primary">Answer</button>
+    </div>
+</mat-card>
+*/
+
+.question-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+.question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.voting-answers-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 2rem;
+  width: 15%;
+  height: 100%;
+}
+
+.voting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.voting button {
+  padding: 0;
+}
+
+.voting .count {
+  font-size: 0.8rem;
+}
+
+.answers {
+  font-size: 0.8rem;
+  color: #1a1a1a;
+}
+
+.question-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.question-content .description {
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+  color: #1a1a1a;
+}
+
+.question-content .tags {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.question-content .tags span {
+  padding: 0.2rem 0.5rem;
+  margin-right: 0.5rem;
+  background-color: #0A95FF;
+  color: white;
+  font-size: 0.8rem;
+}
+
+.question-content .user-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #1a1a1a;
+}
+
+.question-content .user-info img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.question-content .user-info a {
+  color: #0a95ff;
+}
+
+.question-content .user-info a:hover {
+  color: #f48225;
+}

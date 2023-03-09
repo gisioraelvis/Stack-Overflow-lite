@@ -65,6 +65,7 @@ button:hover {
   width: 100%;
 }
 
+/* Search form */
 .search-form-container {
   display: flex;
   justify-content: center;
@@ -73,14 +74,55 @@ button:hover {
   margin-top: 10px;
 }
 
-.search{
-    width: 60%;
+.search {
+  width: 60%;
 }
 
 .search-form-container button {
+  padding: 1.3rem 1rem;
   margin-left: 7rem;
 }
 
 button:hover {
-  background-color: #F48225;
+  background-color: #f48225;
+}
+
+/* Recent questions */
+.recent-questions {
+  margin: 2rem 5rem;
+}
+
+.recent-questions-title {
+  display: flex;
+  border-bottom: 1px solid #f48225;
+}
+
+.recent-questions-title h2 {
+  font-size: 1.5rem;
+  font-weight: normal;
+  color: white;
+  background-color: #f48225;
+  padding: 0.5rem 1rem;
+  margin: 0;
+}
+
+.questions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+}
+
+.no-questions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.no-questions p {
+  font-size: 1.2rem;
+  color: #1a1a1a;
+  text-align: center;
 }

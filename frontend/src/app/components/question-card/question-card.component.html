@@ -1,0 +1,38 @@
+<mat-card class="question-card">
+    <div class="question">
+        <div class="voting-answers-section">
+            <div class="voting thumbs-ups">
+                <button mat-icon-button><mat-icon>thumb_up</mat-icon></button>
+                <span class="count">10</span>
+            </div>
+            <div class="answers">
+                <span class="count">5</span>
+                answers
+            </div>
+            <div class="voting thumbs-downs">
+                <button mat-icon-button><mat-icon>thumb_down</mat-icon></button>
+                <span class="count">5</span>
+            </div>
+        </div>
+        <div class="question-content">
+            <a routerLink="/questions/{{question.id}}">
+                <h3>{{question.title}}</h3>
+            </a>
+            <div class="description">
+                <!-- TODO: Add Truncate Pipe  -->
+                {{question.description}}
+            </div>
+            <div class="tags">
+                <span *ngFor="let tag of question.tags">{{tag}}</span>
+            </div>
+            <div class="user-info">
+                <img src="{{question.user.avatar}}" alt="{{question.user.name}}">
+                <!-- TODO: Add Time Ago Pipe -->
+                &nbsp;{{question.user.name}} asked {{question.time | date:'medium'}}
+            </div>
+        </div>
+    </div>
+    <div>
+        <button mat-raised-button color="primary">Answer</button>
+    </div>
+</mat-card>

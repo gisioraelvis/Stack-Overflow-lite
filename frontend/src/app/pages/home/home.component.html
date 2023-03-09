@@ -18,3 +18,17 @@
     </div>
     <button mat-raised-button routerLink="/questions/ask" color="accent">Ask a Question</button>
 </div>
+<div class="recent-questions">
+    <div class="recent-questions-title">
+        <h2>Recent Questions</h2>
+    </div>
+    <div class="questions" *ngIf="(questions!==undefined&&questions.length!==0); else noQuestions">
+        <app-question-card *ngFor="let question of questions" [question]="question"></app-question-card>
+    </div>
+    <ng-template #noQuestions>
+        <div class="no-questions">
+            <p>There are no questions yet. Be the first to ask a question.</p>
+            <button mat-raised-button routerLink="/questions/ask" color="accent">Ask a Question</button>
+        </div>
+    </ng-template>
+</div>
