@@ -1,0 +1,27 @@
+.comment {
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid #e1ecf4; /* To separate comments */
+}
+
+.voting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 10px; /* To add some space between voting and content */
+}
+
+.content {
+  flex-grow: 1; /* To fill the remaining space */
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-top: 10px /* To add some space between text and user info */;
+}
+
+.user-info img {
+  width: 32px;
+  height: auto;
+}
