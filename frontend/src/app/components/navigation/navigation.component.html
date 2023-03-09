@@ -1,5 +1,7 @@
 <mat-toolbar class="nav">
-    <img routerLink="/" src="assets/images/Stack_Overflow_logo.png" alt="logo">
+    <a routerLink="/" class="logo">
+        <img src="assets/images/Stack_Overflow_logo.png" alt="logo">
+    </a>
     <div>
         <button mat-button routerLink="/questions">Questions</button>
         <button mat-button routerLink="/tags">Tags</button>
@@ -7,7 +9,7 @@
     </div>
     <mat-form-field appearance="outline" class="search-container">
         <input matInput placeholder="Search">
-        <mat-icon class="search-icon" matSuffix>search</mat-icon>
+        <mat-icon class="search-icon" matSuffix matTooltip="Search">search</mat-icon>
     </mat-form-field>
     <div class="sign-btns">
         <button mat-button routerLink="/sign-in">Sign In</button>

@@ -4,10 +4,14 @@
   align-items: center;
 }
 
-img {
+a.logo{
   width: 20%;
-  height: 85%;
-  background-color: #f48225;
+  height: 100%;
+}
+
+.logo img{
+  width: 100%;
+  height: 100%;
 }
 
 .search-container {

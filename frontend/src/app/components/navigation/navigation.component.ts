@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-navigation',
@@ -23,7 +24,8 @@ import { RouterModule } from '@angular/router';
     MatListModule,
     MatFormFieldModule,
     MatInputModule,
-    RouterModule
+    MatTooltipModule,
+    RouterModule,
   ],
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css'],
