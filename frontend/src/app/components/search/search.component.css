@@ -1,0 +1,16 @@
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.search-full-width {
+  width: 100%;
+}
+
+.search-icon:hover {
+  scale: 2;
+  color: #f48225;
+}
