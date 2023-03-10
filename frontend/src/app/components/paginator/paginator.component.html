@@ -1,0 +1,34 @@
+<!-- Use material paginator with custom template -->
+<mat-paginator class="paginator" [length]="totalItems" [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="onPageEvent($event)">
+    <ng-template matPaginatorItem>
+        <!-- Use ngx-pagination template for displaying buttons -->
+        <pagination-template #p="paginationApi" (pageChange)="p.setCurrent($event)" [id]="'custom'" [maxSize]="5">
+            <div class="custom-pagination">
+                <!-- First button -->
+                <div class="first-page" *ngIf="!p.isFirstPage()">
+                    <a (click)="p.setCurrent(1)">First</a>
+                </div>
+                <!-- Previous button -->
+                <div class="previous-page" *ngIf="!p.isFirstPage()">
+                    <a (click)="p.previous()">Previous</a>
+                </div>
+                <!-- Page buttons -->
+                <ul *ngFor="let page of p.pages" class="pages">
+                    <li [class.current]="p.getCurrent() === page.value">
+                        <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value"><span>{{ page.label
+                                }}</span></a>
+                        <span *ngIf="p.getCurrent() === page.value">{{ page.label }}</span>
+                    </li>
+                </ul>
+                <!-- Next button -->
+                <div class="next-page" *ngIf="!p.isLastPage()">
+                    <a (click)="p.next()">Next</a>
+                </div>
+                <!-- Last button -->
+                <div class="last-page" *ngIf="!p.isLastPage()">
+                    <a (click)="p.setCurrent(p.getLastPage())">Last</a>
+                </div>
+            </div>
+        </pagination-template>
+    </ng-template>
+</mat-paginator>

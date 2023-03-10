@@ -1,0 +1,51 @@
+.paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .custom-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .custom-pagination .first-page,
+  .custom-pagination .previous-page {
+    margin-right: 10px;
+  }
+  
+  .custom-pagination .last-page,
+  .custom-pagination .next-page {
+    margin-left: 10px;
+  }
+  
+  .custom-pagination .pages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+  }
+  
+  .custom-pagination .pages li {
+    list-style-type: none;
+  }
+  
+  .custom-pagination .pages li span {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .custom-pagination .pages li a {
+    text-decoration: none;
+    font-size: 1.2rem;
+  }
+  
+  .custom-pagination .pages li a:hover {
+    color: #0a95ff;
+  }
+  
+  .custom-pagination .pages li.current {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }

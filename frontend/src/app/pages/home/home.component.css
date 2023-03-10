@@ -133,3 +133,10 @@
   color: #1a1a1a;
   text-align: center;
 }
+
+.progress-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}

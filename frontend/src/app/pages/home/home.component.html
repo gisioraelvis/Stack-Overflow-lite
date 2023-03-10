@@ -18,25 +18,37 @@
     </div>
     <button mat-raised-button routerLink="/questions/ask" color="accent">Ask a Question</button>
 </div>
+<!-- Questions -->
 <div class="recent-questions">
     <div class="recent-questions-title">
         <h2>Recent Questions</h2>
     </div>
-    <div class="questions" *ngIf="(questions!==undefined&&questions.length!==0); else noQuestions">
-        <app-question-card *ngFor="let question of questions" [question]="question"></app-question-card>
+    <div class="progress-spinner" *ngIf="loading">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div class="questions" *ngIf="(questions$ | async ) as questions; else noQuestions">
+        <span *ngIf="questions.length>0; else noQuestions">
+            <app-question-card
+                *ngFor="let question of questions | paginate: { id: 'server', itemsPerPage: 5, currentPage: page, totalItems: questions.length }"
+                [question]="question"></app-question-card>
+        </span>
     </div>
     <ng-template #noQuestions>
-        <div class="no-questions">
+        <div class="no-questions" *ngIf="!loading">
             <p>There are no questions yet. Be the first to ask a question.</p>
             <button mat-raised-button routerLink="/questions/ask" color="accent">Ask a Question</button>
         </div>
     </ng-template>
 </div>
 
-<!-- Comments Section
+<!-- Comments
 <div class="comments-section">
      TODO: Add Pagination or Infinite Scroll 
     <app-comment-card *ngFor="let comment of comments" [comment]="comment"></app-comment-card>  
 </div>
 -->
-<!-- Pagination -->
+
+
+<div class="paginator" *ngIf="(questions$ | async ) as questions">
+    <app-paginator [totalItems]="questions.length" [pageSize]="5" (pageChange)="getQuestions()"></app-paginator>
+</div>
