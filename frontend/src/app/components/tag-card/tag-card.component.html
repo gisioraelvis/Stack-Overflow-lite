@@ -1,8 +1,7 @@
 <div class="tag-card">
     <div class="tag-card-header">
         <div class="tag-name">
-            <a routerLink="/questions/tagged/{{tag.name}}" matTooltip="Questions tagged {{tag.name}}"
-                [matTooltipPosition]="position">{{tag.name}}</a>
+            {{tag.name}}
         </div>
         <div class="tag-edit-delete">
             <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -24,6 +23,7 @@
         <p>{{tag.description | truncate: 100}}</p>
     </div>
     <div class="tag-question-count">
-        <p>{{tag.questionsCount}} questions</p>
+        <a routerLink="/questions/tagged/{{tag.name}}" matTooltip="Questions tagged {{tag.name}}"
+            [matTooltipPosition]="position">{{tag.questionsCount}} questions</a>
     </div>
 </div>

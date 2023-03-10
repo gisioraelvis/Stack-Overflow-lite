@@ -105,6 +105,7 @@
 .answer-btn button {
   color: white;
   width: 15%;
+  font-size: 1rem;
 }
 
 .answer-btn button:hover {

@@ -17,6 +17,10 @@ a.logo {
   height: 100%;
 }
 
+.nav-btns > * {
+  font-size: 1.2rem;
+}
+
 .search-container {
   display: flex;
   align-items: center;
@@ -36,6 +40,10 @@ a.logo {
   align-items: center;
   width: 15%;
   margin-right: 20px;
+}
+
+.sign-btns > * {
+  font-size: 1.2rem;
 }
 
 button:hover {
