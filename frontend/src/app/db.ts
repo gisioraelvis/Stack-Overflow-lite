@@ -1,5 +1,6 @@
 import { IComment } from './shared/interfaces/IComment';
 import { IQuestion } from './shared/interfaces/IQuestion';
+import { ITag } from './shared/interfaces/ITag';
 
 export const QUESTIONS: IQuestion[] = [
   {
@@ -409,5 +410,98 @@ export const COMMENTS: IComment[] = [
     },
     createdAt: new Date(),
     updatedAt: new Date(),
+  },
+];
+
+export const TAGS: ITag[] = [
+  {
+    id: 1,
+    name: 'angular',
+    description:
+      'Angular is a platform that makes it easy to build applications with the web. Angular combines declarative templates, dependency injection, end to end tooling, and integrated best practices to solve development challenges. Angular empowers developers to build applications that live on the web, mobile, or the desktop.',
+    questionsCount: 0,
+    createdAt: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+  },
+  {
+    id: 2,
+    name: 'react',
+    description:
+      'React is a JavaScript library for building user interfaces. React is maintained by Facebook, Instagram and a community of individual developers and companies.',
+    questionsCount: 0,
+    createdAt: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+  },
+  {
+    id: 3,
+    name: 'vue',
+    description:
+      'Vue.js (pronounced /vjuː/, like view) is a progressive framework for building user interfaces. Unlike other monolithic frameworks, Vue is designed from the ground up to be incrementally adoptable. The core library is focused on the view layer only, and is easy to pick up and integrate with other libraries or existing projects. On the other hand, Vue is also perfectly capable of powering sophisticated Single-Page Applications when used in combination with modern tooling and supporting libraries.',
+    questionsCount: 0,
+    createdAt: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+  },
+  {
+    id: 4,
+    name: 'material',
+    description:
+      'Material Design is a design language developed by Google. Material Design is inspired by the card-based layouts and transitions that are prevalent in modern mobile applications. It has the goal of providing a unified user experience across all their products on any platform.',
+    questionsCount: 0,
+    createdAt: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+  },
+  {
+    id: 5,
+    name: 'bootstrap',
+    description:
+      'Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. Quickly prototype your ideas or build your entire app with our Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful plugins built on jQuery.',
+    questionsCount: 0,
+    createdAt: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+  },
+  {
+    id: 6,
+    name: 'installation',
+    description:
+      'Installation is the process of adding a software package to a computer system. In computing, an installation is the act of adding hardware or software to a computer or computing system. This is in contrast to upgrading, which refers to the process of replacing an existing version of software with a newer one.',
+    questionsCount: 0,
+    createdAt: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+  },
+  {
+    id: 7,
+    name: 'typescript',
+    description:
+      'TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. Any browser. Any host. Any OS. Open source.',
+    questionsCount: 0,
+    createdAt: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+  },
+  {
+    id: 8,
+    name: 'javascript',
+    description:
+      'JavaScript, often abbreviated as JS, is a high-level, interpreted programming language that conforms to the ECMAScript specification. JavaScript has curly-bracket syntax, dynamic typing, prototype-based object-orientation, and first-class functions. Alongside HTML and CSS, JavaScript is one of the three core technologies of the World Wide Web.',
+    questionsCount: 0,
+    createdAt: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+  },
+  {
+    id: 9,
+    name: 'html',
+    description:
+      'HTML is the standard markup language for creating Web pages. With Cascading Style Sheets (CSS) and JavaScript, it forms a triad of cornerstone technologies for the World Wide Web. Web browsers receive HTML documents from a webserver or from local storage and render them into multimedia web pages. HTML describes the structure of a web page semantically and originally included cues for the appearance of the document.',
+    questionsCount: 0,
+    createdAt: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+  },
+  {
+    id: 10,
+    name: 'css',
+    description:
+      'Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a document written in a markup language like HTML. CSS is a cornerstone technology of the World Wide Web, alongside HTML and JavaScript.',
+    questionsCount: 0,
+    createdAt: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
   },
 ];

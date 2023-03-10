@@ -1,0 +1,44 @@
+.tag-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.tag-card:hover {
+  border: 1px solid #ff6f00;
+}
+
+.tag-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tag-name h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.tag-edit-delete button {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  color: #ff6f00;
+  border: 1px solid #ff6f00;
+}
+
+.tag-edit-delete button:hover {
+  color: white;
+  background-color: #ff6f00;
+}
+
+.tag-description p{
+  margin: 0;
+}

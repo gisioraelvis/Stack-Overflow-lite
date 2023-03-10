@@ -1,0 +1,39 @@
+<div class="tags-page">
+    <div class="top-section">
+        <div class="tags-heading">
+            <h1>Tags</h1>
+            <p>A tag is a keyword or label that categorizes your question with other, similar questions.
+                Using the right tags makes it easier for others to find and answer your question.</p>
+        </div>
+        <div class="ask-question">
+            <button mat-raised-button routerLink="/questions/ask" color="accent">Ask a Question</button>
+        </div>
+    </div>
+    <div class="search-container">
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Search">
+            <mat-icon class="search-icon" matSuffix [matTooltipPosition]="position"
+                matTooltip="Search tag by name">search</mat-icon>
+        </mat-form-field>
+    </div>
+    <div class="tags-container">
+        <mat-tab-group>
+            <mat-tab *ngFor="let tagCategorie of tagCategories" [label]="tagCategorie.label">
+                <div class="progress-spinner" *ngIf="loading">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <span *ngIf="(tags$ | async ) as tags; else noTags">
+                    <span *ngIf="tags.length>0; else noTags">
+                        <app-tag-card class="tags" *ngFor="let tag of tags" [tag]="tag"></app-tag-card>
+                    </span>
+                </span>
+                <ng-template #noTags>
+                    <div class="no-tags" *ngIf="!loading">
+                        <p>There are no tags yet. Be the first to add a tag.</p>
+                        <button mat-raised-button routerLink="/tags/add" color="accent">Add a Tag</button>
+                    </div>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

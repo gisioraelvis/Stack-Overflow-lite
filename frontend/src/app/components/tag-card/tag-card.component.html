@@ -1,0 +1,28 @@
+<div class="tag-card">
+    <div class="tag-card-header">
+        <div class="tag-name">
+            <h2>{{tag.name}}</h2>
+        </div>
+        <div class="tag-edit-delete">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="editTag()">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                </button>
+                <button mat-menu-item (click)="deleteTag()">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+    <div class="tag-description">
+        <p>{{tag.description}}</p>
+    </div>
+    <div class="tag-question-count">
+        <p>{{tag.questionsCount}} questions</p>
+    </div>
+</div>

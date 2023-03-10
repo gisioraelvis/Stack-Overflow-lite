@@ -42,11 +42,8 @@ const routes: Routes = [
   },
   {
     path: 'tags',
-    // loadComponent: () => import('./pages/tags/tags.component').then((c) => c.TagsComponent),
     loadComponent: () =>
-      import('./components/place-holder/place-holder.component').then(
-        (c) => c.PlaceHolderComponent
-      ),
+      import('./pages/tags/tags.component').then((c) => c.TagsComponent),
   },
   {
     path: 'users',

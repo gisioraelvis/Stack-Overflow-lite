@@ -1,0 +1,121 @@
+/* 
+<div class="tags-page">
+    <div class="top-section">
+        <div class="tags-heading">
+            <h1>Tags</h1>
+            <p>A tag is a keyword or label that categorizes your question with other, similar questions.
+                Using the right tags makes it easier for others to find and answer your question.</p>
+        </div>
+        <div class="ask-question">
+            <button mat-raised-button routerLink="/questions/ask" color="accent">Ask a Question</button>
+        </div>
+    </div>
+    <div class="search-container">
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Search">
+            <mat-icon class="search-icon" matSuffix [matTooltipPosition]="position"
+                matTooltip="Search tag by name">search</mat-icon>
+        </mat-form-field>
+    </div>
+    <div class="tags-container">
+        <mat-tab-group>
+            <mat-tab *ngFor="let tagCategorie of tagCategories" [label]="tagCategorie.label">
+                <div class="progress-spinner" *ngIf="loading">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <div class="tags" *ngIf="(tags$ | async ) as tags; else noTags">
+                    <span *ngIf="tags.length>0; else noTags">
+                        <app-tag-card *ngFor="let tag of tags" [tag]="tag"></app-tag-card>
+                    </span>
+                </div>
+                <ng-template #noTags>
+                    <div class="no-tags" *ngIf="!loading">
+                        <p>There are no tags yet. Be the first to add a tag.</p>
+                        <button mat-raised-button routerLink="/tags/add" color="accent">Add a Tag</button>
+                    </div>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+*/
+.tags-page {
+  margin: 1rem 5rem;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.tags-heading {
+  width: 80%;
+}
+
+.tags-heading h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.ask-question button:hover {
+  background-color: #ff6f00;
+}
+
+.search-filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid #ff6f00;
+}
+
+.search-icon:hover {
+  scale: 2;
+  color: #ff6f00;
+}
+
+.tags-container {
+  margin-top: 3rem;
+}
+
+.tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.no-tags {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.no-tags p {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.no-tags button {
+  width: 15rem;
+}
+
+.no-tags button:hover {
+  background-color: #ff6f00;
+}
+
+.progress-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}

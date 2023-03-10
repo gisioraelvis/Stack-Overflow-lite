@@ -1,6 +1,6 @@
 import { IUser } from './IUser';
 
-export interface ITag {
+export interface IQTag {
   id: number;
   name: string;
   createdAt: Date;
@@ -11,7 +11,7 @@ export interface IQuestion {
   id: number;
   title: string;
   description: string;
-  tags: ITag[];
+  tags: IQTag[];
   user: IUser;
   upvotes: number;
   downvotes: number;
