@@ -8,7 +8,8 @@ import { IQuestion } from 'src/app/shared/interfaces/IQuestion';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { TruncatePipe } from 'src/app/shared/pipes/truncate';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
+import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-question-card',
@@ -22,12 +23,12 @@ import { TruncatePipe } from 'src/app/shared/pipes/truncate';
     MatButtonModule,
     MatTooltipModule,
     TruncatePipe,
+    TimeAgoPipe,
   ],
   templateUrl: './question-card.component.html',
   styleUrls: ['./question-card.component.css'],
 })
 export class QuestionCardComponent {
   @Input() question!: IQuestion;
-
-  constructor() {}
+  time: Date = new Date();
 }

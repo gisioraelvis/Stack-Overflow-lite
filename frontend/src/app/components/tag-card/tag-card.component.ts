@@ -10,7 +10,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ITag } from 'src/app/shared/interfaces/ITag';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
-import { TruncatePipe } from 'src/app/shared/pipes/truncate';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 
 @Component({

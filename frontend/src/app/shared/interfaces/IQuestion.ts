@@ -16,5 +16,6 @@ export interface IQuestion {
   upvotes: number;
   downvotes: number;
   answersCount: number;
-  time: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }

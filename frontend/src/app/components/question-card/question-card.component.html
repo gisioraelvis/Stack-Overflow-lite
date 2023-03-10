@@ -28,8 +28,8 @@
             </div>
             <div class="user-info">
                 <img src="{{question.user.avatar}}" alt="{{question.user.name}}">
-                <!-- TODO: Add Time Ago Pipe, should factor modified date -->
-                &nbsp;{{question.user.name}} asked {{question.time | date:'medium'}}
+                <!-- TODO: Add Time Ago Pipe, should factor modified date i.e if modified use the updatedAt -->
+                &nbsp;{{question.user.name}} asked {{question.createdAt | timeAgo}}
             </div>
         </div>
     </div>

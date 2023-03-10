@@ -2,12 +2,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ standalone: true, name: 'truncate' })
 export class TruncatePipe implements PipeTransform {
-  transform(value: string, length: number): string {
-    if (value.length <= length) {
-      return value;
+  transform(content: string, length: number): string {
+    if (content.length <= length) {
+      return content;
     }
 
-    const truncated = value.slice(0, length);
+    const truncated = content.slice(0, length);
     return `${truncated}...`;
   }
 }

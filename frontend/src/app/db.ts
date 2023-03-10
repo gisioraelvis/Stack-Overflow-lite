@@ -36,7 +36,8 @@ export const QUESTIONS: IQuestion[] = [
     upvotes: 5,
     downvotes: 2,
     answersCount: 2,
-    time: new Date(2023, 2, 9, 16, 0),
+    createdAt: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
   },
   {
     id: 2,
@@ -71,7 +72,8 @@ export const QUESTIONS: IQuestion[] = [
     upvotes: 3,
     downvotes: 1,
     answersCount: 1,
-    time: new Date(2023, 2, 9, 17, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+    createdAt: new Date(2023, 2, 9, 16, 0),
   },
   {
     id: 3,
@@ -106,7 +108,8 @@ export const QUESTIONS: IQuestion[] = [
     upvotes: 2,
     downvotes: 1,
     answersCount: 0,
-    time: new Date(2023, 2, 9, 16, 30),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+    createdAt: new Date(2023, 2, 9, 16, 0),
   },
   {
     id: 4,
@@ -141,7 +144,8 @@ export const QUESTIONS: IQuestion[] = [
     upvotes: 1,
     downvotes: 0,
     answersCount: 0,
-    time: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+    createdAt: new Date(2023, 2, 9, 16, 0),
   },
   {
     id: 5,
@@ -176,7 +180,8 @@ export const QUESTIONS: IQuestion[] = [
     upvotes: 0,
     downvotes: 0,
     answersCount: 0,
-    time: new Date(2023, 2, 9, 17, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+    createdAt: new Date(2023, 2, 9, 16, 0),
   },
   {
     id: 6,
@@ -211,7 +216,8 @@ export const QUESTIONS: IQuestion[] = [
     upvotes: 0,
     downvotes: 0,
     answersCount: 0,
-    time: new Date(2023, 2, 9, 16, 30),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+    createdAt: new Date(2023, 2, 9, 16, 0),
   },
   {
     id: 7,
@@ -246,7 +252,8 @@ export const QUESTIONS: IQuestion[] = [
     upvotes: 0,
     downvotes: 0,
     answersCount: 0,
-    time: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+    createdAt: new Date(2023, 2, 9, 16, 0),
   },
   {
     id: 8,
@@ -281,7 +288,8 @@ export const QUESTIONS: IQuestion[] = [
     upvotes: 0,
     downvotes: 0,
     answersCount: 0,
-    time: new Date(2023, 2, 9, 17, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+    createdAt: new Date(2023, 2, 9, 16, 0),
   },
   {
     id: 9,
@@ -316,7 +324,8 @@ export const QUESTIONS: IQuestion[] = [
     upvotes: 0,
     downvotes: 0,
     answersCount: 0,
-    time: new Date(2023, 2, 9, 16, 30),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+    createdAt: new Date(2023, 2, 9, 16, 0),
   },
   {
     id: 10,
@@ -351,7 +360,8 @@ export const QUESTIONS: IQuestion[] = [
     upvotes: 0,
     downvotes: 0,
     answersCount: 0,
-    time: new Date(2023, 2, 9, 16, 0),
+    updatedAt: new Date(2023, 2, 9, 16, 0),
+    createdAt: new Date(2023, 2, 9, 16, 0),
   },
 ];
 
