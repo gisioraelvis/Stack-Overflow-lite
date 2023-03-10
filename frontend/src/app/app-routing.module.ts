@@ -23,7 +23,6 @@ const routes: Routes = [
         (c) => c.PlaceHolderComponent
       ),
   },
-  ///questions/tagged/{{tag.name}}
   {
     path: 'questions/tagged/:tag-name',
     // loadComponent: () => import('./pages/questions/questions.component').then((c) => c.QuestionsComponent),
@@ -44,6 +43,15 @@ const routes: Routes = [
     path: 'tags',
     loadComponent: () =>
       import('./pages/tags/tags.component').then((c) => c.TagsComponent),
+  },
+  ///tags/add
+  {
+    path: 'tags/add',
+    // loadComponent: () => import('./pages/add-tag/add-tag.component').then((c) => c.AddTagComponent),
+    loadComponent: () =>
+      import('./components/place-holder/place-holder.component').then(
+        (c) => c.PlaceHolderComponent
+      ),
   },
   {
     path: 'users',

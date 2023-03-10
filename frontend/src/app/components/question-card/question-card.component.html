@@ -19,8 +19,7 @@
                 <h3>{{question.title}}</h3>
             </a>
             <div class="description">
-                <!-- TODO: Add Truncate Pipe  -->
-                {{question.description}}
+                {{question.description | truncate: 400}}
             </div>
             <div class="tags">
                 <span *ngFor="let tag of question.tags">

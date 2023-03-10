@@ -8,6 +8,7 @@ import { IQuestion } from 'src/app/shared/interfaces/IQuestion';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate';
 
 @Component({
   selector: 'app-question-card',
@@ -19,7 +20,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatExpansionModule,
     MatIconModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    TruncatePipe,
   ],
   templateUrl: './question-card.component.html',
   styleUrls: ['./question-card.component.css'],

@@ -1,3 +1,11 @@
+/* 
+<div>
+    <h1>This is a placeholder for the <span>`{{path}}` </span>page</h1>
+    <h3>It is not yet implemented.</h3>
+    <button mat-raised-button color="accent" (click)="goBack()">Go Back</button>
+</div>
+*/
+
 div {
   display: flex;
   flex-direction: column;
@@ -13,4 +21,20 @@ h1 {
 
 h1 span {
   font-weight: bold;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-bottom: 2rem;
+}
+
+button {
+  width: 10rem;
+  height: 5rem;
+  font-size: 1.5rem;
+}
+
+button:hover {
+  background-color: #ff6f00;
 }

@@ -67,6 +67,6 @@ export class TagsComponent {
     setTimeout(() => {
       this.tags$ = of(TAGS);
       this.loading = false;
-    }, 1000);
+    }, 500);
   }
 }

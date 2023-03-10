@@ -22,11 +22,11 @@
                 <div class="progress-spinner" *ngIf="loading">
                     <mat-spinner></mat-spinner>
                 </div>
-                <span *ngIf="(tags$ | async ) as tags; else noTags">
-                    <span *ngIf="tags.length>0; else noTags">
-                        <app-tag-card class="tags" *ngFor="let tag of tags" [tag]="tag"></app-tag-card>
-                    </span>
-                </span>
+                <ng-container *ngIf="(tags$ | async ) as tags; else noTags">
+                    <div class="tags" *ngIf="tags.length>0; else noTags">
+                        <app-tag-card class="tag" *ngFor="let tag of tags" [tag]="tag"></app-tag-card>
+                    </div>
+                </ng-container>
                 <ng-template #noTags>
                     <div class="no-tags" *ngIf="!loading">
                         <p>There are no tags yet. Be the first to add a tag.</p>

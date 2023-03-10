@@ -1,18 +1,23 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-place-holder',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule],
   templateUrl: './place-holder.component.html',
   styleUrls: ['./place-holder.component.css'],
 })
 export class PlaceHolderComponent {
   path: string;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private location: Location) {
     this.path = this.route.snapshot.url.join('/');
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

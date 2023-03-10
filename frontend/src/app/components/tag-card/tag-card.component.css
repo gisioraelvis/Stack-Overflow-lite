@@ -1,6 +1,5 @@
 .tag-card {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -20,10 +19,14 @@
   justify-content: space-between;
 }
 
-.tag-name h2 {
+a {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 500;
+  padding: 0.2rem 0.5rem;
+  margin: 0.2rem;
+  color: black;
+  background-color: #77c2fc;
 }
 
 .tag-edit-delete button {
@@ -35,10 +38,13 @@
 }
 
 .tag-edit-delete button:hover {
-  color: white;
-  background-color: #ff6f00;
+  scale: 1.2;
 }
 
-.tag-description p{
+.delete:hover {
+  background-color: red;
+}
+
+.tag-description p {
   margin: 0;
 }
