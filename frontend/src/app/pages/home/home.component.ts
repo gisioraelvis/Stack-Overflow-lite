@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
@@ -32,19 +32,23 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrls: ['./home.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {
-  loading?: boolean = false;
+export class HomeComponent implements OnInit {
+  loading: boolean = false;
   page: number = 1;
   questions$?: Observable<IQuestion[]>;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getQuestions();
   }
 
   // TODO: Implement pagination i.e fetch and update questions$ with the next page of questions
   getQuestions() {
     this.loading = true;
-    this.questions$ = of(QUESTIONS);
+    // setTimeout(() => {
+    //   this.questions$ = of(QUESTIONS);
+    //   this.loading = false;
+    // }, 500);
+    // this.questions$ = of(QUESTIONS);
     this.loading = false;
   }
 }

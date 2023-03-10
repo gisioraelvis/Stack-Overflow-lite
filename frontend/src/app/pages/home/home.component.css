@@ -134,6 +134,17 @@
   text-align: center;
 }
 
+.no-questions button {
+  color: white;
+  font-size: 1.2rem;
+  padding: 1.5rem 1rem;
+  margin-top: 1rem;
+}
+
+.no-questions button:hover {
+  background-color: #f48225;
+}
+
 .progress-spinner {
   display: flex;
   justify-content: center;

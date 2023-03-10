@@ -26,13 +26,13 @@
     <div class="progress-spinner" *ngIf="loading">
         <mat-spinner></mat-spinner>
     </div>
-    <div class="questions" *ngIf="(questions$ | async ) as questions; else noQuestions">
-        <span *ngIf="questions.length>0; else noQuestions">
+    <ng-container class="questions" *ngIf="(questions$ | async ) as questions; else noQuestions">
+        <div class="questions" *ngIf="questions.length>0; else noQuestions">
             <app-question-card
                 *ngFor="let question of questions | paginate: { id: 'server', itemsPerPage: 5, currentPage: page, totalItems: questions.length }"
                 [question]="question"></app-question-card>
-        </span>
-    </div>
+        </div>
+    </ng-container>
     <ng-template #noQuestions>
         <div class="no-questions" *ngIf="!loading">
             <p>There are no questions yet. Be the first to ask a question.</p>
@@ -47,7 +47,6 @@
     <app-comment-card *ngFor="let comment of comments" [comment]="comment"></app-comment-card>  
 </div>
 -->
-
 
 <div class="paginator" *ngIf="(questions$ | async ) as questions">
     <app-paginator [totalItems]="questions.length" [pageSize]="5" (pageChange)="getQuestions()"></app-paginator>
