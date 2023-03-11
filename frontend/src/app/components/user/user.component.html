@@ -1,0 +1,31 @@
+<div class="user-card">
+    <div class="user-card-header">
+        <div class="user-info">
+            <img src="{{user.avatar}}" alt="{{user.name}}">
+            <div class="user-name">
+                {{user.name}}
+            </div>
+        </div>
+        <div class="user-edit-delete">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button class="edit" mat-menu-item (click)="edituser()">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                </button>
+                <button class="delete" mat-menu-item (click)="deleteuser()">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+    <div class="user-question-count">
+        {{user.questionsCount}} Questions
+    </div>
+    <div class="user-answers-count">
+        {{user.answersCount}} Answers
+    </div>
+</div>

@@ -24,6 +24,6 @@
     </div>
     <div class="tag-question-count">
         <a routerLink="/questions/tagged/{{tag.name}}" matTooltip="Questions tagged {{tag.name}}"
-            [matTooltipPosition]="position">{{tag.questionsCount}} questions</a>
+            [matTooltipPosition]="position">{{tag.questionsCount | thousandSeparator}} questions</a>
     </div>
 </div>

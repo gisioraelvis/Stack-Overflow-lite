@@ -1,21 +1,20 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { ITag } from 'src/app/shared/interfaces/ITag';
+import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
-import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
-import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.pipe';
+import { IUser } from 'src/app/shared/interfaces/IUser';
 
 @Component({
-  selector: 'app-tag',
+  selector: 'app-user',
   standalone: true,
   imports: [
     CommonModule,
@@ -32,19 +31,17 @@ import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.p
     RouterModule,
     TruncatePipe,
     MatTooltipModule,
-    ThousandSeparatorPipe
   ],
-  templateUrl: './tag.component.html',
-  styleUrls: ['./tag.component.css'],
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css'],
 })
-export class TagComponent {
+export class UserComponent {
   position: TooltipPosition = 'above';
-  @Input() tag!: ITag;
-
-  deleteTag() {
+  @Input() user!: IUser;
+  deleteuser() {
     throw new Error('Method not implemented.');
   }
-  editTag() {
+  edituser() {
     throw new Error('Method not implemented.');
   }
 }

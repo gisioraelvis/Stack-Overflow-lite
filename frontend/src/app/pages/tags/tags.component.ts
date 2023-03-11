@@ -13,8 +13,8 @@ import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { TagComponent } from 'src/app/components/tag/tag.component';
 import { delay, Observable, of, tap } from 'rxjs';
 import { ITag } from 'src/app/shared/interfaces/ITag';
-import { TAGS } from 'src/app/db';
 import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
+import { tagFactory } from 'src/app/db';
 
 @Component({
   selector: 'app-tags',
@@ -65,7 +65,7 @@ export class TagsComponent {
   // TODO: Impliment infinite scroll
   getTags() {
     this.loading = true;
-    this.tags$ = of(TAGS).pipe(
+    this.tags$ = of(tagFactory.buildList(50)).pipe(
       delay(1000), // simulate 1 second delay
       tap(() => {
         this.loading = false;

@@ -5,13 +5,13 @@ import { RouterModule } from '@angular/router';
 import { SearchComponent } from 'src/app/components/search/search.component';
 import { QuestionComponent } from 'src/app/components/question/question.component';
 import { IQuestion } from 'src/app/shared/interfaces/IQuestion';
-import { QUESTIONS } from 'src/app/db';
 import { PaginatorComponent } from 'src/app/components/paginator/paginator.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { delay, Observable, of, tap } from 'rxjs';
 import { CommentComponent } from 'src/app/components/comment/comment.component';
 import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
+import { questionFactory } from 'src/app/db';
 
 @Component({
   selector: 'app-home',
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
 
   getQuestions() {
     this.loading = true;
-    this.questions$ = of(QUESTIONS).pipe(
+    this.questions$ = of(questionFactory.buildList(20)).pipe(
       delay(1000), // simulate 1 second delay
       tap(() => {
         this.loading = false;
