@@ -19,6 +19,12 @@ a.logo {
 
 .nav-btns > * {
   font-size: 1.2rem;
+  margin: 0 0.2rem;
+}
+
+.nav-btns .active {
+  color: white;
+  background-color: #f48225;
 }
 
 .search-container {
