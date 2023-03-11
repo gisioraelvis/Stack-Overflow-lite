@@ -12,7 +12,7 @@ import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
 
 @Component({
-  selector: 'app-question-card',
+  selector: 'app-question',
   standalone: true,
   imports: [
     CommonModule,
@@ -25,10 +25,10 @@ import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
     TruncatePipe,
     TimeAgoPipe,
   ],
-  templateUrl: './question-card.component.html',
-  styleUrls: ['./question-card.component.css'],
+  templateUrl: './question.component.html',
+  styleUrls: ['./question.component.css'],
 })
-export class QuestionCardComponent {
+export class QuestionComponent {
   @Input() question!: IQuestion;
   time: Date = new Date();
 }

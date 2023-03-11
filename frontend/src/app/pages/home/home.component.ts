@@ -3,15 +3,15 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { SearchComponent } from 'src/app/components/search/search.component';
-import { QuestionCardComponent } from 'src/app/components/question-card/question-card.component';
+import { QuestionComponent } from 'src/app/components/question/question.component';
 import { IQuestion } from 'src/app/shared/interfaces/IQuestion';
 import { QUESTIONS } from 'src/app/db';
-import { CommentCardComponent } from 'src/app/components/comment-card/comment-card.component';
 import { PaginatorComponent } from 'src/app/components/paginator/paginator.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { delay, Observable, of, tap } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommentComponent } from 'src/app/components/comment/comment.component';
 
 @Component({
   selector: 'app-home',
@@ -21,8 +21,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     RouterModule,
     MatButtonModule,
     SearchComponent,
-    QuestionCardComponent,
-    CommentCardComponent,
+    QuestionComponent,
+    CommentComponent,
     NgxPaginationModule,
     PaginatorComponent,
     FormsModule,

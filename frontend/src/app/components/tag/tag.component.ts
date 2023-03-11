@@ -14,7 +14,7 @@ import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 
 @Component({
-  selector: 'app-tag-card',
+  selector: 'app-tag',
   standalone: true,
   imports: [
     CommonModule,
@@ -32,10 +32,10 @@ import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
     TruncatePipe,
     MatTooltipModule,
   ],
-  templateUrl: './tag-card.component.html',
-  styleUrls: ['./tag-card.component.css'],
+  templateUrl: './tag.component.html',
+  styleUrls: ['./tag.component.css'],
 })
-export class TagCardComponent {
+export class TagComponent {
   position: TooltipPosition = 'above';
   @Input() tag!: ITag;
 

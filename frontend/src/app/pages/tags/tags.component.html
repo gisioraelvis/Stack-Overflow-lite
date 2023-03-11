@@ -24,7 +24,7 @@
                 </div>
                 <ng-container *ngIf="(tags$ | async ) as tags; else noTags">
                     <div class="tags" *ngIf="tags.length>0; else noTags">
-                        <app-tag-card class="tag" *ngFor="let tag of tags" [tag]="tag"></app-tag-card>
+                        <app-tag class="tag" *ngFor="let tag of tags" [tag]="tag"></app-tag>
                     </div>
                 </ng-container>
                 <ng-template #noTags>

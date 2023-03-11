@@ -10,7 +10,7 @@ import { SearchComponent } from 'src/app/components/search/search.component';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
-import { TagCardComponent } from 'src/app/components/tag-card/tag-card.component';
+import { TagComponent } from 'src/app/components/tag/tag.component';
 import { delay, Observable, of, tap } from 'rxjs';
 import { ITag } from 'src/app/shared/interfaces/ITag';
 import { TAGS } from 'src/app/db';
@@ -33,7 +33,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatInputModule,
     MatTooltipModule,
     MatTabsModule,
-    TagCardComponent,
+    TagComponent,
     MatProgressSpinnerModule,
   ],
   templateUrl: './tags.component.html',
