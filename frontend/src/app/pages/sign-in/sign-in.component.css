@@ -1,0 +1,47 @@
+.sign-in-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 77%;
+  padding: 0 20px;
+}
+
+.sign-in-page mat-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+.sign-in-page mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.sign-in-page button {
+  width: 100%;
+  padding: 1.5rem 0;
+  margin-bottom: 1.6rem;
+  font-size: 1.4rem;
+}
+
+.sign-in-page button:hover {
+  background-color: #f48225;
+}
+
+.sign-in-page .forgot-password {
+  text-align: right;
+}
+
+.sign-in-page .sign-up {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.sign-in-page .sign-up a {
+  color: #2196f3;
+}
+
+mat-error.mat-mdc-form-field-error {
+  font-size: 0.8rem;
+}

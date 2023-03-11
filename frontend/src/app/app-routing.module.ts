@@ -59,15 +59,23 @@ const routes: Routes = [
   },
   {
     path: 'sign-in',
-    // loadComponent: () => import('./pages/sign-in/sign-in.component').then((c) => c.SignInComponent),
     loadComponent: () =>
-      import('./pages/place-holder/place-holder.component').then(
-        (c) => c.PlaceHolderComponent
+      import('./pages/sign-in/sign-in.component').then(
+        (c) => c.SignInComponent
       ),
   },
   {
     path: 'sign-up',
     // loadComponent: () => import('./pages/sign-up/sign-up.component').then((c) => c.SignUpComponent),
+    loadComponent: () =>
+      import('./pages/place-holder/place-holder.component').then(
+        (c) => c.PlaceHolderComponent
+      ),
+  },
+  //forgot-password
+  {
+    path: 'forgot-password',
+    // loadComponent: () => import('./pages/forgot-password/forgot-password.component').then((c) => c.ForgotPasswordComponent),
     loadComponent: () =>
       import('./pages/place-holder/place-holder.component').then(
         (c) => c.PlaceHolderComponent
