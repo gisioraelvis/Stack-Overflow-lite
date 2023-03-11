@@ -9,6 +9,7 @@ import { Observable, of, delay, tap } from 'rxjs';
 import { QUESTIONS } from 'src/app/db';
 import { IQuestion } from 'src/app/shared/interfaces/IQuestion';
 import { QuestionComponent } from 'src/app/components/question/question.component';
+import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.pipe';
 
 @Component({
   selector: 'app-questions',
@@ -24,6 +25,7 @@ import { QuestionComponent } from 'src/app/components/question/question.componen
     MatIconModule,
     MatTabsModule,
     ProgressSpinnerComponent,
+    ThousandSeparatorPipe
   ],
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css'],
