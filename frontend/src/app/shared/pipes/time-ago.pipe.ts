@@ -11,7 +11,7 @@ export class TimeAgoPipe implements PipeTransform {
     );
 
     if (seconds < 60) {
-      return seconds + ' seconds ago';
+      return 'just now';
     }
 
     const minutes = Math.floor(seconds / 60);
