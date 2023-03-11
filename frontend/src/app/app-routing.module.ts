@@ -54,11 +54,8 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    // loadComponent: () => import('./pages/users/users.component').then((c) => c.UsersComponent),
     loadComponent: () =>
-      import('./pages/place-holder/place-holder.component').then(
-        (c) => c.PlaceHolderComponent
-      ),
+      import('./pages/users/users.component').then((c) => c.UsersComponent),
   },
   {
     path: 'sign-in',

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RouterLink } from '@angular/router';
@@ -39,7 +39,7 @@ import { tagFactory } from 'src/app/db';
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.css'],
 })
-export class TagsComponent {
+export class TagsComponent implements OnInit {
   loading: boolean = false;
   position: TooltipPosition = 'above';
   tags$?: Observable<ITag[]>;

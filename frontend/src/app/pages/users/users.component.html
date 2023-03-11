@@ -1,1 +1,32 @@
-<p>users works!</p>
+<div class="users-page">
+    <app-progress-spinner *ngIf="loading"></app-progress-spinner>
+    <ng-container *ngIf="(users$ | async ) as users; else noUsers">
+        <div class="top-section">
+            <div class="users-heading">
+                <h1>Users <span>({{users.length | thousandSeparator}})</span></h1>
+            </div>
+            <div class="sign-up">
+                <button mat-raised-button routerLink="/sign-up" color="accent">Join Community</button>
+            </div>
+        </div>
+        <div class="users-container">
+            <mat-tab-group>
+                <mat-tab *ngFor="let userCategorie of userCategories" [label]="userCategorie.label">
+
+                    <div class="users" *ngIf="users.length>0; else noUsers">
+                        <app-user class="user" *ngFor="let user of users" [user]="user"></app-user>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </ng-container>
+    <ng-template #noUsers>
+        <div class="no-users" *ngIf="!loading">
+            <h1>There are no registered users yet !</h1>
+            <p>Join the community and be the first to add a question.</p>
+            <button mat-raised-button routerLink="/sign-up" color="accent">
+                Sign Up
+            </button>
+        </div>
+    </ng-template>
+</div>

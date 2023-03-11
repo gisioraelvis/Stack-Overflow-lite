@@ -23,9 +23,15 @@
         </div>
     </div>
     <div class="user-question-count">
-        {{user.questionsCount}} Questions
+        <!-- TODO: Create page for results -->
+        <a routerLink="/questions/?userId={{user.id}}">
+            {{user.questionsCount}} Questions
+        </a>
     </div>
     <div class="user-answers-count">
-        {{user.answersCount}} Answers
+        <!-- TODO: Create page for results -->
+        <a routerLink="/questions/?answered=true&userId={{user.id}}">
+            {{user.answersCount}} Answers
+        </a>
     </div>
 </div>

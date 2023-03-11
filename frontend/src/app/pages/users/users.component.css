@@ -1,0 +1,66 @@
+.users-page {
+  margin: 1rem 5rem;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.users-heading {
+  width: 80%;
+}
+
+.users-heading h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.sign-up button {
+  width: 10rem;
+  height: 3rem;
+  font-size: 1rem;
+}
+
+.sign-up button:hover {
+  background-color: #ff6f00;
+}
+
+.users {
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.user {
+  width: calc(20% - 2rem);
+  margin: 0 2rem;
+}
+
+.no-users {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.no-users p {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.no-users button {
+  width: 15rem;
+  font-size: 1.5rem;
+}
+
+.no-users button:hover {
+  background-color: #ff6f00;
+}
