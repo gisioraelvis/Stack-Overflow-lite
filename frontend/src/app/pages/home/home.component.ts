@@ -10,8 +10,8 @@ import { PaginatorComponent } from 'src/app/components/paginator/paginator.compo
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { delay, Observable, of, tap } from 'rxjs';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommentComponent } from 'src/app/components/comment/comment.component';
+import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +26,7 @@ import { CommentComponent } from 'src/app/components/comment/comment.component';
     NgxPaginationModule,
     PaginatorComponent,
     FormsModule,
-    MatProgressSpinnerModule,
+    ProgressSpinnerComponent,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],

@@ -14,7 +14,7 @@ import { TagComponent } from 'src/app/components/tag/tag.component';
 import { delay, Observable, of, tap } from 'rxjs';
 import { ITag } from 'src/app/shared/interfaces/ITag';
 import { TAGS } from 'src/app/db';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
 
 @Component({
   selector: 'app-tags',
@@ -34,7 +34,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTooltipModule,
     MatTabsModule,
     TagComponent,
-    MatProgressSpinnerModule,
+    ProgressSpinnerComponent,
   ],
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.css'],
@@ -62,6 +62,7 @@ export class TagsComponent {
     this.getTags();
   }
 
+  // TODO: Impliment infinite scroll
   getTags() {
     this.loading = true;
     this.tags$ = of(TAGS).pipe(

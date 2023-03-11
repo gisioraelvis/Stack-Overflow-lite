@@ -19,9 +19,7 @@
     <div class="tags-container">
         <mat-tab-group>
             <mat-tab *ngFor="let tagCategorie of tagCategories" [label]="tagCategorie.label">
-                <div class="progress-spinner" *ngIf="loading">
-                    <mat-spinner></mat-spinner>
-                </div>
+                <app-progress-spinner *ngIf="loading"></app-progress-spinner>
                 <ng-container *ngIf="(tags$ | async ) as tags; else noTags">
                     <div class="tags" *ngIf="tags.length>0; else noTags">
                         <app-tag class="tag" *ngFor="let tag of tags" [tag]="tag"></app-tag>

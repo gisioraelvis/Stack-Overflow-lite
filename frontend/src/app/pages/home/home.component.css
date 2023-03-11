@@ -144,10 +144,3 @@
 .no-questions button:hover {
   background-color: #f48225;
 }
-
-.progress-spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50vh;
-}

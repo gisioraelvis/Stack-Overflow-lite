@@ -23,9 +23,7 @@
     <div class="recent-questions-title">
         <h2>Recent Questions</h2>
     </div>
-    <div class="progress-spinner" *ngIf="loading">
-        <mat-spinner></mat-spinner>
-    </div>
+    <app-progress-spinner *ngIf="loading"></app-progress-spinner>
     <ng-container class="questions" *ngIf="(questions$ | async ) as questions; else noQuestions">
         <div class="questions" *ngIf="questions.length>0; else noQuestions">
             <app-question
