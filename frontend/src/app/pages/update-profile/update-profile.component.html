@@ -1,0 +1,65 @@
+<mat-card>
+    <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+        <mat-card-header>
+            <div mat-card-avatar>
+                <!-- TODO: Display existing profile image or default image -->
+                <img src="assets/images/avatar.png" alt="profile image">
+            </div>
+            <mat-card-title>Edit Profile</mat-card-title>
+            <!-- Input field for profile image URL -->
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Profile Image URL" formControlName="profileImage">
+            </mat-form-field>
+        </mat-card-header>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-content>
+            <!-- Input field for display name -->
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Display Name" formControlName="displayName">
+                <mat-error
+                    *ngIf="editProfileForm.get('displayName')?.invalid && editProfileForm.get('displayName')?.touched">
+                    Display name is required
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Input field for email -->
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Email" formControlName="email">
+                <mat-error *ngIf="editProfileForm.get('email')?.invalid && editProfileForm.get('email')?.touched">
+                    Please enter a valid email address
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Input field for password -->
+            <mat-form-field appearance="outline">
+                <input matInput type="password" placeholder="Password" formControlName="password">
+                <!-- TODO: Add more validation errors for password strength -->
+                <mat-error *ngIf="editProfileForm.get('password')?.invalid && editProfileForm.get('password')?.touched">
+                    Password is required
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Input field for confirm password -->
+            <mat-form-field appearance="outline">
+                <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+                <!-- Display error if passwords don't match -->
+                <mat-error
+                    *ngIf="editProfileForm.hasError('mismatch') && editProfileForm.get('confirmPassword')?.touched">
+                    Passwords do not match
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Input field for about me -->
+            <mat-form-field appearance="outline">
+                <textarea matInput placeholder="About Me" formControlName="aboutMe"></textarea>
+            </mat-form-field>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <!-- Disabled save button until all validations are met -->
+            <button mat-raised-button color="primary" type="submit" [disabled]="!editProfileForm.valid">Save</button>
+        </mat-card-actions>
+    </form>
+</mat-card>

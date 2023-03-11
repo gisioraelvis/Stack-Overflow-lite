@@ -80,6 +80,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'update-profile',
+    loadComponent: () =>
+      import('./pages/update-profile/update-profile.component').then(
+        (c) => c.UpdateProfileComponent
+      ),
+  },
+  {
     path: 'not-found',
     loadComponent: () =>
       import('./pages/not-found/not-found.component').then(
