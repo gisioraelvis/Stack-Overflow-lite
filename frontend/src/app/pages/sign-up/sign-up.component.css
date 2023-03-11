@@ -1,0 +1,68 @@
+.sign-up-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  padding: 0 20px;
+}
+
+.left-section {
+  width: 40%;
+  text-align: center;
+}
+
+.left-section h1 {
+  font-size: 1.8rem;
+}
+
+.left-section h1 span {
+  color: #f48225;
+}
+
+.left-section h1 sub {
+  font-size: 1rem;
+  font-weight: normal;
+  vertical-align: sub;
+}
+
+.sign-up-page .right-section {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sign-up-page .right-section mat-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+.sign-up-page .right-section mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.sign-up-page .right-section button {
+  width: 100%;
+  padding: 1.5rem 0;
+  margin-bottom: 1.6rem;
+  font-size: 1.4rem;
+}
+
+.sign-up-page .right-section button:hover {
+  background-color: #f48225;
+}
+
+.sign-up-page .sign-in {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.sign-up-page .sign-in a {
+  color: #2196f3;
+}
+
+mat-error.mat-mdc-form-field-error {
+  font-size: 0.8rem;
+}

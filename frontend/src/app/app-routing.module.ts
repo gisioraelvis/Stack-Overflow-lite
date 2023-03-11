@@ -66,13 +66,11 @@ const routes: Routes = [
   },
   {
     path: 'sign-up',
-    // loadComponent: () => import('./pages/sign-up/sign-up.component').then((c) => c.SignUpComponent),
     loadComponent: () =>
-      import('./pages/place-holder/place-holder.component').then(
-        (c) => c.PlaceHolderComponent
+      import('./pages/sign-up/sign-up.component').then(
+        (c) => c.SignUpComponent
       ),
   },
-  //forgot-password
   {
     path: 'forgot-password',
     // loadComponent: () => import('./pages/forgot-password/forgot-password.component').then((c) => c.ForgotPasswordComponent),

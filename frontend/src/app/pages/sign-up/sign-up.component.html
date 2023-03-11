@@ -1,1 +1,49 @@
-<p>sign-up works!</p>
+<div class="sign-up-page">
+    <div class="left-section">
+        <h1>Join the Stack <span>Overflow</span><sub>Lite</sub> community</h1>
+        <p>Collaborate and share knowledge</p>
+    </div>
+    <div class="right-section">
+        <mat-card>
+            <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+                <mat-form-field>
+                    <mat-label>Display Name</mat-label>
+                    <input matInput formControlName="name">
+                    <mat-error *ngIf="signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched">
+                        Name is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email">
+                    <mat-error *ngIf="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched">
+                        Please enter a valid email address
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password">
+                    <mat-error *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched">
+                        Password must be at least 8 characters long,<br>
+                        contain at least one uppercase letter,<br>
+                        one lowercase letter,<br>
+                        one number and<br>
+                        one special character.<br>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Confirm Password</mat-label>
+                    <input matInput type="password" formControlName="confirmPassword">
+                    <mat-error *ngIf="signUpForm.hasError('mismatch') && signUpForm.get('confirmPassword')?.touched">
+                        Passwords do not match
+                    </mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="accent" type="submit" [disabled]="!signUpForm.valid">Sign Up</button>
+            </form>
+        </mat-card>
+        <div class="sign-in">
+            <span>Already have an account?</span>&nbsp;
+            <a routerLink="/sign-in">Sign In</a>
+        </div>
+    </div>
+</div>
