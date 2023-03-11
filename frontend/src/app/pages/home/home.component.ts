@@ -10,7 +10,7 @@ import { CommentCardComponent } from 'src/app/components/comment-card/comment-ca
 import { PaginatorComponent } from 'src/app/components/paginator/paginator.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of, tap } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
@@ -41,14 +41,13 @@ export class HomeComponent implements OnInit {
     this.getQuestions();
   }
 
-  // TODO: Implement pagination i.e fetch and update questions$ with the next page of questions
   getQuestions() {
     this.loading = true;
-    // setTimeout(() => {
-    //   this.questions$ = of(QUESTIONS);
-    //   this.loading = false;
-    // }, 500);
-    // this.questions$ = of(QUESTIONS);
-    this.loading = false;
+    this.questions$ = of(QUESTIONS).pipe(
+      delay(1000), // simulate 1 second delay
+      tap(() => {
+        this.loading = false;
+      })
+    );
   }
 }

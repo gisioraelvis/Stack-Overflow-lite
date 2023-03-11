@@ -34,6 +34,7 @@
         </div>
     </ng-container>
     <ng-template #noQuestions>
+        <!-- TODO: Extract to it's own component -->
         <div class="no-questions" *ngIf="!loading">
             <p>There are no questions yet. Be the first to ask a question.</p>
             <button mat-raised-button routerLink="/questions/ask" color="accent">Ask a Question</button>

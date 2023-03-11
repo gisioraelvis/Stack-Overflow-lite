@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { TagCardComponent } from 'src/app/components/tag-card/tag-card.component';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of, tap } from 'rxjs';
 import { ITag } from 'src/app/shared/interfaces/ITag';
 import { TAGS } from 'src/app/db';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -64,9 +64,11 @@ export class TagsComponent {
 
   getTags() {
     this.loading = true;
-    setTimeout(() => {
-      this.tags$ = of(TAGS);
-      this.loading = false;
-    }, 500);
+    this.tags$ = of(TAGS).pipe(
+      delay(1000), // simulate 1 second delay
+      tap(() => {
+        this.loading = false;
+      })
+    );
   }
 }
