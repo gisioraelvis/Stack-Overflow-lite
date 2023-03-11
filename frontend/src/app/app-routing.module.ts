@@ -9,10 +9,9 @@ const routes: Routes = [
   },
   {
     path: 'questions',
-    // loadComponent: () => import('./pages/questions/questions.component').then((c) => c.QuestionsComponent),
     loadComponent: () =>
-      import('./components/place-holder/place-holder.component').then(
-        (c) => c.PlaceHolderComponent
+      import('./pages/questions/questions.component').then(
+        (c) => c.QuestionsComponent
       ),
   },
   {

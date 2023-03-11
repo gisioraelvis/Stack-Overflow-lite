@@ -1,0 +1,68 @@
+.questions-page {
+  margin: 1rem 5rem;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.questions-heading {
+  width: 80%;
+}
+
+.questions-heading h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.ask-question button {
+  width: 10rem;
+  height: 3rem;
+  font-size: 1rem;
+}
+
+.ask-question button:hover {
+  background-color: #ff6f00;
+}
+
+.questions-container {
+  width: 100%;
+}
+
+.questions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.question {
+  width: 99%;
+}
+
+.no-questions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.no-questions p {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.no-questions button {
+  width: 15rem;
+  font-size: 1.5rem;
+}
+
+.no-questions button:hover {
+  background-color: #ff6f00;
+}
