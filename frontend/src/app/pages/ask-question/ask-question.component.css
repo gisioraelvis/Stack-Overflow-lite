@@ -1,0 +1,93 @@
+.ask-question-page {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.top-section {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title-container {
+  width: 60%;
+}
+
+.top-section h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.top-section .img-container {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}
+
+.img-container img {
+  width: 100%;
+  max-width: 500px;
+  object-fit: contain;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 1000px;
+}
+
+form mat-card {
+  margin: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.question-field {
+  margin: 1rem;
+}
+
+.chip-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tags-chip-list {
+  width: 100%;
+}
+
+.submit-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 2.5rem 1rem;
+}
+
+.submit-btn-container button {
+  height: 3rem;
+  width: 200px;
+  font-size: 1.2rem;
+}
+
+.submit-btn-container button:hover {
+  background-color: #f48225;
+}
+
+.submit-btn-container button:disabled {
+  cursor: not-allowed;
+}
+
+mat-hint {
+  font-size: 0.8rem;
+}
+
+.tags-label {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}

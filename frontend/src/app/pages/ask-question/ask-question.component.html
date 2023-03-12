@@ -1,0 +1,101 @@
+<div class="ask-question-page">
+    <div class="top-section">
+        <div class="title-container">
+            <h1>Post a question to the community</h1>
+        </div>
+        <div class="img-container">
+            <img src="assets/images/ask-q-bg.svg" alt="">
+        </div>
+    </div>
+    <div class="form-container">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-card>
+                <div class="question-field question-title">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Title</mat-label>
+                        <input matInput type="text" formControlName="title" />
+                        <mat-hint align="start">
+                            Be specific and imagine you’re asking a question to another person.</mat-hint>
+                        <mat-error *ngIf="f['title'].invalid && f['title'].touched">
+                            Please enter a title for your question.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+            <mat-card>
+                <!-- TODO: Auto grow with amount of content-->
+                <div class="question-field question-details">
+                    <mat-form-field appearance="outline">
+                        <mat-label>What are the details of your problem?</mat-label>
+                        <textarea matInput matTextareaAutosize formControlName="details"></textarea>
+                        <mat-hint align="start">
+                            Include all the information someone would need to answer your question.
+                        </mat-hint>
+                        <mat-error *ngIf="f['details'].invalid && f['details'].touched">
+                            Please provide some details about your problem.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+            <mat-card>
+                <!-- TODO: Auto grow with amount of content-->
+                <div class="question-field question-tried">
+                    <mat-form-field appearance="outline">
+                        <mat-label>What did you try and what were you expecting?</mat-label>
+                        <textarea matInput matTextareaAutosize formControlName="tryExpect"></textarea>
+                        <mat-hint align="start">
+                            The body of your question contains your problem details and results.
+                        </mat-hint>
+                        <mat-error *ngIf="f['tryExpect'].invalid && f['tryExpect'].touched">
+                            Please explain what you tried and what you expected to happen.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+            <mat-card>
+                <!-- TODO: Auto grow with amount of content-->
+                <div class="question-field question-tags">
+                    <div class="tags-label">
+                        <mat-label>Tags</mat-label>
+                    </div>
+                    <div class="chip-container">
+                        <mat-form-field class="tags-chip-list" appearance="fill">
+                            <mat-label>Select or Enter Tags</mat-label>
+                            <mat-chip-grid #chipGrid aria-label="Tags selection">
+                                <mat-chip-row *ngFor="let tag of tags" (removed)="remove(tag)">
+                                    {{tag}}
+                                    <button matChipRemove [attr.aria-label]="'remove ' + tag">
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                </mat-chip-row>
+                            </mat-chip-grid>
+                            <input placeholder="New Tag..." #tagInput [formControl]="tagCtrl"
+                                [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                (matChipInputTokenEnd)="add($event)" />
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                                    {{tag}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <mat-hint align="start">
+                            Tags help describe what your question is about and help others find your question.
+                            Start typing to see suggestions or add your own and press enter.
+                        </mat-hint>
+                        <mat-error *ngIf="f['tags'].invalid && f['tags'].touched">
+                            Please select at least one tag for your question.
+                        </mat-error>
+                    </div>
+                </div>
+            </mat-card>
+            <div class="submit-btn-container">
+                <!-- <button mat-raised-button color="accent" type="submit" [disabled]="!form.valid">
+                    Ask Question
+                </button> -->
+                <!-- TODO:[disabled]="!form.valid" -->
+                <button mat-raised-button color="accent" type="submit">Ask Question</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -15,6 +15,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'questions/ask',
+    loadComponent: () =>
+      import('./pages/ask-question/ask-question.component').then(
+        (c) => c.AskQuestionComponent
+      ),
+  },
+  {
     path: 'questions/:id',
     // loadComponent: () => import('./pages/question/question.component').then((c) => c.QuestionComponent),
     loadComponent: () =>
@@ -25,14 +32,6 @@ const routes: Routes = [
   {
     path: 'questions/tagged/:tag-name',
     // loadComponent: () => import('./pages/questions/questions.component').then((c) => c.QuestionsComponent),
-    loadComponent: () =>
-      import('./pages/place-holder/place-holder.component').then(
-        (c) => c.PlaceHolderComponent
-      ),
-  },
-  {
-    path: 'questions/ask',
-    // loadComponent: () => import('./pages/ask-question/ask-question.component').then((c) => c.AskQuestionComponent),
     loadComponent: () =>
       import('./pages/place-holder/place-holder.component').then(
         (c) => c.PlaceHolderComponent
