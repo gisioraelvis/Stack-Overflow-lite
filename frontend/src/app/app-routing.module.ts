@@ -72,10 +72,9 @@ const routes: Routes = [
   },
   {
     path: 'forgot-password',
-    // loadComponent: () => import('./pages/forgot-password/forgot-password.component').then((c) => c.ForgotPasswordComponent),
     loadComponent: () =>
-      import('./pages/place-holder/place-holder.component').then(
-        (c) => c.PlaceHolderComponent
+      import('./pages/forgot-password/forgot-password.component').then(
+        (c) => c.ForgotPasswordComponent
       ),
   },
   {
