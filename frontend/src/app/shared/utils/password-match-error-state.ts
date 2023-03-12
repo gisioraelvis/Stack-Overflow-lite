@@ -9,7 +9,7 @@ export class PasswordMatchErrorState implements ErrorStateMatcher {
   ): boolean {
     return !!(
       control?.parent?.hasError('mismatch') &&
-      (control?.dirty || control?.touched)
+      (control?.touched || control?.dirty)
     );
   }
 }

@@ -84,12 +84,12 @@ const routes: Routes = [
         (c) => c.ForgotPasswordComponent
       ),
   },
-  // reset-password/:token
+  // reset-password/?token=token
   {
-    path: 'reset-password/:token',
+    path: 'reset-password',
     loadComponent: () =>
-      import('./pages/reset-password/reset-password.component').then(
-        (c) => c.ResetPasswordComponent
+      import('./pages/password-reset/password-reset.component').then(
+        (c) => c.PasswordResetComponent
       ),
   },
   {
