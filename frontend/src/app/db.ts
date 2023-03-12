@@ -4,6 +4,7 @@ import { IComment } from './shared/interfaces/IComment';
 import { IQuestion } from './shared/interfaces/IQuestion';
 import { ITag } from './shared/interfaces/ITag';
 import { IUser } from './shared/interfaces/IUser';
+import { IAnswer } from './shared/interfaces/IAnswer';
 
 // Users
 export const userFactory = Factory.Sync.makeFactory<IUser>({
@@ -30,7 +31,7 @@ export const tagFactory = Factory.Sync.makeFactory<ITag>({
 export const questionFactory = Factory.Sync.makeFactory<IQuestion>({
   id: Factory.each((i) => i + 1),
   title: Factory.each(() => faker.lorem.sentence()),
-  description: Factory.each(() => faker.lorem.paragraph()),
+  description: Factory.each(() => faker.lorem.paragraph(100)),
   tags: Factory.each(() =>
     tagFactory.buildList(faker.datatype.number({ min: 1, max: 5 }))
   ),
@@ -46,8 +47,19 @@ export const questionFactory = Factory.Sync.makeFactory<IQuestion>({
 // Comments
 export const commentFactory = Factory.Sync.makeFactory<IComment>({
   id: Factory.each(() => faker.datatype.number()),
-  text: Factory.each(() => faker.lorem.sentence()),
+  text: Factory.each(() => faker.lorem.paragraph()),
   user: Factory.each(() => userFactory.build()),
+  createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
+  updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
+});
+
+// Answers
+export const answerFactory = Factory.Sync.makeFactory<IAnswer>({
+  id: Factory.each(() => faker.datatype.number()),
+  text: Factory.each(() => faker.lorem.paragraph(50)),
+  user: Factory.each(() => userFactory.build()),
+  upvotes: faker.datatype.number(),
+  downvotes: faker.datatype.number(),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
   updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
 });

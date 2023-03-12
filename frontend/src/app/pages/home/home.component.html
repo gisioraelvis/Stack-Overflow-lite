@@ -39,14 +39,6 @@
         </div>
     </ng-template>
 </div>
-
-<!-- Comments
-<div class="comments-section">
-     TODO: Add Pagination or Infinite Scroll 
-    <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>  
-</div>
--->
-
 <div class="paginator" *ngIf="(questions$ | async ) as questions">
     <app-paginator [totalItems]="questions.length" [pageSize]="5" (pageChange)="getQuestions()"></app-paginator>
 </div>

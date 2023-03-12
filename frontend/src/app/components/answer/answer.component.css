@@ -1,0 +1,89 @@
+.answer-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+.answer-card:hover {
+  border: 1px solid #ff6f00;
+}
+
+.answer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.voting-answers-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 1rem;
+  width: 15%;
+  height: 100%;
+}
+
+.voting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.voting button {
+  padding: 0;
+}
+
+.voting .count {
+  font-size: 0.8rem;
+}
+
+.answer-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.answer-content .description {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.user-info {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.user-info img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.answer-btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin: 1.5rem 0 0.5rem 0;
+}
+
+.answer-btn button {
+  color: white;
+  width: 15%;
+  font-size: 1rem;
+}
+
+.answer-btn button:hover {
+  background-color: #f48225;
+}

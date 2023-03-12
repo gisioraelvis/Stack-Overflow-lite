@@ -1,18 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Input } from '@angular/core';
+import { IAnswer } from 'src/app/shared/interfaces/IAnswer';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { IQuestion } from 'src/app/shared/interfaces/IQuestion';
-import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
+import { RouterModule } from '@angular/router';
 import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 
 @Component({
-  selector: 'app-question',
+  selector: 'app-answer',
   standalone: true,
   imports: [
     CommonModule,
@@ -25,9 +24,9 @@ import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
     TruncatePipe,
     TimeAgoPipe,
   ],
-  templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css'],
+  templateUrl: './answer.component.html',
+  styleUrls: ['./answer.component.css'],
 })
-export class QuestionComponent {
-  @Input() question!: IQuestion;
+export class AnswerComponent {
+  @Input() answer!: IAnswer;
 }

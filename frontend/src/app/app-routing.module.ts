@@ -23,10 +23,9 @@ const routes: Routes = [
   },
   {
     path: 'questions/:id',
-    // loadComponent: () => import('./pages/question/question.component').then((c) => c.QuestionComponent),
     loadComponent: () =>
-      import('./pages/place-holder/place-holder.component').then(
-        (c) => c.PlaceHolderComponent
+      import('./pages/question/question.component').then(
+        (c) => c.QuestionComponentPage
       ),
   },
   {

@@ -1,0 +1,142 @@
+/* 
+<div class="question-page">
+    <div class="top-section">
+        <div class="ask-question">
+            <button mat-raised-button routerLink="/questions/ask" color="accent">
+                Ask a Question
+            </button>
+        </div>
+    </div>
+    <div class="question-section">
+        <app-progress-spinner *ngIf="loading"></app-progress-spinner>
+        <ng-container *ngIf="(question$ | async ) as question; else noquestion">
+            <app-question class="question" [question]="question"></app-question>
+        </ng-container>
+    </div>
+    <ng-template #noquestion>
+        <div class="no-question" *ngIf="!loading">
+            <p>The question does not exist.</p>
+            <button mat-raised-button color="accent" (click)="goBack()">Go Back</button>
+        </div>
+    </ng-template>
+    <div class="comments-section">
+        <div class="comments-title">
+            <h2>Comments</h2>
+        </div>
+        <app-progress-spinner *ngIf="loading"></app-progress-spinner>
+        <div class="comments">
+            <ng-container *ngIf="(comments$ | async ) as comments">
+                <div class="comments" *ngIf="comments.length>0">
+                    <app-comment class="comment" *ngFor="let comment of comments" [comment]="comment"></app-comment>
+                </div>
+            </ng-container>
+        </div>
+        <div class="add-comment">
+            <app-add-comment></app-add-comment>
+        </div>
+    </div>
+</div>
+*/
+
+.question-page {
+  margin: 1rem 5rem;
+}
+
+.question-page .top-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.ask-question button {
+  width: 10rem;
+  height: 3rem;
+  font-size: 1rem;
+}
+
+.ask-question button:hover {
+  background-color: #ff6f00;
+}
+
+.question-container {
+  width: 100%;
+}
+
+.question {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.question {
+  width: 100%;
+}
+
+.no-question {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.no-question p {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.no-question button {
+  width: 15rem;
+  font-size: 1.5rem;
+}
+
+.no-question button:hover {
+  background-color: #ff6f00;
+}
+
+.comments-section {
+  margin-top: 0;
+}
+
+.comments-title {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.comments-title h2 {
+  font-size: 1rem;
+}
+
+.question-comments {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.question-comment {
+  width: 90%;
+}
+
+.add-comment {
+  width: 100%;
+}
+
+mat-divider {
+  margin: 2rem 0 1rem 0;
+}
+
+.add-answer-section {
+  width: 100%;
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.add-answer {
+  width: 100%;
+}

@@ -1,0 +1,43 @@
+.add-answer-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  width: 90%;
+  margin: 1rem 0 2rem 0;
+}
+
+.answer-field {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.add-answer-btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-answer-btn button {
+  height: 3rem;
+  width: 200px;
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.add-answer-btn button:hover {
+  background-color: #f48225;
+}
+
+.add-answer-btn button:disabled {
+  cursor: not-allowed;
+}

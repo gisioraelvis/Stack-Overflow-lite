@@ -1,0 +1,18 @@
+<div class="add-answer-container">
+    <mat-card>
+        <form [formGroup]="answerForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="answer-field" appearance="outline">
+                <textarea matInput rows='10' placeholder="Add an answer" formControlName="answer"></textarea>
+            </mat-form-field>
+            <mat-hint align="start">
+                Contribute an answer to the question.
+                Please be sure to provide details and share your research!
+            </mat-hint>
+            <div class="add-answer-btn">
+                <button mat-raised-button color="accent" type="submit" [disabled]="answerForm.invalid">
+                    Post Your answer
+                </button>
+            </div>
+        </form>
+    </mat-card>
+</div>
