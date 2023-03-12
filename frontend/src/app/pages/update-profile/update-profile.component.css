@@ -4,6 +4,22 @@
   align-items: center;
 }
 
+.go-back {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin: 1.5rem 0 0 5rem;
+}
+
+.go-back button {
+  height: 2.5rem;
+  font-size: 1rem;
+}
+
+.go-back button:hover {
+  background-color: #ff6f00;
+}
+
 .title-container {
   margin: 2rem 0;
   text-align: center;

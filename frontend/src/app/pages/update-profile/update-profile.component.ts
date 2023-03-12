@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -33,7 +33,7 @@ import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.
     MatCardModule,
     SafePipeModule,
     FileUploadModule,
-    FileUploadComponent
+    FileUploadComponent,
   ],
 })
 export class UpdateProfileComponent implements OnInit {
@@ -42,7 +42,7 @@ export class UpdateProfileComponent implements OnInit {
 
   public profileForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private location: Location) {
     this.profileForm = this.fb.group(
       {
         name: ['', Validators.required],
@@ -81,6 +81,10 @@ export class UpdateProfileComponent implements OnInit {
     ) => {
       console.log('ImageUpload:uploaded:', item, status, response);
     };
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   passwordMatchValidator(g: FormGroup) {
