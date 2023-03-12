@@ -71,17 +71,25 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'update-profile',
+    loadComponent: () =>
+      import('./pages/update-profile/update-profile.component').then(
+        (c) => c.UpdateProfileComponent
+      ),
+  },
+  {
     path: 'forgot-password',
     loadComponent: () =>
       import('./pages/forgot-password/forgot-password.component').then(
         (c) => c.ForgotPasswordComponent
       ),
   },
+  // reset-password/:token
   {
-    path: 'update-profile',
+    path: 'reset-password/:token',
     loadComponent: () =>
-      import('./pages/update-profile/update-profile.component').then(
-        (c) => c.UpdateProfileComponent
+      import('./pages/reset-password/reset-password.component').then(
+        (c) => c.ResetPasswordComponent
       ),
   },
   {

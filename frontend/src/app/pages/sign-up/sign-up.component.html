@@ -33,8 +33,10 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Confirm Password</mat-label>
-                    <input matInput type="password" formControlName="confirmPassword">
-                    <mat-error *ngIf="signUpForm.hasError('mismatch') && signUpForm.get('confirmPassword')?.touched">
+                    <input matInput type="password" formControlName="confirmPassword"
+                        [errorStateMatcher]="passwordMatchErrorState">
+                    <mat-error
+                        *ngIf="(signUpForm.hasError('mismatch') || signUpForm.get('confirmPassword')?.invalid) && signUpForm.get('confirmPassword')?.touched">
                         Passwords do not match
                     </mat-error>
                 </mat-form-field>

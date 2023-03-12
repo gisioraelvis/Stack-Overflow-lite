@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  FormGroup,
-  FormControl,
   Validators,
   ReactiveFormsModule,
   AbstractControl,
   ValidationErrors,
+  FormBuilder,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -14,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { PasswordMatchErrorState } from 'src/app/shared/utils/password-match-error-state';
 
 @Component({
   selector: 'app-sign-up',
@@ -32,19 +32,24 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent {
-  signUpForm = new FormGroup(
+  constructor(private fb: FormBuilder) {}
+
+  signUpForm = this.fb.group(
     {
-      name: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.pattern(
-          '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
-        ),
-      ]),
-      confirmPassword: new FormControl('', [Validators.required]),
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
+          ),
+        ],
+      ],
+      confirmPassword: ['', [Validators.required]],
     },
-    this.passwordMatchValidator
+    { validator: this.passwordMatchValidator }
   );
 
   onSubmit() {
@@ -52,10 +57,11 @@ export class SignUpComponent {
     console.log(this.signUpForm.value);
   }
 
-  // TODO: Fix password does not match error message not showing 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
     return password === confirmPassword ? null : { mismatch: true };
   }
+
+  passwordMatchErrorState = new PasswordMatchErrorState();
 }
