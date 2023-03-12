@@ -1,22 +1,46 @@
-mat-card {
-  max-width: 600px;
-  margin: 20px auto;
-}
-
-mat-card-header {
+.update-profile-page {
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
-mat-card-avatar {
-  margin-right: 20px;
+.title-container {
+  margin: 2rem 0;
+  text-align: center;
 }
 
-mat-form-field {
+.title-container h1 {
+  font-size: 1.8rem;
+}
+
+.update-form-container {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-mat-card-actions {
-  display: flex;
-  justify-content: flex-end;
+.update-form-container mat-card {
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.update-form-container mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.update-form-container button {
+  width: 100%;
+  padding: 1.5rem 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+.update-form-container button:hover {
+  background-color: #f48225;
+}
+
+mat-error.mat-mdc-form-field-error {
+  font-size: 0.8rem;
 }
