@@ -6,6 +6,7 @@ import {
   AbstractControl,
   ValidationErrors,
   FormBuilder,
+  AbstractControlOptions,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { PasswordMatchErrorState } from 'src/app/shared/utils/password-match-error-state';
+import { passwordPatternValidator } from 'src/app/shared/utils/password-pattern-validator';
 
 @Component({
   selector: 'app-sign-up',
@@ -32,28 +34,23 @@ import { PasswordMatchErrorState } from 'src/app/shared/utils/password-match-err
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent {
+  formOptions: AbstractControlOptions = {
+    validators: this.passwordMatchValidator,
+  };
   constructor(private fb: FormBuilder) {}
 
   signUpForm = this.fb.group(
     {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
-          ),
-        ],
-      ],
+      password: ['', [Validators.required, passwordPatternValidator]],
       confirmPassword: ['', [Validators.required]],
     },
-    { validator: this.passwordMatchValidator }
+    this.formOptions
   );
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
+    // TODO: Implement submit logic
     console.log(this.signUpForm.value);
   }
 

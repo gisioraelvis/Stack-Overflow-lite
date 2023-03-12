@@ -5,11 +5,13 @@ import {
   FormControl,
   Validators,
   ReactiveFormsModule,
+  FormBuilder,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { passwordPatternValidator } from 'src/app/shared/utils/password-pattern-validator';
 
 @Component({
   selector: 'app-sign-in',
@@ -26,14 +28,11 @@ import { MatCardModule } from '@angular/material/card';
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent {
-  signInForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.pattern(
-        '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
-      ),
-    ]),
+  constructor(private fb: FormBuilder) {}
+
+  signInForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, passwordPatternValidator]],
   });
 
   onSubmit() {

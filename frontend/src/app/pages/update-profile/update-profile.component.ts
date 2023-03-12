@@ -1,6 +1,8 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
+  AbstractControl,
+  AbstractControlOptions,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -39,7 +41,9 @@ import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.
 export class UpdateProfileComponent implements OnInit {
   uploader: FileUploader;
   imagePreview: any;
-
+  formOptions: AbstractControlOptions = {
+    validators: this.passwordMatchValidator,
+  };
   public profileForm: FormGroup;
 
   constructor(private fb: FormBuilder, private location: Location) {
@@ -59,9 +63,7 @@ export class UpdateProfileComponent implements OnInit {
         confirmPassword: ['', Validators.required],
         aboutMe: ['', Validators.maxLength(200)],
       },
-      {
-        validator: this.passwordMatchValidator,
-      }
+      this.formOptions
     );
 
     this.uploader = new FileUploader({
@@ -87,8 +89,9 @@ export class UpdateProfileComponent implements OnInit {
     this.location.back();
   }
 
-  passwordMatchValidator(g: FormGroup) {
-    return g.get('password')?.value === g.get('confirmPassword')?.value
+  passwordMatchValidator(control: AbstractControl) {
+    return control.get('password')?.value ===
+      control.get('confirmPassword')?.value
       ? null
       : { mismatch: true };
   }
