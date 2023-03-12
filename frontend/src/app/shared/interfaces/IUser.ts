@@ -4,4 +4,6 @@ export interface IUser {
   avatar: string;
   questionsCount: number;
   answersCount: number;
+  createdAt: string | Date;
+  updatedAt: string | Date;
 }

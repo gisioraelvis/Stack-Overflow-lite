@@ -12,6 +12,8 @@ export const userFactory = Factory.Sync.makeFactory<IUser>({
   avatar: faker.image.avatar(),
   questionsCount: faker.datatype.number({ min: 0, max: 100 }),
   answersCount: faker.datatype.number({ min: 0, max: 100 }),
+  createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
+  updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
 });
 
 // Tags
