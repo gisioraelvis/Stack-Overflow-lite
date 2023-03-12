@@ -32,34 +32,34 @@
   align-items: center;
 }
 
-.sign-up-page .right-section mat-card {
+.right-section mat-card {
   width: 100%;
   max-width: 400px;
   padding: 2rem;
 }
 
-.sign-up-page .right-section mat-form-field {
+.right-section mat-form-field {
   width: 100%;
   margin-bottom: 1rem;
 }
 
-.sign-up-page .right-section button {
+.right-section button {
   width: 100%;
   padding: 1.5rem 0;
   margin-bottom: 1.6rem;
   font-size: 1.4rem;
 }
 
-.sign-up-page .right-section button:hover {
+.right-section button:hover {
   background-color: #f48225;
 }
 
-.sign-up-page .sign-in {
+.sign-in {
   text-align: center;
   margin-top: 20px;
 }
 
-.sign-up-page .sign-in a {
+.sign-in a {
   color: #2196f3;
 }
 
