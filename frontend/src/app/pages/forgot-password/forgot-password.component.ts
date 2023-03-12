@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  FormControl,
-  FormGroup,
+  FormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -26,8 +25,10 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./forgot-password.component.css'],
 })
 export class ForgotPasswordComponent {
-  forgotPasswordForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+  constructor(private fb: FormBuilder) {}
+
+  forgotPasswordForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
   });
 
   onSubmit() {

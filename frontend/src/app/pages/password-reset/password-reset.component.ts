@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
   FormBuilder,
@@ -7,6 +7,7 @@ import {
   AbstractControl,
   ValidationErrors,
   ReactiveFormsModule,
+  AbstractControlOptions,
 } from '@angular/forms';
 import { PasswordMatchErrorState } from 'src/app/shared/utils/password-match-error-state';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,6 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { passwordPatternValidator } from 'src/app/shared/utils/password-pattern-validator';
 
 @Component({
   selector: 'app-password-reset',
@@ -33,6 +35,9 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class PasswordResetComponent {
   token: string;
+  formOptions: AbstractControlOptions = {
+    validators: this.passwordMatchValidator,
+  };
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder) {
     // reset-password/?token=token
@@ -42,18 +47,10 @@ export class PasswordResetComponent {
 
   resetPasswordForm = this.fb.group(
     {
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
-          ),
-        ],
-      ],
+      password: ['', [Validators.required, passwordPatternValidator]],
       confirmPassword: ['', [Validators.required]],
     },
-    { validator: this.passwordMatchValidator }
+    this.formOptions
   );
 
   onSubmit() {
