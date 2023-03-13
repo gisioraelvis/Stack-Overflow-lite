@@ -9,7 +9,43 @@
     <div class="question-section">
         <app-progress-spinner *ngIf="loading"></app-progress-spinner>
         <ng-container *ngIf="(question$ | async ) as question; else noquestion">
-            <app-question class="question" [question]="question"></app-question>
+            <!-- <app-question class="question" [question]="question"></app-question> -->
+            <mat-card class="question-card">
+                <div class="question">
+                    <div class="voting-answers-section">
+                        <div class="voting thumbs-ups">
+                            <button mat-icon-button><mat-icon>thumb_up</mat-icon></button>
+                            <span class="count">{{question.upvotes}}</span>
+                        </div>
+                        <div class="answers-count">
+                            <span class="count">{{question.answersCount}}</span>
+                            answers
+                        </div>
+                        <div class="voting thumbs-downs">
+                            <button mat-icon-button><mat-icon>thumb_down</mat-icon></button>
+                            <span class="count">{{question.downvotes}}</span>
+                        </div>
+                    </div>
+                    <div class="question-content">
+                        <a class="question-title" routerLink="/questions/{{question.id}}">
+                            <h3>{{question.title}}</h3>
+                        </a>
+                        <div class="description">
+                            {{question.description }}
+                        </div>
+                        <div class="tags">
+                            <span *ngFor="let tag of question.tags">
+                                <a routerLink="/questions/tagged/{{tag.name}}">{{tag.name}}</a>
+                            </span>
+                        </div>
+                        <div class="user-info">
+                            <img src="{{question.user.avatar}}" alt="{{question.user.name}}">
+                            <!-- TODO: Add Time Ago Pipe, should factor modified date i.e if modified use the updatedAt -->
+                            &nbsp;{{question.user.name}} asked {{question.createdAt | timeAgo}}
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
         </ng-container>
     </div>
     <ng-template #noquestion>

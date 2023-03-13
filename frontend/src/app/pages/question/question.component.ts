@@ -18,6 +18,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { IAnswer } from 'src/app/shared/interfaces/IAnswer';
 import { AnswerComponent } from 'src/app/components/answer/answer.component';
 import { AddAnswerComponent } from 'src/app/components/add-answer/add-answer.component';
+import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-question-page',
@@ -29,6 +31,7 @@ import { AddAnswerComponent } from 'src/app/components/add-answer/add-answer.com
     AddCommentComponent,
     RouterModule,
     RouterLink,
+    MatCardModule,
     MatIconModule,
     MatTabsModule,
     MatButtonModule,
@@ -39,6 +42,7 @@ import { AddAnswerComponent } from 'src/app/components/add-answer/add-answer.com
     MatDividerModule,
     AnswerComponent,
     AddAnswerComponent,
+    TimeAgoPipe
   ],
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css'],

@@ -9,6 +9,9 @@
                 <button mat-icon-button><mat-icon>thumb_down</mat-icon></button>
                 <span class="count">{{answer.downvotes}}</span>
             </div>
+            <div class="user-accepted">
+                <mat-icon color="accent" *ngIf="answer.isAccepted">check_circle</mat-icon>
+            </div>
         </div>
         <div class="answer-content">
             <div class="description">

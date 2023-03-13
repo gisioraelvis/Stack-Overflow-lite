@@ -9,10 +9,12 @@ import { IAnswer } from './shared/interfaces/IAnswer';
 // Users
 export const userFactory = Factory.Sync.makeFactory<IUser>({
   id: Factory.each((i) => i),
-  name: faker.name.fullName(),
-  avatar: faker.image.avatar(),
-  questionsCount: faker.datatype.number({ min: 0, max: 100 }),
-  answersCount: faker.datatype.number({ min: 0, max: 100 }),
+  name: Factory.each(() => faker.name.fullName()),
+  avatar: Factory.each(() => faker.image.avatar()),
+  questionsCount: Factory.each(() =>
+    faker.datatype.number({ min: 0, max: 100 })
+  ),
+  answersCount: Factory.each(() => faker.datatype.number({ min: 0, max: 100 })),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
   updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
 });
@@ -30,15 +32,14 @@ export const tagFactory = Factory.Sync.makeFactory<ITag>({
 // Questions
 export const questionFactory = Factory.Sync.makeFactory<IQuestion>({
   id: Factory.each((i) => i + 1),
-  title: Factory.each(() => faker.lorem.sentence()),
+  title: Factory.each(() => faker.lorem.sentence(faker.datatype.number({ min: 7, max: 10 }))),
   description: Factory.each(() => faker.lorem.paragraph(100)),
   tags: Factory.each(() =>
     tagFactory.buildList(faker.datatype.number({ min: 1, max: 5 }))
   ),
-  //TODO: random different user for each question
   user: Factory.each(() => userFactory.build()),
-  upvotes: faker.datatype.number(),
-  downvotes: faker.datatype.number(),
+  upvotes: Factory.each(() => faker.datatype.number({ min: 0, max: 50 })),
+  downvotes: Factory.each(() => faker.datatype.number({ min: 0, max: 50 })),
   answersCount: faker.datatype.number({ min: 0, max: 20 }),
   updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
@@ -58,8 +59,9 @@ export const answerFactory = Factory.Sync.makeFactory<IAnswer>({
   id: Factory.each(() => faker.datatype.number()),
   text: Factory.each(() => faker.lorem.paragraph(50)),
   user: Factory.each(() => userFactory.build()),
-  upvotes: faker.datatype.number(),
-  downvotes: faker.datatype.number(),
+  isAccepted: Factory.each(() => faker.datatype.boolean()),
+  upvotes: Factory.each(() => faker.datatype.number({ min: 0, max: 50 })),
+  downvotes: Factory.each(() => faker.datatype.number({ min: 0, max: 50 })),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
   updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
 });
