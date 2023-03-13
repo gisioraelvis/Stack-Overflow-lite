@@ -11,18 +11,20 @@
     </div>
     <div class="search-container">
         <mat-form-field appearance="outline">
-            <input matInput placeholder="Search">
+            <input matInput placeholder="Search" [(ngModel)]="searchTerm">
             <mat-icon class="search-icon" matSuffix [matTooltipPosition]="position"
                 matTooltip="Search tag by name">search</mat-icon>
         </mat-form-field>
     </div>
     <div class="tags-container">
-        <mat-tab-group>
+        <mat-tab-group [selectedIndex]="selectedTagCategory">
             <mat-tab *ngFor="let tagCategorie of tagCategories" [label]="tagCategorie.label">
                 <app-progress-spinner *ngIf="loading"></app-progress-spinner>
                 <ng-container *ngIf="(tags$ | async ) as tags; else noTags">
                     <div class="tags" *ngIf="tags.length>0; else noTags">
-                        <app-tag class="tag" *ngFor="let tag of tags" [tag]="tag"></app-tag>
+                        <app-tag class="tag" *ngFor="let tag of tags | filterTags:searchType:searchTerm | sortTags: sortBy"
+                            [tag]="tag">
+                        </app-tag>
                     </div>
                 </ng-container>
                 <ng-template #noTags>

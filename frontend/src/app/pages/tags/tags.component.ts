@@ -15,6 +15,8 @@ import { delay, Observable, of, tap } from 'rxjs';
 import { ITag } from 'src/app/shared/interfaces/ITag';
 import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
 import { tagFactory } from 'src/app/db';
+import { FilterTagsPipe } from 'src/app/shared/pipes/tags-filter.pipe';
+import { SortTagsPipe } from 'src/app/shared/pipes/tags-sort.pipe';
 
 @Component({
   selector: 'app-tags',
@@ -35,6 +37,8 @@ import { tagFactory } from 'src/app/db';
     MatTabsModule,
     TagComponent,
     ProgressSpinnerComponent,
+    FilterTagsPipe,
+    SortTagsPipe,
   ],
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.css'],
@@ -43,6 +47,10 @@ export class TagsComponent implements OnInit {
   loading: boolean = false;
   position: TooltipPosition = 'above';
   tags$?: Observable<ITag[]>;
+  searchType: string = 'Name';
+  searchTerm?: string;
+  sortBy: string = 'Newest';
+
   tagCategories: {
     label: string;
     tagCategorie: string;
@@ -54,7 +62,10 @@ export class TagsComponent implements OnInit {
       tagCategorie: 'unanswered',
     },
   ];
-  selectedTagCategory: string = 'popular';
+
+  selectedTagCategory: number = this.tagCategories.findIndex(
+    (tagCategory) => tagCategory.tagCategorie === 'popular'
+  );
 
   constructor(private route: ActivatedRoute) {}
 
@@ -68,6 +79,13 @@ export class TagsComponent implements OnInit {
     if (!userId) {
       this.getTags();
     }
+  }
+
+  ngOnChanges() {
+    if (this.searchTerm) {
+      this.searchTags(this.searchTerm);
+    }
+    this.sortBy = this.tagCategories[this.selectedTagCategory].label;
   }
 
   // TODO: Impliment infinite scroll pagination
@@ -90,5 +108,12 @@ export class TagsComponent implements OnInit {
         this.loading = false;
       })
     );
+  }
+
+  searchTags(searchTerm: string | undefined | null) {
+    if(searchTerm) {
+      console.log(`searching for tags with searchTerm: ${searchTerm}`);
+      this.getTags(); // TODO: Impliment search
+    }
   }
 }

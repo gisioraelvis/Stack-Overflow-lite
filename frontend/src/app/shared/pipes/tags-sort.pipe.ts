@@ -2,10 +2,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ITag } from '../interfaces/ITag';
 
 @Pipe({
+  standalone: true,
   name: 'sortTags',
 })
 export class SortTagsPipe implements PipeTransform {
   transform(tags: ITag[], sortBy: string): ITag[] {
+    console.log(`SortTagsPipe - sortBy: ${sortBy}`);
     if (!sortBy) {
       return tags;
     }
