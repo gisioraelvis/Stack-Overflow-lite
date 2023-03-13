@@ -38,8 +38,11 @@ export class QuestionsComponent implements OnInit {
   loading: boolean = false;
   page: number = 1;
   questions$?: Observable<IQuestion[]>;
-  tag?: string | null;
   sortBy: string = 'Newest';
+
+  // search
+  searchType?: string;
+  searchTerm?: string;
 
   questionCategories: {
     label: string;
@@ -65,7 +68,7 @@ export class QuestionsComponent implements OnInit {
     const userId = this.route.snapshot.queryParamMap.get('userId');
 
     // /questions?filter=answered&userId=1
-    if ((filter || userId) && !this.tag) {
+    if ((filter || userId) && !this.searchTerm) {
       this.userQuestions(filter, userId);
     }
 
@@ -91,9 +94,16 @@ export class QuestionsComponent implements OnInit {
     // /questions?tag=some-tag
     const tag = this.route.snapshot.queryParamMap.get('tag');
     if (tag) {
-      this.tag = tag;
+      this.searchTerm = tag;
+      this.getQuestions();
     }
-    if (this.tag) {
+
+    // /questions?searchType=Keyword&search=searchTerm
+    const searchType = this.route.snapshot.queryParamMap.get('searchType');
+    const searchTerm = this.route.snapshot.queryParamMap.get('search');
+    if (searchType && searchTerm) {
+      this.searchType = searchType;
+      this.searchTerm = searchTerm;
       this.getQuestions();
     }
 
@@ -101,6 +111,10 @@ export class QuestionsComponent implements OnInit {
     if (!filter && !userId) {
       this.getQuestions();
     }
+  }
+
+  ngOnChanges() {
+    this.getQuestions();
   }
 
   // TODO: implement infinite scroll pagination

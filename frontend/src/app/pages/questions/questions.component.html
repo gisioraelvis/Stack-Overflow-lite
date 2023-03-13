@@ -14,7 +14,7 @@
                 <mat-tab *ngFor="let questionCategorie of questionCategories" [label]="questionCategorie.label">
                     <div class="questions" *ngIf="questions.length>0; else noquestions">
                         <app-question class="question"
-                            *ngFor="let question of questions | filterQuestions: 'Tag': tag | sortQuestions: sortBy"
+                            *ngFor="let question of questions | filterQuestions: searchType: searchTerm | sortQuestions: sortBy"
                             [question]="question"></app-question>
                     </div>
                 </mat-tab>

@@ -2,14 +2,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
   margin-bottom: 3px;
   background-color: white;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
 }
 
 a.logo {
   width: 20%;
   height: 100%;
+  margin-left: 3rem;
 }
 
 .logo img {
@@ -19,7 +20,8 @@ a.logo {
 
 .nav-btns > * {
   font-size: 1.2rem;
-  margin: 0 0.2rem;
+  margin: 0 1rem;
+  padding: 1rem 1.5rem;
 }
 
 .nav-btns .active {
@@ -44,12 +46,13 @@ a.logo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 15%;
-  margin-right: 20px;
+  width: 20%;
+  margin-right: 5rem;
 }
 
 .sign-btns > * {
   font-size: 1.2rem;
+  padding: 1.5rem 2rem;
 }
 
 button:hover {
