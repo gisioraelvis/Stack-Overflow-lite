@@ -13,7 +13,8 @@
             <mat-tab-group [selectedIndex]="selectedquestionCategory">
                 <mat-tab *ngFor="let questionCategorie of questionCategories" [label]="questionCategorie.label">
                     <div class="questions" *ngIf="questions.length>0; else noquestions">
-                        <app-question class="question" *ngFor="let question of questions | filterQuestions: 'Tag': tag"
+                        <app-question class="question"
+                            *ngFor="let question of questions | filterQuestions: 'Tag': tag | sortQuestions: sortBy"
                             [question]="question"></app-question>
                     </div>
                 </mat-tab>

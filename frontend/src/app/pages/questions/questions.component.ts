@@ -11,6 +11,7 @@ import { QuestionComponent } from 'src/app/components/question/question.componen
 import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.pipe';
 import { questionFactory } from 'src/app/db';
 import { FilterQuestionsPipe } from 'src/app/shared/pipes/questions-filter.pipe';
+import { SortQuestionsPipe } from 'src/app/shared/pipes/questions-sort.pipe';
 
 @Component({
   selector: 'app-questions',
@@ -28,6 +29,7 @@ import { FilterQuestionsPipe } from 'src/app/shared/pipes/questions-filter.pipe'
     ProgressSpinnerComponent,
     ThousandSeparatorPipe,
     FilterQuestionsPipe,
+    SortQuestionsPipe,
   ],
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css'],
@@ -37,6 +39,7 @@ export class QuestionsComponent implements OnInit {
   page: number = 1;
   questions$?: Observable<IQuestion[]>;
   tag?: string | null;
+  sortBy: string = 'Newest';
 
   questionCategories: {
     label: string;
@@ -58,33 +61,44 @@ export class QuestionsComponent implements OnInit {
 
   ngOnInit(): void {
     // /questions?filter=answered&userId=1
-    // /questions?filter=unanswered
     const filter = this.route.snapshot.queryParamMap.get('filter');
     const userId = this.route.snapshot.queryParamMap.get('userId');
 
-    // /questions?tag=some-tag
-    const tag = this.route.snapshot.queryParamMap.get('tag');
-    if (tag) {
-      this.tag = tag;
-    }
-
+    // /questions?filter=answered&userId=1
     if ((filter || userId) && !this.tag) {
       this.userQuestions(filter, userId);
     }
 
+    // /questions?filter=unanswered
     if (filter === 'unanswered') {
       this.getQuestions();
+      this.sortBy = 'Unanswered';
       this.selectedquestionCategory = this.questionCategories.findIndex(
         (questionCategory) =>
           questionCategory.questionCategorie === 'unanswered'
       );
     }
 
-    if (!filter && !userId) {
+    // /questions?filter=answered
+    if (filter === 'answered') {
+      this.getQuestions();
+      this.sortBy = 'Most Answered';
+      this.selectedquestionCategory = this.questionCategories.findIndex(
+        (questionCategory) => questionCategory.questionCategorie === 'answered'
+      );
+    }
+
+    // /questions?tag=some-tag
+    const tag = this.route.snapshot.queryParamMap.get('tag');
+    if (tag) {
+      this.tag = tag;
+    }
+    if (this.tag) {
       this.getQuestions();
     }
 
-    if (this.tag) { 
+    // /questions
+    if (!filter && !userId) {
       this.getQuestions();
     }
   }

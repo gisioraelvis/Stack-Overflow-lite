@@ -2,10 +2,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IQuestion } from '../interfaces/IQuestion';
 
 @Pipe({
+  standalone: true,
   name: 'sortQuestions',
 })
 export class SortQuestionsPipe implements PipeTransform {
   transform(questions: IQuestion[], sortBy: string): IQuestion[] {
+    console.log(`SortQuestionsPipe - sortBy: ${sortBy}`);
     if (!sortBy) {
       return questions;
     }
