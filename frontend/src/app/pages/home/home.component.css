@@ -70,7 +70,7 @@
 }
 
 /* Search form */
-.search-form-container {
+.search-ask-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,19 +78,29 @@
   margin-top: 10px;
 }
 
-.search {
+.search-form-container {
   width: 60%;
+  margin-top: 1.1rem;
 }
 
-.search-form-container button {
+.search-form-container mat-form-field {
+  width: 100%;
+}
+
+.ask-question {
   height: 100%;
-  width: 15%;
+  width: 20%;
+}
+
+.ask-question button {
+  height: 100%;
+  width: 60%;
   padding: 1rem 0.5rem;
   margin-left: 7rem;
   font-size: 1.2rem;
 }
 
-.search-form-container button:hover {
+.ask-question button:hover {
   background-color: #f48225;
 }
 

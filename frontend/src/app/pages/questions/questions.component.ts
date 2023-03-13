@@ -12,24 +12,31 @@ import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.p
 import { questionFactory } from 'src/app/db';
 import { FilterQuestionsPipe } from 'src/app/shared/pipes/questions-filter.pipe';
 import { SortQuestionsPipe } from 'src/app/shared/pipes/questions-sort.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-questions',
   standalone: true,
   imports: [
     CommonModule,
-    QuestionComponent,
     RouterModule,
+    FormsModule,
     RouterLink,
-    MatIconModule,
-    MatTabsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTabsModule,
+    ReactiveFormsModule,
+    QuestionComponent,
     ProgressSpinnerComponent,
     ThousandSeparatorPipe,
     FilterQuestionsPipe,
     SortQuestionsPipe,
+    MatIconModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTooltipModule,
   ],
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css'],
@@ -41,7 +48,7 @@ export class QuestionsComponent implements OnInit {
   sortBy: string = 'Newest';
 
   // search
-  searchType?: string;
+  searchType?: string = 'Keyword';
   searchTerm?: string;
 
   questionCategories: {
@@ -114,7 +121,9 @@ export class QuestionsComponent implements OnInit {
   }
 
   ngOnChanges() {
-    this.getQuestions();
+    if (this.searchTerm) {
+      this.getSearchQuestions(this.searchTerm);
+    }
   }
 
   // TODO: implement infinite scroll pagination
@@ -143,5 +152,16 @@ export class QuestionsComponent implements OnInit {
         (questionCategory) => questionCategory.questionCategorie === filter
       );
     }
+  }
+
+  getSearchQuestions(searchTerm: string) {
+    this.loading = true;
+    // TODO: implement search
+    this.questions$ = of(questionFactory.buildList(50)).pipe(
+      delay(500), // simulate delay
+      tap(() => {
+        this.loading = false;
+      })
+    );
   }
 }

@@ -29,6 +29,15 @@
   background-color: #ff6f00;
 }
 
+.search-form-container {
+  width: 100%;
+  margin-top: 1.1rem;
+}
+
+.search-form-container mat-form-field {
+  width: 100%;
+}
+
 .questions-container {
   width: 100%;
 }

@@ -12,11 +12,18 @@
         <img src="assets/images/globe.svg" alt="">
     </div>
 </div>
-<div class="search-form-container">
-    <div class="search">
-        <app-search></app-search>
+<div class="search-ask-container">
+    <div class="search-form-container">
+        <form>
+            <mat-form-field>
+                <input type="text" placeholder="Look for an answer to your question..." aria-label="Search question"
+                    matInput [(ngModel)]="searchTerm" name="search">
+            </mat-form-field>
+        </form>
     </div>
-    <button mat-raised-button routerLink="/questions/ask" color="accent">Ask a Question</button>
+    <div class="ask-question">
+        <button mat-raised-button routerLink="/questions/ask" color="accent">Ask a Question</button>
+    </div>
 </div>
 <!-- Questions -->
 <div class="recent-questions">
@@ -27,7 +34,7 @@
     <ng-container class="questions" *ngIf="(questions$ | async ) as questions; else noQuestions">
         <div class="questions" *ngIf="questions.length>0; else noQuestions">
             <app-question
-                *ngFor="let question of questions | paginate: { id: 'server', itemsPerPage: 5, currentPage: page, totalItems: questions.length }"
+                *ngFor="let question of questions | filterQuestions: searchType: searchTerm | sortQuestions: sortBy | paginate: { id: 'server', itemsPerPage: 5, currentPage: page, totalItems: questions.length }"
                 [question]="question"></app-question>
         </div>
     </ng-container>
