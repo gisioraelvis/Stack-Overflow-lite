@@ -1,40 +1,72 @@
 <div class="user-dashboard-page">
-    <div class="top-section">
-        <div class="user-container">
-            <div class="avatar-container">
-                <img class="avatar" src="assets/images/avatar.png" alt="avatar">
+    <app-progress-spinner *ngIf="loading"></app-progress-spinner>
+    <ng-container *ngIf="(user$ | async) as user; else noUser">
+        <div class="top-section">
+            <div class="user-container">
+                <div class="avatar-container">
+                    <img class="avatar" src="{{user.avatar ? user.avatar : 'assets/images/avatar.png'}}" alt="avatar">
+                </div>
+                <div class="user-bio">
+                    <h1>{{user.name}}</h1>
+                    <p>Member since <span>{{user.createdAt | timeAgo}}</span>
+                    </p>
+                </div>
             </div>
-            <div class="user-bio">
-                <h1>Username</h1>
-                <p>Member since 2019</p>
+            <div class="edit-profile">
+                <button mat-raised-button routerLink="/dashboard/edit-profile" color="accent">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit Profile</span>
+                </button>
             </div>
         </div>
-        <div class="edit-profile">
-            <button mat-raised-button routerLink="/dashboard/edit-profile" color="accent">
-                <mat-icon>edit</mat-icon>
-                <span>Edit Profile</span>
-            </button>
+        <div class="analytics">
+            <mat-card>
+                <div class="answers">
+                    <p>
+                        You have answered&nbsp;
+                        <a [routerLink]="['/questions']" [queryParams]="{ filter: 'answered', userId: '1' }">
+                            {{user.answersCount}} questions
+                        </a>
+                    </p>
+                    <p *ngIf="user.answersCount === 0">
+                        You have not answered any questions yet&nbsp;
+                        <a [routerLink]="['/questions']" [queryParams]="{ filter: 'unanswered' }">
+                            Unanswered Questions
+                        </a>
+                    <p>
+                </div>
+            </mat-card>
+            <mat-card>
+                <div class="questions">
+                    <p>You have asked&nbsp;
+                        <a [routerLink]="['/questions']" [queryParams]="{  userId: '1' }">
+                            {{user.questionsCount}} questions
+                        </a>
+                    </p>
+                    <p *ngIf="user.questionsCount === 0">
+                        You have not asked any questions yet&nbsp;
+                        <a routerLink="/questions/ask">Ask Questions</a>
+                    </p>
+                </div>
+            </mat-card>
+            <mat-card>
+                <div class="tags">
+                    <p>You have participated in&nbsp;
+                        <a [routerLink]="['/tags']" [queryParams]="{ userId: '1' }">
+                            {{user.tagsCount}} tags
+                        </a>
+                    </p>
+                    <p *ngIf="user.tagsCount === 0">You have not participated in any
+                        <a routerLink="/tags">Tags</a>
+                    </p>
+                </div>
+            </mat-card>
         </div>
-    </div>
-    <div class="analytics">
-        <!-- Answers, Questions, Tags -->
-        <div class="answers">
-            <p>You have answered <span>0</span> questions</p>
-            <!-- <p *ngIf="user.answers.length === 0">You have not answered any questions yet
-                <span><a routerLink="/questions?filter=unanswered">Unanswered Questions</a></span>
-            </p> -->
+    </ng-container>
+    <ng-template #noUser>
+        <div class="no-user" *ngIf="!loading">
+            <p>The user does not exist.</p>
+            <button mat-raised-button color="accent" (click)="goBack()">Go Back</button>
         </div>
-        <div class="questions">
-            <p>You have asked <span>0</span> questions</p>
-            <!-- <p *ngIf="user.questions.length === 0">You have not asked any questions yet
-                <span><a routerLink="/questions/ask">Ask Questions</a></span>
-            </p> -->
-        </div>
-        <div class="tags">
-            <p>You have participated in<span>0</span> tags</p>
-            <!-- <p *ngIf="user.tags.length === 0">You have not participated in any
-                <span><a routerLink="/tags">Tags</a></span>
-            </p> -->
-        </div>
-    </div>
+    </ng-template>
 </div>

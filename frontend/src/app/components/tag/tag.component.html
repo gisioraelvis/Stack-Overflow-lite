@@ -23,7 +23,9 @@
         <p>{{tag.description | truncate: 100}}</p>
     </div>
     <div class="tag-question-count">
-        <a routerLink="/questions/tagged/{{tag.name}}" matTooltip="Questions tagged {{tag.name}}"
-            [matTooltipPosition]="position">{{tag.questionsCount | thousandSeparator}} questions</a>
+        <a [routerLink]="['/questions']" [queryParams]="{ filter: 'Tag', tag: tag.name }"
+            matTooltip="Questions tagged {{tag.name}}" [matTooltipPosition]="position">
+            {{tag.questionsCount | thousandSeparator}} questions
+        </a>
     </div>
 </div>

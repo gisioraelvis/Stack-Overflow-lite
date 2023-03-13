@@ -1,12 +1,19 @@
 .user-dashboard-page {
-  margin: 1rem 5rem;
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .top-section {
+  height: 30%;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-top: 2rem;
 }
 
 .user-container {
@@ -44,7 +51,7 @@
 }
 
 .edit-profile button {
-  width: 15rem;
+  width: 10rem;
   height: 3rem;
   font-size: 1rem;
 }
@@ -56,25 +63,43 @@
 .analytics {
   width: 90%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 3rem;
 }
 
+.analytics mat-card {
+  width: 30%;
+  height: 10rem;
+  margin-bottom: 2rem;
+}
+
+mat-card div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+mat-card div:hover {
+  border: 1px solid #ff6f00;
+}
+
 .answers,
 .questions,
 .tags {
-  width: 30%;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }
 
 .answers p,
 .questions p,
 .tags p {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 500;
-  margin-bottom: 1rem;
 }
 
 .answers span,
@@ -86,12 +111,5 @@
 .answers a,
 .questions a,
 .tags a {
-  text-decoration: none;
-  color: #ff6f00;
-}
-
-.answers a:hover,
-.questions a:hover,
-.tags a:hover {
-  text-decoration: underline;
+  color: #0a95ff;
 }

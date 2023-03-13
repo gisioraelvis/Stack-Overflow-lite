@@ -23,7 +23,7 @@
             </div>
             <div class="tags">
                 <span *ngFor="let tag of question.tags">
-                    <a routerLink="/questions/tagged/{{tag.name}}">{{tag.name}}</a>
+                    <a [routerLink]="['/questions']" [queryParams]="{ filter: 'Tag', tag: tag.name }">{{tag.name}}</a>
                 </span>
             </div>
             <div class="user-info">

@@ -15,6 +15,7 @@ export const userFactory = Factory.Sync.makeFactory<IUser>({
     faker.datatype.number({ min: 0, max: 100 })
   ),
   answersCount: Factory.each(() => faker.datatype.number({ min: 0, max: 100 })),
+  tagsCount: Factory.each(() => faker.datatype.number({ min: 0, max: 1000 })),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
   updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
 });
@@ -25,6 +26,7 @@ export const tagFactory = Factory.Sync.makeFactory<ITag>({
   name: Factory.each(() => faker.lorem.word()),
   description: Factory.each(() => faker.lorem.sentence()),
   questionsCount: Factory.each(() => faker.datatype.number()),
+  userId: Factory.each(() => faker.datatype.number()),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
   updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
 });

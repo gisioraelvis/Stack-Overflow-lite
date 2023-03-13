@@ -69,6 +69,8 @@ export class QuestionComponentPage implements OnInit {
         this.answers$ = this.getAnswers(question.id);
       })
     );
+
+    
   }
 
   goBack(): void {

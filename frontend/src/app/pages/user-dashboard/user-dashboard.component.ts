@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +15,8 @@ import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.p
 import { delay, Observable, of, tap } from 'rxjs';
 import { IUser } from 'src/app/shared/interfaces/IUser';
 import { userFactory } from 'src/app/db';
+import { MatCardModule } from '@angular/material/card';
+import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -24,6 +26,9 @@ import { userFactory } from 'src/app/db';
     UserComponent,
     RouterModule,
     RouterLink,
+    ThousandSeparatorPipe,
+    ProgressSpinnerComponent,
+    TimeAgoPipe,
     MatFormFieldModule,
     MatIconModule,
     MatTabsModule,
@@ -34,8 +39,7 @@ import { userFactory } from 'src/app/db';
     MatInputModule,
     MatTooltipModule,
     MatTabsModule,
-    ProgressSpinnerComponent,
-    ThousandSeparatorPipe,
+    MatCardModule,
   ],
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.css'],
@@ -44,8 +48,14 @@ export class UserDashboardComponent implements OnInit {
   loading: boolean = false;
   user$?: Observable<IUser>;
 
+  constructor(private location: Location) {}
+
   ngOnInit(): void {
     this.getUser();
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   getUser() {

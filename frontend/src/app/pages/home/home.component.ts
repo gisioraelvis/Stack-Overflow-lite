@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
   getQuestions() {
     this.loading = true;
     this.questions$ = of(questionFactory.buildList(20)).pipe(
-      delay(1000), // simulate 1 second delay
+      delay(500), // simulate delay
       tap(() => {
         this.loading = false;
       })

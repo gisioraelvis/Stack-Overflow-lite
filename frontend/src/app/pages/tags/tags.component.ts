@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -56,17 +56,36 @@ export class TagsComponent implements OnInit {
   ];
   selectedTagCategory: string = 'popular';
 
-  constructor() {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.getTags();
+    // /tags?userId=1
+    const userId = this.route.snapshot.queryParamMap.get('userId');
+    if (userId) {
+      this.getUserTags(+userId);
+    }
+
+    if (!userId) {
+      this.getTags();
+    }
   }
 
-  // TODO: Impliment infinite scroll
+  // TODO: Impliment infinite scroll pagination
   getTags() {
     this.loading = true;
     this.tags$ = of(tagFactory.buildList(50)).pipe(
-      delay(1000), // simulate 1 second delay
+      delay(500), // simulate delay
+      tap(() => {
+        this.loading = false;
+      })
+    );
+  }
+
+  getUserTags(userId: number) {
+    console.log(`tags by userId:${userId}`);
+    this.loading = true;
+    this.tags$ = of(tagFactory.buildList(50)).pipe(
+      delay(500), // simulate delay
       tap(() => {
         this.loading = false;
       })

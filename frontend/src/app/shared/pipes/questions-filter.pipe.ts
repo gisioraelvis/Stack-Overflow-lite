@@ -2,15 +2,20 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IQuestion } from '../interfaces/IQuestion';
 
 @Pipe({
+  standalone: true,
   name: 'filterQuestions',
 })
 export class FilterQuestionsPipe implements PipeTransform {
   transform(
     questions: IQuestion[],
-    searchTerm: string,
-    searchType: string
+    searchType: string | null | undefined,
+    searchTerm: string | null | undefined
   ): IQuestion[] {
-    if (!searchTerm) {
+    console.log(
+      `FilterQuestionsPipe - searchType: ${searchType}, searchTerm: ${searchTerm}`
+    );
+
+    if (!questions || !searchType || !searchTerm) {
       return questions;
     }
 
@@ -20,22 +25,22 @@ export class FilterQuestionsPipe implements PipeTransform {
       case 'Keyword':
         return questions.filter(
           (question) =>
-            question.title.toLowerCase().includes(searchTerm) ||
-            question.description.toLowerCase().includes(searchTerm) ||
+            question.title.toLowerCase().includes(searchTerm!) ||
+            question.description.toLowerCase().includes(searchTerm!) ||
             question.tags.some((tag) =>
-              tag.name.toLowerCase().includes(searchTerm)
+              tag.name.toLowerCase().includes(searchTerm!)
             )
         );
       case 'User':
         return questions.filter((question) =>
-          question.user.name.toLowerCase().includes(searchTerm)
+          question.user.name.toLowerCase().includes(searchTerm!)
         );
       case 'Tag':
-        return questions.filter((question) =>
+        return questions.filter((question) => {
           question.tags.some((tag) =>
-            tag.name.toLowerCase().includes(searchTerm)
-          )
-        );
+            tag.name.toLowerCase().includes(searchTerm!)
+          );
+        });
       default:
         return questions;
     }

@@ -10,10 +10,10 @@
             </div>
         </div>
         <div class="questions-container">
-            <mat-tab-group>
+            <mat-tab-group [selectedIndex]="selectedquestionCategory">
                 <mat-tab *ngFor="let questionCategorie of questionCategories" [label]="questionCategorie.label">
                     <div class="questions" *ngIf="questions.length>0; else noquestions">
-                        <app-question class="question" *ngFor="let question of questions"
+                        <app-question class="question" *ngFor="let question of questions | filterQuestions: 'Tag': tag"
                             [question]="question"></app-question>
                     </div>
                 </mat-tab>
