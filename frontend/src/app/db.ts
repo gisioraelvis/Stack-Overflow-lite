@@ -32,7 +32,9 @@ export const tagFactory = Factory.Sync.makeFactory<ITag>({
 // Questions
 export const questionFactory = Factory.Sync.makeFactory<IQuestion>({
   id: Factory.each((i) => i + 1),
-  title: Factory.each(() => faker.lorem.sentence(faker.datatype.number({ min: 7, max: 10 }))),
+  title: Factory.each(() =>
+    faker.lorem.sentence(faker.datatype.number({ min: 7, max: 10 }))
+  ),
   description: Factory.each(() => faker.lorem.paragraph(100)),
   tags: Factory.each(() =>
     tagFactory.buildList(faker.datatype.number({ min: 1, max: 5 }))
@@ -40,7 +42,7 @@ export const questionFactory = Factory.Sync.makeFactory<IQuestion>({
   user: Factory.each(() => userFactory.build()),
   upvotes: Factory.each(() => faker.datatype.number({ min: 0, max: 50 })),
   downvotes: Factory.each(() => faker.datatype.number({ min: 0, max: 50 })),
-  answersCount: faker.datatype.number({ min: 0, max: 20 }),
+  answersCount: Factory.each(() => faker.datatype.number({ min: 0, max: 20 }),),
   updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
 });
