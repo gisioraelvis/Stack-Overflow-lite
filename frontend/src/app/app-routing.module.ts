@@ -70,7 +70,14 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'update-profile',
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./pages/user-dashboard/user-dashboard.component').then(
+        (c) => c.UserDashboardComponent
+      ),
+  },
+  {
+    path: 'dashboard/edit-profile',
     loadComponent: () =>
       import('./pages/update-profile/update-profile.component').then(
         (c) => c.UpdateProfileComponent

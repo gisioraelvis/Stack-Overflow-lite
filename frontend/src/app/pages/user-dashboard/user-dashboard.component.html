@@ -1,71 +1,3 @@
-.users-page {
-  margin: 1rem 5rem;
-}
-
-.top-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 3rem;
-}
-
-.users-heading {
-  width: 80%;
-}
-
-.users-heading h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.sign-up button {
-  width: 10rem;
-  height: 3rem;
-  font-size: 1rem;
-}
-
-.sign-up button:hover {
-  background-color: #ff6f00;
-}
-
-.users {
-  width: 90%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.user {
-  width: calc(20% - 2rem);
-  margin: 0 2rem;
-}
-
-.no-users {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem 0;
-}
-
-.no-users p {
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-bottom: 2rem;
-}
-
-.no-users button {
-  width: 15rem;
-  font-size: 1.5rem;
-}
-
-.no-users button:hover {
-  background-color: #ff6f00;
-}
-
-/* 
 <div class="user-dashboard-page">
     <div class="top-section">
         <div class="user-container">
@@ -88,22 +20,21 @@
         <!-- Answers, Questions, Tags -->
         <div class="answers">
             <p>You have answered <span>0</span> questions</p>
-            <p *ngIf="user.answers.length === 0">You have not answered any questions yet
+            <!-- <p *ngIf="user.answers.length === 0">You have not answered any questions yet
                 <span><a routerLink="/questions?filter=unanswered">Unanswered Questions</a></span>
-            </p>
+            </p> -->
         </div>
         <div class="questions">
             <p>You have asked <span>0</span> questions</p>
-            <p *ngIf="user.questions.length === 0">You have not asked any questions yet
+            <!-- <p *ngIf="user.questions.length === 0">You have not asked any questions yet
                 <span><a routerLink="/questions/ask">Ask Questions</a></span>
-            </p>
+            </p> -->
         </div>
         <div class="tags">
             <p>You have participated in<span>0</span> tags</p>
-            <p *ngIf="user.tags.length === 0">You have not participated in any
+            <!-- <p *ngIf="user.tags.length === 0">You have not participated in any
                 <span><a routerLink="/tags">Tags</a></span>
-            </p>
+            </p> -->
         </div>
     </div>
 </div>
-*/
