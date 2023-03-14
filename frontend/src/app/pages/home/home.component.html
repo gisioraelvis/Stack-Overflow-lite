@@ -35,7 +35,7 @@
         <div class="questions" *ngIf="questions.length>0; else noQuestions">
             <app-question
                 *ngFor="let question of questions | filterQuestions: searchType: searchTerm | sortQuestions: sortBy | paginate: { id: 'server', itemsPerPage: 5, currentPage: page, totalItems: questions.length }"
-                [question]="question"></app-question>
+                [question]="question" searchTermHighlight="{{searchTerm}}"></app-question>
         </div>
     </ng-container>
     <ng-template #noQuestions>

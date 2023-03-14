@@ -23,7 +23,7 @@
                     <div class="questions" *ngIf="questions.length>0; else noquestions">
                         <app-question class="question"
                             *ngFor="let question of questions | filterQuestions: searchType: searchTerm | sortQuestions: sortBy"
-                            [question]="question"></app-question>
+                            [question]="question" searchTermHighlight="{{searchTerm}}"></app-question>
                     </div>
                 </mat-tab>
             </mat-tab-group>

@@ -2,14 +2,19 @@ import { Directive, ElementRef, Input } from '@angular/core';
 
 @Directive({
   standalone: true,
-  selector: '[appHighlight]',
+  selector: '[appSearchHighlight]',
 })
 export class HighlightDirective {
-  @Input('appHighlight') searchQuery!: string;
+  @Input('appSearchHighlight') searchQuery: string | undefined | null;
 
   constructor(private el: ElementRef) {}
 
-  ngOnInit() {
+  ngOnChanges() {
+    if (!this.searchQuery) {
+      return;
+    }
+
+    // console.log(`HighlightDirective - highlight: ${this.searchQuery}`);
     if (this.searchQuery && this.searchQuery.trim()) {
       const content = this.el.nativeElement.textContent;
       const regex = new RegExp(this.searchQuery, 'gi');
@@ -17,7 +22,7 @@ export class HighlightDirective {
       if (match && match.length > 0) {
         const highlightedContent = content.replace(
           regex,
-          `<span class="highlight">${match[0]}</span>`
+          `<ng-container class="highlight">${match[0]}</ng-container>`
         );
         this.el.nativeElement.innerHTML = highlightedContent;
       }
@@ -25,4 +30,4 @@ export class HighlightDirective {
   }
 }
 
-// <div appHighlight="{{ searchQuery }}">Search result containing the search query</div>
+// <div appSearchHighlight="{{ searchQuery }}">Search result containing the search query</div>

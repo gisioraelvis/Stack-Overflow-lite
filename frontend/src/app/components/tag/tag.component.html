@@ -1,6 +1,6 @@
 <div class="tag-card">
     <div class="tag-card-header">
-        <div class="tag-name">
+        <div class="tag-name" appSearchHighlight="{{ searchTermHighlight }}">
             {{tag.name}}
         </div>
         <div class="tag-edit-delete">
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="tag-description">
-        <p>{{tag.description | truncate: 100}}</p>
+        <p appSearchHighlight="{{ searchTermHighlight }}">{{tag.description | truncate: 100}}</p>
     </div>
     <div class="tag-question-count">
         <a [routerLink]="['/questions']" [queryParams]="{ filter: 'Tag', tag: tag.name }"

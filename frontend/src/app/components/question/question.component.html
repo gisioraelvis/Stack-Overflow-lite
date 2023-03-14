@@ -16,14 +16,15 @@
         </div>
         <div class="question-content">
             <a class="question-title" routerLink="/questions/{{question.id}}">
-                <h3>{{question.title}}</h3>
+                <h3 appSearchHighlight="{{ searchTermHighlight }}">{{question.title}}</h3>
             </a>
-            <div class="description">
+            <div class="description" appSearchHighlight="{{ searchTermHighlight }}">
                 {{question.description | truncate: 400}}
             </div>
             <div class="tags">
                 <span *ngFor="let tag of question.tags">
-                    <a [routerLink]="['/questions']" [queryParams]="{ filter: 'Tag', tag: tag.name }">{{tag.name}}</a>
+                    <a [routerLink]="['/questions']" [queryParams]="{ filter: 'Tag', tag: tag.name }"
+                        appSearchHighlight="{{ searchTermHighlight }}">{{tag.name}}</a>
                 </span>
             </div>
             <div class="user-info">

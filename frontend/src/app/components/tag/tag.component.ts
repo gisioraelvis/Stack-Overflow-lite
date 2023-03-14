@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.pipe';
+import { HighlightDirective } from 'src/app/shared/directives/highlight.directive';
 
 @Component({
   selector: 'app-tag',
@@ -32,7 +33,8 @@ import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.p
     RouterModule,
     TruncatePipe,
     MatTooltipModule,
-    ThousandSeparatorPipe
+    ThousandSeparatorPipe,
+    HighlightDirective,
   ],
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.css'],
@@ -40,6 +42,7 @@ import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.p
 export class TagComponent {
   position: TooltipPosition = 'above';
   @Input() tag!: ITag;
+  @Input() searchTermHighlight?: string;
 
   deleteTag() {
     throw new Error('Method not implemented.');

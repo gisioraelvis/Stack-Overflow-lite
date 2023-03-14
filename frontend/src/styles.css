@@ -9,3 +9,9 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+/* for HighlightDirective */
+.highlight {
+  color: white;
+  background-color: #ff6f00;
+}
