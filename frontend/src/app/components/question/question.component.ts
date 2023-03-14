@@ -11,6 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
 import { HighlightDirective } from 'src/app/shared/directives/highlight.directive';
+import { ScrollToDirective } from 'src/app/shared/directives/scroll-to.directive';
 
 @Component({
   selector: 'app-question',
@@ -26,6 +27,7 @@ import { HighlightDirective } from 'src/app/shared/directives/highlight.directiv
     TruncatePipe,
     TimeAgoPipe,
     HighlightDirective,
+    ScrollToDirective,
   ],
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css'],

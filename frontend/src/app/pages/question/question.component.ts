@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
@@ -20,6 +20,7 @@ import { AnswerComponent } from 'src/app/components/answer/answer.component';
 import { AddAnswerComponent } from 'src/app/components/add-answer/add-answer.component';
 import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
 import { MatCardModule } from '@angular/material/card';
+import { ScrollToDirective } from 'src/app/shared/directives/scroll-to.directive';
 
 @Component({
   selector: 'app-question-page',
@@ -42,7 +43,8 @@ import { MatCardModule } from '@angular/material/card';
     MatDividerModule,
     AnswerComponent,
     AddAnswerComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    ScrollToDirective,
   ],
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css'],
@@ -53,6 +55,7 @@ export class QuestionComponentPage implements OnInit {
   question$?: Observable<IQuestion>;
   comments$?: Observable<IComment[]>;
   answers$?: Observable<IAnswer[]>;
+  @Output() dataReady = new EventEmitter<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -67,10 +70,10 @@ export class QuestionComponentPage implements OnInit {
       tap((question) => {
         this.comments$ = this.getComments(question.id);
         this.answers$ = this.getAnswers(question.id);
+
+        this.dataReady.emit();
       })
     );
-
-    
   }
 
   goBack(): void {

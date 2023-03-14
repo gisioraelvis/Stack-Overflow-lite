@@ -44,7 +44,7 @@ export const questionFactory = Factory.Sync.makeFactory<IQuestion>({
   user: Factory.each(() => userFactory.build()),
   upvotes: Factory.each(() => faker.datatype.number({ min: 0, max: 50 })),
   downvotes: Factory.each(() => faker.datatype.number({ min: 0, max: 50 })),
-  answersCount: Factory.each(() => faker.datatype.number({ min: 0, max: 20 }),),
+  answersCount: Factory.each(() => faker.datatype.number({ min: 0, max: 20 })),
   updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
 });

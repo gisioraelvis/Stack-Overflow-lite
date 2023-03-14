@@ -45,6 +45,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="answer-btn">
+                    <button mat-raised-button color="accent" appToScroll="add-answer">
+                        {{question.answersCount > 0 ? 'Add Answer' : 'Be The First To Answer'}}
+                    </button>
+                </div>
             </mat-card>
         </ng-container>
     </div>
@@ -83,7 +88,7 @@
                 </div>
             </div>
         </ng-container>
-        <div class="add-answer-section">
+        <div class="add-answer-section" id="add-answer">
             <h2>Your Answer</h2>
             <app-add-answer class="add-answer"></app-add-answer>
         </div>
