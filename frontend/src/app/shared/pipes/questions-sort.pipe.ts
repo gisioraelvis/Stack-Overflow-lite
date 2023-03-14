@@ -7,7 +7,7 @@ import { IQuestion } from '../interfaces/IQuestion';
 })
 export class SortQuestionsPipe implements PipeTransform {
   transform(questions: IQuestion[], sortBy: string): IQuestion[] {
-    console.log(`SortQuestionsPipe - sortBy: ${sortBy}`);
+    // console.log(`SortQuestionsPipe - sortBy: ${sortBy}`);
     if (!sortBy) {
       return questions;
     }

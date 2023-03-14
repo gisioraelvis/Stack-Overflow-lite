@@ -11,9 +11,7 @@ export class FilterQuestionsPipe implements PipeTransform {
     searchType: string | null | undefined,
     searchTerm: string | null | undefined
   ): IQuestion[] {
-    console.log(
-      `FilterQuestionsPipe - searchType: ${searchType}, searchTerm: ${searchTerm}`
-    );
+    // console.log( `FilterQuestionsPipe - searchType: ${searchType}, searchTerm: ${searchTerm}`);
 
     if (!questions || !searchType || !searchTerm) {
       return questions;

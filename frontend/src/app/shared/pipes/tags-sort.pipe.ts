@@ -7,7 +7,7 @@ import { ITag } from '../interfaces/ITag';
 })
 export class SortTagsPipe implements PipeTransform {
   transform(tags: ITag[], sortBy: string): ITag[] {
-    console.log(`SortTagsPipe - sortBy: ${sortBy}`);
+    // console.log(`SortTagsPipe - sortBy: ${sortBy}`);
     if (!sortBy) {
       return tags;
     }

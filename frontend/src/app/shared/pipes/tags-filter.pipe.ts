@@ -11,7 +11,7 @@ export class FilterTagsPipe implements PipeTransform {
     searchType: string | null | undefined,
     searchTerm: string | null | undefined
   ): ITag[] {
-    console.log(`FilterTagsPipe - searchType: ${searchType}, searchTerm: ${searchTerm}`)
+    // console.log(`FilterTagsPipe - searchType: ${searchType}, searchTerm: ${searchTerm}`)
     if (!searchTerm || !searchType) {
       return tags;
     }
