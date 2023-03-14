@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -27,6 +27,8 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class AddCommentComponent {
   commentForm: FormGroup;
+  @Input() id!: number;
+  @Input() for!: string;
 
   constructor(private fb: FormBuilder) {
     this.commentForm = this.fb.group({
