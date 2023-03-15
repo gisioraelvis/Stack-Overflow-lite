@@ -10,10 +10,6 @@ export class HighlightDirective {
   constructor(private el: ElementRef) {}
 
   ngOnChanges() {
-    if (!this.searchQuery) {
-      return;
-    }
-
     // console.log(`HighlightDirective - highlight: ${this.searchQuery}`);
     if (this.searchQuery && this.searchQuery.trim()) {
       const content = this.el.nativeElement.textContent;
@@ -26,6 +22,13 @@ export class HighlightDirective {
         );
         this.el.nativeElement.innerHTML = highlightedContent;
       }
+    } else {
+      // searchQuery is empty, remove all highlight classes
+      const highlightedElements =
+        this.el.nativeElement.querySelectorAll('.highlight');
+      highlightedElements.forEach((element: HTMLElement) => {
+        element.classList.remove('highlight');
+      });
     }
   }
 }
