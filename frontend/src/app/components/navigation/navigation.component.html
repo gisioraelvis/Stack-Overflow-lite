@@ -1,17 +1,12 @@
 <mat-toolbar class="nav">
     <a routerLink="/" class="logo">
-        <img src="assets/images/Stack_Overflow_logo.png" alt="logo">
+        <img src="assets/images/stack-overflow-logo.png" alt="logo">
     </a>
     <div class="nav-btns">
         <button mat-button routerLink="/questions" routerLinkActive="active">Questions</button>
         <button mat-button routerLink="/tags" routerLinkActive="active">Tags</button>
         <button mat-button routerLink="/users" routerLinkActive="active">Users</button>
     </div>
-    <!-- if on the questions page hide the search form-->
-    <!-- <mat-form-field appearance="outline" class="search-container">
-        <input matInput placeholder="Search" [(ngModel)]="searchTerm" (keyup.enter)="search()" disabled="{{isQuestionsPage()}}">
-        <mat-icon class="search-icon" matSuffix matTooltip="Search" (click)="search()">search</mat-icon>
-    </mat-form-field> -->
     <div class="sign-btns">
         <button mat-button routerLink="/sign-in">Sign In</button>
         <button mat-raised-button color="accent" routerLink="/sign-up">Sign Up</button>

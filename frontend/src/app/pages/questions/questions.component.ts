@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule, RouterLink, ActivatedRoute } from '@angular/router';
 import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
@@ -12,11 +11,7 @@ import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.p
 import { questionFactory } from 'src/app/db';
 import { FilterQuestionsPipe } from 'src/app/shared/pipes/questions-filter.pipe';
 import { SortQuestionsPipe } from 'src/app/shared/pipes/questions-sort.pipe';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { HighlightDirective } from 'src/app/shared/directives/highlight.directive';
+import { SearchComponent } from 'src/app/components/search/search.component';
 
 @Component({
   selector: 'app-questions',
@@ -24,20 +19,15 @@ import { HighlightDirective } from 'src/app/shared/directives/highlight.directiv
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule,
     RouterLink,
-    ReactiveFormsModule,
     QuestionComponent,
     ProgressSpinnerComponent,
     ThousandSeparatorPipe,
     FilterQuestionsPipe,
     SortQuestionsPipe,
-    MatIconModule,
     MatButtonModule,
     MatTabsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTooltipModule,
+    SearchComponent,
   ],
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css'],
@@ -119,6 +109,10 @@ export class QuestionsComponent implements OnInit {
     if (!filter && !userId) {
       this.getQuestions();
     }
+  }
+
+  onSearch(searchTerm: string) {
+    this.searchTerm = searchTerm;
   }
 
   ngOnChanges() {

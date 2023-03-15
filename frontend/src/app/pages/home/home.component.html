@@ -14,12 +14,7 @@
 </div>
 <div class="search-ask-container">
     <div class="search-form-container">
-        <form>
-            <mat-form-field>
-                <input type="text" placeholder="Look for an answer to your question..." aria-label="Search question"
-                    matInput [(ngModel)]="searchTerm" name="search">
-            </mat-form-field>
-        </form>
+        <app-search (search)="onSearch($event)"></app-search>
     </div>
     <div class="ask-question">
         <button mat-raised-button routerLink="/questions/ask" color="accent">Ask a Question</button>

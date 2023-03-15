@@ -1,12 +1,7 @@
-<form class="search-form">
-    <mat-form-field class="search-full-width">
-        <input type="text" placeholder="Looking for an answer to your question" aria-label="Search question" matInput
-            [formControl]="myControl" [matAutocomplete]="auto">
-        <mat-icon class="search-icon" matSuffix [matTooltipPosition]="position" matTooltip="Search">search</mat-icon>
-        <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                {{option.product_name}}
-            </mat-option>
-        </mat-autocomplete>
+<form>
+    <mat-form-field>
+        <input [(ngModel)]="searchTerm" (input)="onInput()" type="text"
+            placeholder="Look for an answer to your question..." aria-label="Search question" matInput name="search">
+        <mat-icon class="search-icon" matSuffix matTooltip="Search" (click)="onSearch()">search</mat-icon>
     </mat-form-field>
 </form>

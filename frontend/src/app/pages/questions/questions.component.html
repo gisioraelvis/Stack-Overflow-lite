@@ -10,12 +10,7 @@
             </div>
         </div>
         <div class="search-form-container">
-            <form>
-                <mat-form-field>
-                    <input type="text" placeholder="Look for an answer to your question..." aria-label="Search question"
-                        matInput [(ngModel)]="searchTerm" name="search">
-                </mat-form-field>
-            </form>
+            <app-search (search)="onSearch($event)"></app-search>
         </div>
         <div class="questions-container">
             <mat-tab-group [selectedIndex]="selectedquestionCategory">
