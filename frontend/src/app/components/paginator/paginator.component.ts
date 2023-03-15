@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -16,7 +16,7 @@ export class PaginatorComponent {
   @Input() pageSize?: number;
 
   // Output event for page change
-  pageChange = new EventEmitter<number>();
+  @Output() pageChange = new EventEmitter<number>();
 
   // Current page index
   pageIndex = 0;

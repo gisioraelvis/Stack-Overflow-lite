@@ -42,5 +42,5 @@
     </ng-template>
 </div>
 <div class="paginator" *ngIf="(questions$ | async ) as questions">
-    <app-paginator [totalItems]="questions.length" [pageSize]="5" (pageChange)="getQuestions()"></app-paginator>
+    <app-paginator [totalItems]="questions.length" [pageSize]="5" (pageChange)="getPage($event)" id="server"></app-paginator>
 </div>

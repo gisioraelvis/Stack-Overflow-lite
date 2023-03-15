@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
   searchTerm?: string;
 
   ngOnInit(): void {
-    this.getQuestions();
+    this.getPage(this.page);
   }
 
   ngOngChanges(): void {
@@ -57,9 +57,20 @@ export class HomeComponent implements OnInit {
     this.searchTerm = searchTerm;
   }
 
-  getQuestions() {
+  // getQuestions() {
+  //   this.loading = true;
+  //   this.questions$ = of(questionFactory.buildList(20)).pipe(
+  //     delay(500), // simulate delay
+  //     tap(() => {
+  //       this.loading = false;
+  //     })
+  //   );
+  // }
+
+  searchQuestions(searchTerm: string | undefined | null) {
     this.loading = true;
-    this.questions$ = of(questionFactory.buildList(20)).pipe(
+    // TODO: implement search
+    this.questions$ = of(questionFactory.buildList(50)).pipe(
       delay(500), // simulate delay
       tap(() => {
         this.loading = false;
@@ -67,10 +78,10 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  searchQuestions(searchTerm: string | undefined | null) {
+  // TODO: implement pagination take page number and items per page
+  getPage($event: number) {
     this.loading = true;
-    // TODO: implement search
-    this.questions$ = of(questionFactory.buildList(50)).pipe(
+    this.questions$ = of(questionFactory.buildList(20)).pipe(
       delay(500), // simulate delay
       tap(() => {
         this.loading = false;
