@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -11,14 +12,14 @@ import { RouterModule, RouterLink } from '@angular/router';
 import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
 import { UserComponent } from 'src/app/components/user/user.component';
 import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.pipe';
-import { delay, Observable, of, tap } from 'rxjs';
-import { IUser } from 'src/app/shared/interfaces/IUser';
-import { userFactory } from 'src/app/db';
-import { MatCardModule } from '@angular/material/card';
 import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
+import { Observable, of, delay, tap } from 'rxjs';
+import { analyticsFactory, userFactory } from 'src/app/db';
+import { IUser } from 'src/app/shared/interfaces/IUser';
+import { IAnalytics } from 'src/app/shared/interfaces/IAnalytics';
 
 @Component({
-  selector: 'app-user-dashboard',
+  selector: 'app-admin-dashboard',
   standalone: true,
   imports: [
     CommonModule,
@@ -38,18 +39,21 @@ import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
     MatTooltipModule,
     MatTabsModule,
     MatCardModule,
+    ThousandSeparatorPipe,
   ],
-  templateUrl: './user-dashboard.component.html',
-  styleUrls: ['./user-dashboard.component.css'],
+  templateUrl: './admin-dashboard.component.html',
+  styleUrls: ['./admin-dashboard.component.css'],
 })
-export class UserDashboardComponent implements OnInit {
+export class AdminDashboardComponent {
   loading: boolean = false;
   user$?: Observable<IUser>;
+  analytics$?: Observable<IAnalytics>;
 
   constructor(private location: Location) {}
 
   ngOnInit(): void {
     this.getUser();
+    this.getAnalytics();
   }
 
   goBack(): void {
@@ -59,6 +63,16 @@ export class UserDashboardComponent implements OnInit {
   getUser() {
     this.loading = true;
     this.user$ = of(userFactory.build()).pipe(
+      delay(500), // simulate 1 second delay
+      tap(() => {
+        this.loading = false;
+      })
+    );
+  }
+
+  getAnalytics() {
+    this.loading = true;
+    this.analytics$ = of(analyticsFactory.build()).pipe(
       delay(500), // simulate 1 second delay
       tap(() => {
         this.loading = false;

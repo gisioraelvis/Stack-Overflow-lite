@@ -1,4 +1,4 @@
-<div class="user-dashboard-page">
+<div class="dashboard-page">
     <app-progress-spinner *ngIf="loading"></app-progress-spinner>
     <ng-container *ngIf="(user$ | async) as user; else noUser">
         <div class="top-section">
@@ -6,7 +6,7 @@
                 <div class="avatar-container">
                     <img class="avatar" src="{{user.avatar ? user.avatar : 'assets/images/avatar.png'}}" alt="avatar">
                 </div>
-                <div class="user-bio">
+                <div class="bio">
                     <h1>{{user.name}}</h1>
                     <p>Member since <span>{{user.createdAt | timeAgo}}</span>
                     </p>
@@ -25,7 +25,7 @@
                     <p>
                         You have answered&nbsp;
                         <a [routerLink]="['/questions']" [queryParams]="{ filter: 'answered', userId: '1' }">
-                            {{user.answersCount}} questions
+                            {{user.answersCount | thousandSeparator}} questions
                         </a>
                     </p>
                     <p *ngIf="user.answersCount === 0">
@@ -40,7 +40,7 @@
                 <div class="questions">
                     <p>You have asked&nbsp;
                         <a [routerLink]="['/questions']" [queryParams]="{  userId: '1' }">
-                            {{user.questionsCount}} questions
+                            {{user.questionsCount | thousandSeparator }} questions
                         </a>
                     </p>
                     <p *ngIf="user.questionsCount === 0">
@@ -53,7 +53,7 @@
                 <div class="tags">
                     <p>You have participated in&nbsp;
                         <a [routerLink]="['/tags']" [queryParams]="{ userId: '1' }">
-                            {{user.tagsCount}} tags
+                            {{user.tagsCount | thousandSeparator}} tags
                         </a>
                     </p>
                     <p *ngIf="user.tagsCount === 0">You have not participated in any

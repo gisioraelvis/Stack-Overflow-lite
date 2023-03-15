@@ -1,7 +1,7 @@
 <div class="user-card">
     <div class="user-card-header">
         <div class="user-info">
-            <img src="{{user.avatar}}" alt="{{user.name}}">
+            <img src="{{user.avatar ? user.avatar : 'assets/images/avatar.png'}}" alt="{{user.name}}">
             <div class="user-name">
                 {{user.name}}
             </div>

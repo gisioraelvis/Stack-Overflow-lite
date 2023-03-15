@@ -99,6 +99,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'admin',
+    loadComponent: () =>
+      import('./pages/admin-dashboard/admin-dashboard.component').then(
+        (c) => c.AdminDashboardComponent
+      ),
+  },
+  {
     path: 'not-found',
     loadComponent: () =>
       import('./pages/not-found/not-found.component').then(

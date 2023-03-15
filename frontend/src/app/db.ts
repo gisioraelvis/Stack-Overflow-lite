@@ -5,6 +5,7 @@ import { IQuestion } from './shared/interfaces/IQuestion';
 import { ITag } from './shared/interfaces/ITag';
 import { IUser } from './shared/interfaces/IUser';
 import { IAnswer } from './shared/interfaces/IAnswer';
+import { IAnalytics } from './shared/interfaces/IAnalytics';
 
 // Users
 export const userFactory = Factory.Sync.makeFactory<IUser>({
@@ -68,4 +69,19 @@ export const answerFactory = Factory.Sync.makeFactory<IAnswer>({
   downvotes: Factory.each(() => faker.datatype.number({ min: 0, max: 50 })),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
   updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
+});
+
+export const analyticsFactory = Factory.Sync.makeFactory<IAnalytics>({
+  userCount: Factory.each(() =>
+    faker.datatype.number({ min: 1000, max: 10000 })
+  ),
+  questionCount: Factory.each(() =>
+    faker.datatype.number({ min: 10000, max: 100000 })
+  ),
+  answerCount: Factory.each(() =>
+    faker.datatype.number({ min: 10000, max: 200000 })
+  ),
+  tagCount: Factory.each(() =>
+    faker.datatype.number({ min: 1000, max: 10000 })
+  ),
 });
