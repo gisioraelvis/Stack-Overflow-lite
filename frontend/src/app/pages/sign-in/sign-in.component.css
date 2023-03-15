@@ -30,11 +30,11 @@
 }
 
 .sign-in-page .forgot-password {
-  text-align: right;
+  body-align: right;
 }
 
 .sign-in-page .sign-up {
-  text-align: center;
+  body-align: center;
   margin-top: 20px;
 }
 

@@ -27,6 +27,6 @@ export class ScrollToDirective {
 </div>
 
 <div id="answer-123">
-  <p>This is the answer text</p>
+  <p>This is the answer body</p>
 </div>
 */

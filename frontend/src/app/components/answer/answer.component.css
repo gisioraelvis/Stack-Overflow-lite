@@ -87,3 +87,37 @@
 .answer-btn button:hover {
   background-color: #f48225;
 }
+
+.comments-section {
+  margin-top: 0;
+}
+
+.comments-title {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.comments-title h2 {
+  font-size: 1rem;
+}
+
+.question-comments {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.question-comment {
+  width: 90%;
+}
+
+.add-comment {
+  width: 100%;
+}
+
+mat-divider {
+  margin: 2rem 0 1rem 0;
+}

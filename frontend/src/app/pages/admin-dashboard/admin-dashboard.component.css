@@ -103,7 +103,7 @@ mat-card:hover {
 }
 
 mat-card p {
-  text-align: center;
+  body-align: center;
 }
 
 p span {

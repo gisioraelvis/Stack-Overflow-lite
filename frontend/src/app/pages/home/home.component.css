@@ -40,7 +40,7 @@
   font-size: 1.2rem;
   color: #1a1a1a;
   margin: 1rem 0;
-  text-align: end;
+  body-align: end;
 }
 
 .left .content .btn-container {
@@ -141,7 +141,7 @@
 .no-questions p {
   font-size: 1.2rem;
   color: #1a1a1a;
-  text-align: center;
+  body-align: center;
 }
 
 .no-questions button {

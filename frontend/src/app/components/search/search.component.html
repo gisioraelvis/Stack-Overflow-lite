@@ -1,6 +1,6 @@
 <form>
     <mat-form-field>
-        <input [(ngModel)]="searchTerm" (input)="onInput()" type="text"
+        <input [(ngModel)]="searchTerm" (input)="onInput()" type="body"
             placeholder="Look for an answer to your question..." aria-label="Search question" matInput name="search">
         <mat-icon class="search-icon" matSuffix matTooltip="Search" (click)="onSearch()">search</mat-icon>
     </mat-form-field>

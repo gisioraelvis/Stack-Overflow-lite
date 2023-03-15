@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -35,6 +35,7 @@ import { RouterModule } from '@angular/router';
 })
 export class AddAnswerComponent {
   answerForm: FormGroup;
+  @Input() questionId!: number;
 
   constructor(private fb: FormBuilder) {
     this.answerForm = this.fb.group({
@@ -44,9 +45,8 @@ export class AddAnswerComponent {
 
   // TODO: Submit to the backend
   onSubmit() {
-    // if (this.form.valid) {
-    //   console.log(this.form.value);
-    // }
-    console.log(this.answerForm.value);
+    console.log(
+      `Add answer {questionId:${this.questionId}, answer:${this.answerForm.value.answer}}`
+    );
   }
 }

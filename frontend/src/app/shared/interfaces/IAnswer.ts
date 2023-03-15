@@ -1,12 +1,14 @@
+import { IComment } from './IComment';
 import { IUser } from './IUser';
 
 export interface IAnswer {
   id: number;
-  text: string;
+  body: string;
   user: IUser;
   isAccepted: boolean;
   upvotes: number;
   downvotes: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  comments: IComment[];
 }

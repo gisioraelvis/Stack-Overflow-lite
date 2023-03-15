@@ -4,6 +4,6 @@ export interface ITag {
   description: string;
   questionsCount: number;
   userId: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string | Date;
+  updatedAt: string | Date;
 }

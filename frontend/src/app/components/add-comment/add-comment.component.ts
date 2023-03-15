@@ -38,9 +38,16 @@ export class AddCommentComponent {
 
   // TODO: Submit to the backend
   onSubmit() {
-    // if (this.form.valid) {
-    //   console.log(this.form.value);
-    // }
-    console.log(this.commentForm.value);
+    if (this.for === 'question') {
+      console.log(
+        `Question comment {questionId:${this.id}, comment:${this.commentForm.value.comment}}`
+      );
+    }
+
+    if (this.for === 'answer') {
+      console.log(
+        `Answer comment {answerId:${this.id}, comment:${this.commentForm.value.comment}}`
+      );
+    }
   }
 }

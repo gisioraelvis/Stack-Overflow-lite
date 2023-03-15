@@ -15,7 +15,7 @@
         </div>
         <div class="answer-content">
             <div class="description">
-                {{answer.text}}
+                {{answer.body}}
             </div>
             <div class="user-info">
                 <img src="{{answer.user.avatar}}" alt="{{answer.user.name}}">
@@ -25,3 +25,16 @@
         </div>
     </div>
 </mat-card>
+<div class="comments-section">
+    <div class="comments-title">
+        <h2>Comments</h2>
+    </div>
+    <div class="question-comments" *ngIf="answer.comments.length>0">
+        <!-- TODO: Pass the type of comment and the id -->
+        <app-comment class="question-comment" *ngFor="let comment of answer.comments" [comment]="comment"></app-comment>
+    </div>
+    <div class="add-comment">
+        <app-add-comment [for]="'answer'" [id]="answer.id"></app-add-comment>
+    </div>
+</div>
+<mat-divider></mat-divider>
