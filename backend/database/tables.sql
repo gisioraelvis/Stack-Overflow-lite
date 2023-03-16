@@ -1,133 +1,84 @@
-USE GadgetHub;
+USE StackOverflowLite;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Questions;
+DROP TABLE IF EXISTS Answers;
+DROP TABLE IF EXISTS Comments;
+DROP TABLE IF EXISTS Tags;
+DROP TABLE IF EXISTS QuestionTags;
 
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS reviews;
-DROP TABLE IF EXISTS brands;
-DROP TABLE IF EXISTS categories;
-DROP TABLE IF EXISTS product_review;
-DROP TABLE IF EXISTS product_category;
-DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS order_items;
-DROP TABLE IF EXISTS cart;
-
-CREATE TABLE users
+CREATE TABLE Users
 (
-    id INT IDENTITY(1,1) PRIMARY KEY,
+    id INT PRIMARY KEY IDENTITY(1,1),
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    isAdmin BIT NOT NULL DEFAULT 0,
+    avatar VARCHAR(255),
+    bio VARCHAR(255),
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    isAdmin BIT NOT NULL
+);
+
+CREATE TABLE Questions
+(
+    id INT PRIMARY KEY IDENTITY(1,1),
+    userId INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    body VARCHAR(MAX) NOT NULL,
+    upvotes INT NOT NULL DEFAULT 0,
+    downvotes INT NOT NULL DEFAULT 0,
     isDeleted BIT NOT NULL DEFAULT 0,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES Users(id)
+);
+
+CREATE TABLE Answers
+(
+    id INT PRIMARY KEY IDENTITY(1,1),
+    userId INT NOT NULL,
+    questionId INT NOT NULL,
+    body VARCHAR(MAX) NOT NULL,
+    upvotes INT NOT NULL DEFAULT 0,
+    downvotes INT NOT NULL DEFAULT 0,
+    isAccepted BIT NOT NULL DEFAULT 0,
+    isDeleted BIT NOT NULL DEFAULT 0,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES Users(id),
+    FOREIGN KEY (questionId) REFERENCES Questions(id)
+);
+
+CREATE TABLE Comments
+(
+    id INT PRIMARY KEY IDENTITY(1,1),
+    userId INT NOT NULL,
+    questionId INT,
+    answerId INT,
+    body VARCHAR(MAX) NOT NULL,
+    isDeleted BIT NOT NULL DEFAULT 0,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES Users(id),
+    FOREIGN KEY (questionId) REFERENCES Questions(id),
+    FOREIGN KEY (answerId) REFERENCES Answers(id)
+);
+
+CREATE TABLE Tags
+(
+    id INT PRIMARY KEY IDENTITY(1,1),
+    name VARCHAR(255) NOT NULL,
+    body VARCHAR(MAX) NOT NULL,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE brands
+CREATE TABLE QuestionTags
 (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    questionId INT NOT NULL,
+    tagId INT NOT NULL,
+    PRIMARY KEY (questionId, tagId),
+    FOREIGN KEY (questionId) REFERENCES Questions(id),
+    FOREIGN KEY (tagId) REFERENCES Tags(id)
 );
 
-CREATE TABLE products
-(
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    userId INT NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    image VARCHAR(500) NOT NULL,
-    description VARCHAR(1000) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    countInStock INT NOT NULL,
-    brandId INT NOT NULL,
-    createdAt DATETIME DEFAULT GETDATE(),
-    updatedAt DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (userId) REFERENCES users(id),
-    FOREIGN KEY (brandId) REFERENCES brands(id)
-);
-
-CREATE TABLE categories
-(
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE reviews
-(
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    userId INT NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    rating INT NOT NULL,
-    comment VARCHAR(1000) NOT NULL,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE product_category
-(
-    productId INT NOT NULL,
-    categoryId INT NOT NULL,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (productId, categoryId),
-    FOREIGN KEY (productId) REFERENCES products(id),
-    FOREIGN KEY (categoryId) REFERENCES categories(id)
-);
-
-CREATE TABLE product_review
-(
-    productId INT NOT NULL,
-    reviewId INT NOT NULL,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (productId, reviewId),
-    FOREIGN KEY (productId) REFERENCES products(id),
-    FOREIGN KEY (reviewId) REFERENCES reviews(id)
-);
-
-CREATE TABLE orders
-(
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    userId INT NOT NULL,
-    shippingAddress VARCHAR(500) NOT NULL,
-    paymentMethod VARCHAR(100),
-    paymentResultId VARCHAR(100),
-    paymentResultStatus VARCHAR(100) DEFAULT 'Pending',
-    taxPrice DECIMAL(10, 2),
-    shippingPrice DECIMAL(10, 2),
-    totalPrice DECIMAL(10, 2) NOT NULL,
-    isPaid BIT DEFAULT 0,
-    paidAt DATETIME,
-    isDelivered BIT DEFAULT 0,
-    deliveredAt DATETIME,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userId) REFERENCES users(id)
-);
-
-CREATE TABLE order_items
-(
-    orderId INT NOT NULL,
-    productId INT NOT NULL,
-    qty INT NOT NULL,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (orderId, productId),
-    FOREIGN KEY (orderId) REFERENCES orders(id),
-    FOREIGN KEY (productId) REFERENCES products(id)
-);
-
-CREATE TABLE cart
-(
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    userId INT NOT NULL,
-    productId INT NOT NULL,
-    qty INT NOT NULL,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userId) REFERENCES users(id),
-    FOREIGN KEY (productId) REFERENCES products(id)
-);
