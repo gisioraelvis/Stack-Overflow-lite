@@ -8,7 +8,7 @@
 
 .left-section {
   width: 40%;
-  body-align: center;
+  text-align: center;
 }
 
 .left-section h1 {
@@ -55,7 +55,7 @@
 }
 
 .sign-in {
-  body-align: center;
+  text-align: center;
   margin-top: 20px;
 }
 
