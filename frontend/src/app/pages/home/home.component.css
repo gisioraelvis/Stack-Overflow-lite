@@ -141,7 +141,7 @@
 .no-questions p {
   font-size: 1.2rem;
   color: #1a1a1a;
-  body-align: center;
+  text-align: center;
 }
 
 .no-questions button {
@@ -154,3 +154,11 @@
 .no-questions button:hover {
   background-color: #f48225;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}
+

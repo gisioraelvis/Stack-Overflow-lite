@@ -29,7 +29,7 @@
     <ng-container class="questions" *ngIf="(questions$ | async ) as questions; else noQuestions">
         <div class="questions" *ngIf="questions.length>0; else noQuestions">
             <app-question
-                *ngFor="let question of questions | filterQuestions: searchType: searchTerm | sortQuestions: sortBy | paginate: { id: 'server', itemsPerPage: 5, currentPage: page, totalItems: questions.length }"
+                *ngFor="let question of questions | filterQuestions: searchType: searchTerm | sortQuestions: sortBy | paginate: { id: 'home-page', currentPage: page, itemsPerPage, totalItems}"
                 [question]="question" searchTermHighlight="{{searchTerm}}"></app-question>
         </div>
     </ng-container>
@@ -41,6 +41,6 @@
         </div>
     </ng-template>
 </div>
-<div class="paginator" *ngIf="(questions$ | async ) as questions">
-    <app-paginator [totalItems]="questions.length" [pageSize]="5" (pageChange)="getPage($event)" id="server"></app-paginator>
+<div class="pagination" *ngIf="questions$ | async ">
+    <pagination-controls (pageChange)="getPage($event)" id="home-page"></pagination-controls>
 </div>
