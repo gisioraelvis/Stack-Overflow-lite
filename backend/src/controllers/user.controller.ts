@@ -240,7 +240,7 @@ export const resetPassword = async (req: IRequestWithUser, res: Response) => {
         "1d"
       );
 
-      return res.status(200).json({ id, name, email, isAdmin, JWT });
+      return res.status(200).json({...updatedUser.recordset[0], JWT});
     } else {
       return res.status(400).json({
         message: "Password reset failed, please request a new password reset",
@@ -264,9 +264,7 @@ export const getUserProfile = async (req: IRequestWithUser, res: Response) => {
     const user = await dbUtils.exec("usp_FindUserById", { id: userId });
 
     if (user.recordset.length > 0) {
-      const { id, name, email, isAdmin } = user.recordset[0];
-
-      return res.status(200).json({ id, name, email, isAdmin });
+      return res.status(200).json(user.recordset[0]);
     } else {
       return res.status(404).json({ message: "User not found" });
     }
@@ -385,9 +383,7 @@ export const getUserById = async (req: Request, res: Response) => {
     const user = await dbUtils.exec("usp_FindUserById", { id: userId });
 
     if (user.recordset.length > 0) {
-      const { id, name, email, isAdmin } = user.recordset[0];
-
-      return res.status(200).json({ id, name, email, isAdmin });
+      return res.status(200).json(user.recordset[0]);
     } else {
       return res
         .status(404)
