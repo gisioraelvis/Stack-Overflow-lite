@@ -23,9 +23,9 @@ export class FilterTagsPipe implements PipeTransform {
         return tags.filter((tag) =>
           tag.name.toLowerCase().includes(searchTerm!)
         );
-      case 'Description':
+      case 'body':
         return tags.filter((tag) =>
-          tag.description.toLowerCase().includes(searchTerm!)
+          tag.body.toLowerCase().includes(searchTerm!)
         );
       default:
         return tags;

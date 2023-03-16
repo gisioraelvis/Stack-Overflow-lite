@@ -29,8 +29,8 @@
                         <a class="question-title" routerLink="/questions/{{question.id}}">
                             <h3>{{question.title}}</h3>
                         </a>
-                        <div class="description">
-                            {{question.description }}
+                        <div class="body">
+                            {{question.body }}
                         </div>
                         <div class="tags">
                             <span *ngFor="let tag of question.tags">
@@ -68,14 +68,14 @@
         <mat-divider></mat-divider>
         <div class="answers-section">
             <app-progress-spinner *ngIf="loading"></app-progress-spinner>
-                <div class="answers-title">
-                    <h2>Answers({{question.answers.length}})</h2>
+            <div class="answers-title">
+                <h2>Answers({{question.answers.length}})</h2>
+            </div>
+            <div class="answers">
+                <div class="answers" *ngIf="question.answers.length>0">
+                    <app-answer class="answer" *ngFor="let answer of question.answers" [answer]="answer"></app-answer>
                 </div>
-                <div class="answers">
-                    <div class="answers" *ngIf="question.answers.length>0">
-                        <app-answer class="answer" *ngFor="let answer of question.answers" [answer]="answer"></app-answer>
-                    </div>
-                </div>
+            </div>
             <div class="add-answer-section" id="add-answer">
                 <h2>Your Answer</h2>
                 <app-add-answer class="add-answer" [questionId]="question.id"></app-add-answer>

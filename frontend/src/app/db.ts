@@ -25,7 +25,7 @@ export const userFactory = Factory.Sync.makeFactory<IUser>({
 export const tagFactory = Factory.Sync.makeFactory<ITag>({
   id: Factory.each(() => faker.datatype.number()),
   name: Factory.each(() => faker.lorem.word()),
-  description: Factory.each(() => faker.lorem.sentence()),
+  body: Factory.each(() => faker.lorem.sentence()),
   questionsCount: Factory.each(() => faker.datatype.number()),
   userId: Factory.each(() => faker.datatype.number()),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
@@ -38,7 +38,7 @@ export const questionFactory = Factory.Sync.makeFactory<IQuestion>({
   title: Factory.each(() =>
     faker.lorem.sentence(faker.datatype.number({ min: 7, max: 10 }))
   ),
-  description: Factory.each(() => faker.lorem.paragraph(100)),
+  body: Factory.each(() => faker.lorem.paragraph(100)),
   user: Factory.each(() => userFactory.build()),
   upvotes: Factory.each(() => faker.datatype.number({ min: 0, max: 50 })),
   downvotes: Factory.each(() => faker.datatype.number({ min: 0, max: 50 })),

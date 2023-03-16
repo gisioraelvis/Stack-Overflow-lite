@@ -93,7 +93,7 @@
   padding: 0;
 }
 
-.question-content .description {
+.question-content .body {
   margin: 0.5rem 0;
 }
 
@@ -202,7 +202,7 @@ mat-divider {
 
 .add-answer-section {
   width: 100%;
-  body-align: center;
+  text-align: center;
   margin-top: 5rem;
 }
 

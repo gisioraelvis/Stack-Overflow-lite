@@ -6,7 +6,7 @@ import { IUser } from './IUser';
 export interface IQuestion {
   id: number;
   title: string;
-  description: string;
+  body: string;
   user: IUser;
   upvotes: number;
   downvotes: number;

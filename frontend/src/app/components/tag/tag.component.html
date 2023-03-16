@@ -19,8 +19,8 @@
             </mat-menu>
         </div>
     </div>
-    <div class="tag-description">
-        <p appSearchHighlight="{{ searchTermHighlight }}">{{tag.description | truncate: 100}}</p>
+    <div class="tag-body">
+        <p appSearchHighlight="{{ searchTermHighlight }}">{{tag.body | truncate: 100}}</p>
     </div>
     <div class="tag-question-count">
         <a [routerLink]="['/questions']" [queryParams]="{ filter: 'Tag', tag: tag.name }"

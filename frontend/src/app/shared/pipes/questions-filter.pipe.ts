@@ -24,7 +24,7 @@ export class FilterQuestionsPipe implements PipeTransform {
         return questions.filter(
           (question) =>
             question.title.toLowerCase().includes(searchTerm!) ||
-            question.description.toLowerCase().includes(searchTerm!) ||
+            question.body.toLowerCase().includes(searchTerm!) ||
             question.tags.some((tag) =>
               tag.name.toLowerCase().includes(searchTerm!)
             )
