@@ -1,4 +1,4 @@
-CREATE PROCEDURE usp_RegisterUser(
+CREATE OR ALTER PROCEDURE usp_RegisterUser(
     @name VARCHAR(255),
     @email VARCHAR(255),
     @password VARCHAR(255),
@@ -6,12 +6,12 @@ CREATE PROCEDURE usp_RegisterUser(
 )
 AS
 BEGIN
-    INSERT INTO users
+    INSERT INTO Users
         (name, email, password, isAdmin)
     VALUES
         (@name, @email, @password, @isAdmin);
 
     SELECT *
-    FROM users
+    FROM Users
     WHERE email = @email;
 END

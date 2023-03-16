@@ -1,8 +1,8 @@
-CREATE PROCEDURE usp_FindUserByEmail
+CREATE OR ALTER PROCEDURE usp_FindUserByEmail
     (@email VARCHAR(255))
 AS
 BEGIN
     SELECT *
-    FROM users
+    FROM Users
     WHERE email = @email
 END

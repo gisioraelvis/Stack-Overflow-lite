@@ -1,8 +1,8 @@
-CREATE PROCEDURE usp_FindUserById
+CREATE OR ALTER PROCEDURE usp_FindUserById
     (@id INT)
 AS
 BEGIN
     SELECT *
-    FROM users
+    FROM Users
     WHERE id = @id
 END

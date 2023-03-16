@@ -14,9 +14,10 @@ CREATE TABLE Users
     password VARCHAR(255) NOT NULL,
     avatar VARCHAR(255),
     bio VARCHAR(255),
+    isAdmin BIT NOT NULL,
+    isDeleted BIT NOT NULL DEFAULT 0,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    isAdmin BIT NOT NULL
 );
 
 CREATE TABLE Questions

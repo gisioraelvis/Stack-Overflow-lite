@@ -1,9 +1,9 @@
-CREATE PROCEDURE usp_DeleteAllUsers
+CREATE OR ALTER PROCEDURE usp_DeleteAllUsers
 AS
 BEGIN
   SET NOCOUNT ON;
 
-  DELETE FROM users;
+  DELETE FROM Users;
   DBCC CHECKIDENT('users', RESEED, 0);
 END
 
