@@ -56,15 +56,13 @@ export const UserPasswordResetDto = Joi.object({
   }),
 });
 
-// update user profile dto
+// update user profile dto name, email, password, avatar, bio
 export const UserUpdateProfileDto = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required().email().messages({
-    "string.empty": "Please provide an email",
-    "string.email": "Invalid email",
+  name: Joi.string(),
+  email: Joi.string().email().messages({
+    "string.email": "Please provide a valid email",
   }),
   password: Joi.string()
-    .required()
     .pattern(
       new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$")
     )
@@ -72,9 +70,11 @@ export const UserUpdateProfileDto = Joi.object({
       "string.pattern.base":
         "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special case character",
     }),
-  confirmPassword: Joi.equal(ref("password")).required().messages({
+  confirmPassword: Joi.equal(ref("password")).messages({
     "any.only": "Passwords do not match",
   }),
+  avatar: Joi.string(),
+  bio: Joi.string(),
 });
 
 // update user password dto
@@ -94,11 +94,13 @@ export const UserUpdatePasswordDto = Joi.object({
 });
 
 export const UserUpdateProfileByAdminDto = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required().email().messages({
+  name: Joi.string(),
+  email: Joi.string().email().messages({
     "string.empty": "Please provide an email",
     "string.email": "Invalid email",
   }),
+  avatar: Joi.string(),
+  bio: Joi.string(),
   isDeleted: Joi.boolean(),
   isAdmin: Joi.boolean(),
 });

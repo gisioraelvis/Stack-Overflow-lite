@@ -7,8 +7,7 @@ import {
   getAllUsers,
   getUserById,
   deleteUser,
-  upgradeUserToAdmin,
-  updateUserProfileByAdmin,
+  updateUserByAdmin,
   forgotPassword,
   resetPassword,
   getAllSoftDeletedUsers,
@@ -25,7 +24,9 @@ const userRoutes = express.Router();
 userRoutes.route("/").get(authenticateUser, authorizeAdmin, getAllUsers);
 
 // Get all deleted users - admin only
-userRoutes.route("/soft-deleted").get(authenticateUser, authorizeAdmin, getAllSoftDeletedUsers);
+userRoutes
+  .route("/soft-deleted")
+  .get(authenticateUser, authorizeAdmin, getAllSoftDeletedUsers);
 
 // Register a new user - public
 userRoutes.route("/signup").post(registerUser);
@@ -53,14 +54,9 @@ userRoutes.route("/:id").get(authenticateUser, authorizeAdmin, getUserById);
 // Delete user by id - Admin only
 userRoutes.route("/:id").delete(authenticateUser, authorizeAdmin, deleteUser);
 
-// Upgrade user to admin - Admin only
-userRoutes
-  .route("/:id")
-  .patch(authenticateUser, authorizeAdmin, upgradeUserToAdmin);
-
 // Update user profile by admin - Admin only
 userRoutes
   .route("/:id")
-  .put(authenticateUser, authorizeAdmin, updateUserProfileByAdmin);
+  .put(authenticateUser, authorizeAdmin, updateUserByAdmin);
 
 export default userRoutes;

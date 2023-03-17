@@ -18,7 +18,7 @@ BEGIN
         password = COALESCE(@password, password),
         isAdmin = COALESCE(@isAdmin, isAdmin),
         isDeleted = COALESCE(@isDeleted, isDeleted),
-        updatedAt = GETDATE()
+        updatedAt = CURRENT_TIMESTAMP
         WHERE id = @id;
     SELECT *
     FROM users

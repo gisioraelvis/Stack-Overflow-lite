@@ -79,7 +79,7 @@ USE StackOverflowLite;
 
 --  Users
 DELETE FROM Users;
-DBCC CHECKIDENT('Users', RESEED, 1);
+DBCC CHECKIDENT('Users', RESEED, 0);
 
 INSERT INTO Users
     (name, email, password, avatar, bio, isAdmin)

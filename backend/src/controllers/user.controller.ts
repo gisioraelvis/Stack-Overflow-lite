@@ -16,6 +16,7 @@ import { CreateLog } from "../utils/logger.util";
 import { IRequestWithUser } from "../interfaces/request-with-user.interface";
 import dotenv from "dotenv";
 import { sendEmail } from "../utils/email.util";
+import { IPagination } from "../interfaces/pagination.interface";
 dotenv.config({ path: __dirname + "/../../.env" });
 
 const dbUtils = new DatabaseUtils();
@@ -61,7 +62,10 @@ export const loginUser = async (req: Request, res: Response) => {
         "1d"
       );
 
-      return res.status(200).json({ id, name, email, isAdmin, JWT });
+      // remove password from user.recordset[0]
+      delete user.recordset[0].password;
+
+      return res.status(200).json({ ...user.recordset[0], JWT });
     } else {
       return res.status(401).json({ message: "Invalid email or password" });
     }
@@ -124,7 +128,10 @@ export const registerUser = async (req: Request, res: Response) => {
         "1d"
       );
 
-      return res.status(201).json({ id, name, email, isAdmin, JWT });
+      // remove password from newUser.recordset[0]
+      delete newUser.recordset[0].password;
+
+      return res.status(201).json({ ...newUser.recordset[0], JWT });
     } else {
       return res.status(400).json({ message: "User registration failed" });
     }
@@ -166,10 +173,12 @@ export const forgotPassword = async (req: Request, res: Response) => {
     const resetUrl = `${process.env.CLIENT_URL}/reset-password/?resetToken=${JWT}`;
 
     const passwordResetMsg = `
-      <h1>You requested a password reset</h1>
-      <p>Please go to this link to reset your password</p>
-      <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
-      <p>If you did not request this, please ignore this email</p>
+    <h2>You requested a password reset</h2> 
+    <p>Please click on the link below to reset your password</p> 
+    <a href=${resetUrl} clicktracking=off>Reset Password</a>
+    <p>If the link does not work, copy and paste the link below into your browser</p>
+    <p>${resetUrl}</p>
+    <p>If you did not request this, please ignore this email</p>
     `;
 
     try {
@@ -224,9 +233,11 @@ export const resetPassword = async (req: IRequestWithUser, res: Response) => {
       const html = `<h1>Password Reset Successful</h1>
       <p>Dear ${name},</p>
       <p>Your password has been reset successfully.</p>
-      <P>Happy <a href=${process.env.CLIENT_URL}>Shopping</a> 🎉</P>
+      <P>Happy to have you contributing on&nbsp;
+         <a href=${process.env.CLIENT_URL}>Stack Overflow Lite</a> 🎉
+      </P>
       <p>If you did not request this, please contact us immediately.</p>
-      <p>Regards,<br/>GadgetHub Team</p>`;
+      <p>Regards,<br/>Stack Overflow Lite Team</p>`;
 
       sendEmail(subject, email, html);
 
@@ -240,7 +251,10 @@ export const resetPassword = async (req: IRequestWithUser, res: Response) => {
         "1d"
       );
 
-      return res.status(200).json({...updatedUser.recordset[0], JWT});
+      // remove password from updatedUser.recordset[0]
+      delete updatedUser.recordset[0].password;
+
+      return res.status(200).json({ ...updatedUser.recordset[0], JWT });
     } else {
       return res.status(400).json({
         message: "Password reset failed, please request a new password reset",
@@ -264,6 +278,7 @@ export const getUserProfile = async (req: IRequestWithUser, res: Response) => {
     const user = await dbUtils.exec("usp_FindUserById", { id: userId });
 
     if (user.recordset.length > 0) {
+      delete user.recordset[0].password;
       return res.status(200).json(user.recordset[0]);
     } else {
       return res.status(404).json({ message: "User not found" });
@@ -283,14 +298,14 @@ export const updateUserProfile = async (
   req: IRequestWithUser,
   res: Response
 ) => {
-  // const { error } = UserUpdateProfileDto.validate(req.body);
+  const { error } = UserUpdateProfileDto.validate(req.body);
 
-  // if (error) {
-  //   return res.status(422).json(error.details[0].message);
-  // }
+  if (error) {
+    return res.status(422).json(error.details[0].message);
+  }
 
   const userId = req.user?.id as string;
-  const { name, email, password } = req.body;
+  const { name, email, password, avatar, bio } = req.body;
 
   try {
     // If user tries to update email that already exists in the database
@@ -310,19 +325,23 @@ export const updateUserProfile = async (
     const user = await dbUtils.exec("usp_FindUserById", { id: userId });
 
     if (user.recordset.length > 0) {
-      const passwordHash = await Bcrypt.hash(password, 10);
+      let passwordHash = user.recordset[0].password;
+      if (password) {
+        passwordHash = await Bcrypt.hash(password, 10);
+      }
 
       const updatedUser = await dbUtils.exec("usp_UpdateUser", {
         id: userId,
         name,
         email,
         password: passwordHash,
+        avatar,
+        bio,
       });
 
       if (updatedUser.recordset.length > 0) {
-        const { id, name, email, isAdmin } = updatedUser.recordset[0];
-
-        return res.status(200).json({ id, name, email, isAdmin });
+        delete updatedUser.recordset[0].password;
+        return res.status(200).json(updatedUser.recordset[0]);
       } else {
         return res.status(400).json({ message: "User profile update failed" });
       }
@@ -341,8 +360,19 @@ export const updateUserProfile = async (
  * @access  Private - Admin only
  */
 export const getAllUsers = async (req: Request, res: Response) => {
+  // optional pagination query params
+  const { page, itemsPerPage } = req.query;
+
+  const pagination: IPagination = {
+    page: page ? +page : 1,
+    itemsPerPage: itemsPerPage ? +itemsPerPage : 10,
+  };
+
   try {
-    const users = await dbUtils.exec("usp_GetAllUsers");
+    const users = await dbUtils.exec("usp_GetAllUsers", {
+      page: pagination.page,
+      itemsPerPage: pagination.itemsPerPage,
+    });
 
     // returns the users else if ther's none yet an empty array is returned
     return res.status(200).json(users.recordset);
@@ -358,12 +388,21 @@ export const getAllUsers = async (req: Request, res: Response) => {
  * @access  Private - Admin only
  */
 export const getAllSoftDeletedUsers = async (req: Request, res: Response) => {
-  try {
-    const users = await dbUtils.query(
-      "SELECT * FROM Users WHERE isDeleted = 1"
-    );
+  // optional pagination query params
+  const { page, itemsPerPage } = req.query;
 
-    // returns the users else if ther's none an empty array is returned
+  const pagination: IPagination = {
+    page: page ? +page : 1,
+    itemsPerPage: itemsPerPage ? +itemsPerPage : 10,
+  };
+
+  try {
+    const users = await dbUtils.exec("usp_GetAllSoftDeletedUsers", {
+      page: pagination.page,
+      itemsPerPage: pagination.itemsPerPage,
+    });
+
+    // returns the users else if ther's none yet an empty array is returned
     return res.status(200).json(users.recordset);
   } catch (error: any) {
     res.status(500).json(error.message);
@@ -383,6 +422,7 @@ export const getUserById = async (req: Request, res: Response) => {
     const user = await dbUtils.exec("usp_FindUserById", { id: userId });
 
     if (user.recordset.length > 0) {
+      delete user.recordset[0].password;
       return res.status(200).json(user.recordset[0]);
     } else {
       return res
@@ -426,44 +466,12 @@ export const deleteUser = async (req: Request, res: Response) => {
 };
 
 /**
- * @desc    Upgrade user to an admin
- * @route   PATCH /api/users/:id
- * @access  Private - Admin only
- */
-export const upgradeUserToAdmin = async (req: Request, res: Response) => {
-  const userId = req.params.id as string;
-
-  try {
-    const user = await dbUtils.exec("usp_FindUserById", { id: userId });
-
-    if (user.recordset.length > 0) {
-      const upgradedUser = await dbUtils.exec("usp_UpgradeUserToAdmin", {
-        id: userId,
-      });
-
-      if (upgradedUser.rowsAffected[0] > 0) {
-        return res.status(200).json({ message: "User upgraded to admin" });
-      } else {
-        return res.status(400).json({ message: "User upgrade failed" });
-      }
-    } else {
-      return res
-        .status(404)
-        .json({ message: "User with the given id does not exist" });
-    }
-  } catch (error: any) {
-    res.status(500).json(error.message);
-    CreateLog.error(error);
-  }
-};
-
-/**
  * @desc    Update user profile by admin
  * i.e all fields including upgrading to admin except password
  * @route   PUT /api/users/:id
  * @access  Private - Admin only
  */
-export const updateUserProfileByAdmin = async (
+export const updateUserByAdmin = async (
   req: IRequestWithUser,
   res: Response
 ) => {
@@ -475,7 +483,7 @@ export const updateUserProfileByAdmin = async (
     return res.status(422).json(error.details[0].message);
   }
 
-  const { name, email, isDeleted, isAdmin } = req.body;
+  const { name, email, avatar, bio, isDeleted, isAdmin } = req.body;
 
   try {
     const user = await dbUtils.exec("usp_FindUserById", { id: userId });
@@ -495,14 +503,17 @@ export const updateUserProfileByAdmin = async (
       // So we need to check if the email is the same as the one in the db before updating
       // if same email exclude it from the update else update everything
       if (email === user.recordset[0].email) {
-        const updatedUser = await dbUtils.exec("usp_UpdateUserProfileByAdmin", {
+        const updatedUser = await dbUtils.exec("usp_UpdateUser", {
           id: userId,
           name,
+          avatar,
+          bio,
           isDeleted,
           isAdmin,
         });
 
         if (updatedUser.rowsAffected[0] > 0) {
+          delete updatedUser.recordset[0].password;
           return res.status(200).json({
             message: "User profile updated",
             updatedUser: updatedUser.recordset[0],
@@ -513,15 +524,18 @@ export const updateUserProfileByAdmin = async (
             .json({ message: "User profile update failed" });
         }
       } else {
-        const updatedUser = await dbUtils.exec("usp_UpdateUserProfileByAdmin", {
+        const updatedUser = await dbUtils.exec("usp_UpdateUser", {
           id: userId,
           name,
           email,
+          avatar,
+          bio,
           isDeleted,
           isAdmin,
         });
 
         if (updatedUser.rowsAffected[0] > 0) {
+          delete updatedUser.recordset[0].password;
           return res.status(200).json({
             message: "User profile updated",
             updatedUser: updatedUser.recordset[0],
