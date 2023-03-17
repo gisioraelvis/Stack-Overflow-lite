@@ -1,11 +1,12 @@
 USE StackOverflowLite;
 GO
-
 SET NOCOUNT ON;
-
+DECLARE @sql NVARCHAR(MAX) = '';
+-- Get all foreign key constraints and drop them
+SELECT @sql += 'ALTER TABLE ' + QUOTENAME(OBJECT_SCHEMA_NAME(parent_object_id)) + '.' + QUOTENAME(OBJECT_NAME(parent_object_id)) + ' DROP CONSTRAINT ' + QUOTENAME(name) + ';'
+FROM sys.foreign_keys;
+EXEC sp_executesql @sql;
 BEGIN TRY
-    -- Disable all foreign key constraints
-    EXEC sp_MSforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL';
     -- Drop all tables
     EXEC sp_MSforeachtable 'DROP TABLE ?';
     -- Reset the identity values of all tables to 0

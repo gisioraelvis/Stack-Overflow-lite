@@ -2,14 +2,12 @@ import express, { json } from "express";
 import cors from "cors";
 import { notFound, errorHandler } from "./middlewares/global-error.middleware";
 import { CreateLog } from "./utils/logger.util";
-import userRoutes from "./router/user.routes";
-import productRoutes from "./router/product.routes";
-import orderRoutes from "./router/order.routes";
 import dotenv from "dotenv";
-import cartRoutes from "./router/cart.routes";
 import cron from "node-cron";
 import { sendWelcomeEmail } from "./emails/welcome-email";
 dotenv.config({ path: __dirname + "/../.env" });
+import userRoutes from "./router/user.routes";
+import questionRoutes from "./router/question.routes";
 
 dotenv.config();
 const app = express();
@@ -23,9 +21,8 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 app.use("/api/users", userRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/orders", orderRoutes);
-app.use("/api/cart", cartRoutes);
+app.use("/api/questions", questionRoutes);
+
 
 // Global error handling middlewares
 app.use(notFound);
@@ -38,8 +35,8 @@ app.listen(PORT, () => {
   CreateLog.info(`Server running on http://${HOST}:${PORT}`);
 });
 
-// send welcome email to newly registered users
-cron.schedule("*/10 * * * * *", async () => {
-  // CreateLog.info("New users welcome email cron job");
-  await sendWelcomeEmail();
-});
+// // send welcome email to newly registered users
+// cron.schedule("*/10 * * * * *", async () => {
+//   // CreateLog.info("New users welcome email cron job");
+//   await sendWelcomeEmail();
+// });

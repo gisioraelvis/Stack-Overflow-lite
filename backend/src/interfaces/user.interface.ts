@@ -7,4 +7,6 @@ export interface IUser {
   password: string;
   isDeleted?: boolean;
   isAdmin: boolean;
+  updatedAt?: Date | string;
+  createdAt?: Date | string;
 }
