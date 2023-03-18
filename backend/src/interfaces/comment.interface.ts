@@ -9,3 +9,22 @@ export interface IComment {
   answerId: number;
   user: IUser;
 }
+
+export interface ICommentObject {
+  commentId: number;
+  commentBody: string;
+  commentCreatedAt: string;
+  commentUpdatedAt: string;
+  commentQuestionId: number;
+  commentAnswerId: number;
+  commentUserId: number;
+  userId: number;
+  userName: string;
+  userEmail: string;
+  userAvatar: string;
+  userBio: string;
+  userIsAdmin: boolean;
+  userIsDeleted: boolean;
+  userCreatedAt: string;
+  userUpdatedAt: string;
+}

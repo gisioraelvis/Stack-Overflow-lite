@@ -103,24 +103,6 @@ VALUES
     (9, 4, 'You need to use the CREATE VIEW statement.', 0, 0, 0),
     (10, 4, 'You need to use the CREATE VIEW statement.', 0, 0, 0);
 
-
-/* 
-CREATE TABLE Comments
-(
-    id INT PRIMARY KEY IDENTITY(1,1),
-    userId INT NOT NULL,
-    questionId INT,
-    answerId INT,
-    body VARCHAR(MAX) NOT NULL,
-    isDeleted BIT NOT NULL DEFAULT 0,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userId) REFERENCES Users(id),
-    FOREIGN KEY (questionId) REFERENCES Questions(id),
-    FOREIGN KEY (answerId) REFERENCES Answers(id)
-);
- */
-
 --  Comments
 DELETE FROM Comments;
 DBCC CHECKIDENT('Comments', RESEED, 1);

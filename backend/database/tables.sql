@@ -84,3 +84,5 @@ CREATE TABLE QuestionTags
     FOREIGN KEY (tagId) REFERENCES Tags(id)
 );
 
+
+

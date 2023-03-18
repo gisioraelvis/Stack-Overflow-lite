@@ -11,4 +11,26 @@ export interface IAnswer {
   createdAt: string | Date;
   updatedAt: string | Date;
   comments: IComment[];
+  isDeleted: boolean;
+}
+
+export interface IAnswerObject {
+  answerId: number;
+  answerUserId: number;
+  answerBody: string;
+  answerIsAccepted: boolean;
+  answerUpvotes: number;
+  answerDownvotes: number;
+  answerIsDeleted: boolean;
+  answerCreatedAt: string;
+  answerUpdatedAt: string;
+  userId: number;
+  userName: string;
+  userEmail: string;
+  userAvatar: string;
+  userBio: string;
+  userIsAdmin: boolean;
+  userIsDeleted: boolean;
+  userCreatedAt: string;
+  userUpdatedAt: string;
 }
