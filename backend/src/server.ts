@@ -8,6 +8,7 @@ import { sendWelcomeEmail } from "./emails/welcome-email";
 dotenv.config({ path: __dirname + "/../.env" });
 import userRoutes from "./router/user.routes";
 import questionRoutes from "./router/question.routes";
+import answerRoutes from "./router/answer.routes";
 
 dotenv.config();
 const app = express();
@@ -22,7 +23,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/users", userRoutes);
 app.use("/api/questions", questionRoutes);
-
+app.use("/api/answers", answerRoutes);
 
 // Global error handling middlewares
 app.use(notFound);

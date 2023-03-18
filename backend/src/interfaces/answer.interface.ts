@@ -10,8 +10,8 @@ export interface IAnswer {
   downvotes: number;
   createdAt: string | Date;
   updatedAt: string | Date;
-  comments: IComment[];
-  isDeleted: boolean;
+  comments?: IComment[];
+  isDeleted?: boolean;
 }
 
 export interface IAnswerObject {

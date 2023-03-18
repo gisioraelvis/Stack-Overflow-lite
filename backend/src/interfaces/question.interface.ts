@@ -14,8 +14,6 @@ export interface IQuestion {
   createdAt: string | Date;
   updatedAt: string | Date;
   tags: ITag[];
-  comments: IComment[];
-  answers: IAnswer[];
 }
 
 export interface IQuestionObject {

@@ -5,8 +5,8 @@ export interface IComment {
   body: string;
   createdAt: string | Date;
   updatedAt: string | Date;
-  questionId: number;
-  answerId: number;
+  questionId?: number | string;
+  answerId?: number | string;
   user: IUser;
 }
 
