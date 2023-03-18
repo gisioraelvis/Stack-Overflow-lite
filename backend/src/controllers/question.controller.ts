@@ -6,17 +6,12 @@ import { CreateLog } from "../utils/logger.util";
 import { IUser } from "../interfaces/user.interface";
 import { IRequestWithUser } from "../interfaces/request-with-user.interface";
 import { IPagination } from "../interfaces/pagination.interface";
-import {
-  IQuestion,
-  IQuestionObject,
-  IQuestionObjectWithAnswers,
-} from "../interfaces/question.interface";
+import { IQuestion, IQuestionObject } from "../interfaces/question.interface";
 import { ITag, ITagObject } from "../interfaces/tag.interface";
 import { IAnswer, IAnswerObject } from "../interfaces/answer.interface";
 import { IComment, ICommentObject } from "../interfaces/comment.interface";
-import { QuestionCreateDto } from "../dtos/question.dto";
-import { format } from "morgan";
-import { formatQuestions } from "../utils/question.utils";
+import { QuestionCreateDto, QuestionUpdateDto } from "../dtos/question.dto";
+import { formatQuestionTags } from "../utils/question.utils";
 
 const dbUtils = new DatabaseUtils();
 
@@ -50,6 +45,7 @@ export const getAllQuestions = async (req: Request, res: Response) => {
         const tags = questions.recordset
           .filter((q: IQuestionObject) => q.questionId === question.questionId)
           .map((q: ITagObject) => {
+            if (q.tagName === null || undefined) return [] as ITag[];
             return {
               id: q.tagId,
               name: q.tagName,
@@ -58,6 +54,7 @@ export const getAllQuestions = async (req: Request, res: Response) => {
               updatedAt: q.tagUpdatedAt,
             };
           })
+          .flat()
           .filter((tag: ITag, index: number, self: ITag[]) => {
             return self.findIndex((t: ITag) => t.id === tag.id) === index;
           });
@@ -81,7 +78,7 @@ export const getAllQuestions = async (req: Request, res: Response) => {
 
     return res.status(200).json(formattedQuestions);
   } catch (error: any) {
-    res.status(500).json(error.message);
+    res.status(500).json({ message: error.message });
     CreateLog.error(error);
   }
 };
@@ -97,51 +94,13 @@ export const getQuestionById = async (req: Request, res: Response) => {
   try {
     const questions = await dbUtils.exec("usp_GetQuestionById", { id });
 
-    /*     const formattedQuestion: IQuestion = questions.recordset
-      .map((question: IQuestionObject) => {
-        const user = {
-          id: question.userId,
-          name: question.userName,
-          email: question.userEmail,
-          avatar: question.userAvatar,
-          isAdmin: question.userIsAdmin,
-        };
+    if (questions.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
 
-        const tags = questions.recordset
-          .filter((q: IQuestionObject) => q.questionId === question.questionId)
-          .map((q: ITagObject) => {
-            return {
-              id: q.tagId,
-              name: q.tagName,
-              body: q.tagBody,
-              createdAt: q.tagCreatedAt,
-              updatedAt: q.tagUpdatedAt,
-            };
-          })
-          .filter((tag: ITag, index: number, self: ITag[]) => {
-            return self.findIndex((t: ITag) => t.id === tag.id) === index;
-          });
-
-        return {
-          id: question.questionId,
-          title: question.questionTitle,
-          body: question.questionBody,
-          user,
-          upvotes: question.questionUpvotes,
-          downvotes: question.questionDownvotes,
-          isDeleted: question.questionIsDeleted,
-          createdAt: question.questionCreatedAt,
-          updatedAt: question.questionUpdatedAt,
-          tags,
-        };
-      })
-      .filter((question: IQuestion, index: number, self: IQuestion[]) => {
-        return self.findIndex((q: IQuestion) => q.id === question.id) === index;
-      })[0]; */
-
-    return res.status(200).json(formatQuestions(questions.recordset)[0]);
+    return res.status(200).json(formatQuestionTags(questions.recordset)[0]);
   } catch (error: any) {
-    res.status(500).json(error.message);
+    res.status(500).json({ message: error.message });
     CreateLog.error(error);
   }
 };
@@ -156,6 +115,10 @@ export const getQuestionComments = async (req: Request, res: Response) => {
 
   try {
     const comments = await dbUtils.exec("usp_GetQuestionComments", { id });
+
+    if (comments.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
 
     const formattedQuestionComments: IComment[] = comments.recordset.map(
       (comment: ICommentObject) => {
@@ -179,7 +142,7 @@ export const getQuestionComments = async (req: Request, res: Response) => {
 
     return res.status(200).json(formattedQuestionComments);
   } catch (error: any) {
-    res.status(500).json(error.message);
+    res.status(500).json({ message: error.message });
     CreateLog.error(error);
   }
 };
@@ -194,6 +157,10 @@ export const getQuestionAnswers = async (req: Request, res: Response) => {
 
   try {
     const answers = await dbUtils.exec("usp_GetQuestionAnswers", { id });
+
+    if (answers.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
 
     const formattedQuestionAnswers: IAnswer[] = answers.recordset.map(
       (answer: IAnswerObject) => {
@@ -220,7 +187,7 @@ export const getQuestionAnswers = async (req: Request, res: Response) => {
 
     return res.status(200).json(formattedQuestionAnswers);
   } catch (error: any) {
-    res.status(500).json(error.message);
+    res.status(500).json({ message: error.message });
     CreateLog.error(error);
   }
 };
@@ -243,14 +210,14 @@ export const createQuestion = async (req: IRequestWithUser, res: Response) => {
 
   try {
     const tagIds: number[] = [];
-    // first check if the tags exist
+    // first check if the tag exist
     for (const tag of tags) {
       const tagExists = await dbUtils.exec("usp_GetTagByName", {
         name: tag.name,
       });
 
       if (tagExists.recordset.length === 0) {
-        // if the tag doesn't exist yet
+        // tag doesn't exist, create it
         const createdTag = await dbUtils.exec("usp_CreateTag", {
           name: tag.name,
           body: tag.body,
@@ -258,7 +225,7 @@ export const createQuestion = async (req: IRequestWithUser, res: Response) => {
 
         tagIds.push(createdTag.recordset[0].id);
       } else {
-        // if the tag exists already
+        //tag exists already
         tagIds.push(tagExists.recordset[0].id);
       }
     }
@@ -268,8 +235,6 @@ export const createQuestion = async (req: IRequestWithUser, res: Response) => {
       body,
       userId: user.id,
     });
-
-    console.log(question.recordset[0].questionId);
 
     //create the question tags relation
     for (const tagId of tagIds) {
@@ -283,7 +248,265 @@ export const createQuestion = async (req: IRequestWithUser, res: Response) => {
       id: question.recordset[0].questionId,
     });
 
-    return res.status(200).json(formatQuestions(questions.recordset)[0]);
+    return res.status(200).json(formatQuestionTags(questions.recordset)[0]);
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    Update a question
+ * @route   PUT /api/questions/:id
+ * @access  Private (only the question owner or an admin can update it)
+ */
+export const updateQuestion = async (req: IRequestWithUser, res: Response) => {
+  const { error } = QuestionUpdateDto.validate(req.body);
+
+  if (error) {
+    return res.status(422).json(error.details[0].message);
+  }
+
+  const { id } = req.params;
+  const { title, body, tags } = req.body;
+
+  const user = req.user as IUser;
+
+  try {
+    const question = await dbUtils.exec("usp_GetQuestionById", { id });
+
+    if (question.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
+
+    if (question.recordset[0].userId !== user.id && !user.isAdmin) {
+      return res.status(401).json({
+        message:
+          "Unauthorized, only question owner or admin can update a question",
+      });
+    }
+
+    const tagIds: number[] = [];
+    // check if the tags are being updated
+    if (tags && tags.length > 0) {
+      for (const tag of tags) {
+        const tagExists = await dbUtils.exec("usp_GetTagByName", {
+          name: tag.name,
+        });
+
+        if (tagExists.recordset.length === 0) {
+          //tag doesn't exist, create it
+          const createdTag = await dbUtils.exec("usp_CreateTag", {
+            name: tag.name,
+            body: tag.body,
+          });
+
+          tagIds.push(createdTag.recordset[0].id);
+        } else {
+          // tag exists already
+          tagIds.push(tagExists.recordset[0].id);
+        }
+      }
+
+      // delete the QuestionTags relation
+      await dbUtils.exec("usp_DeleteQuestionTags", {
+        questionId: id,
+      });
+
+      // recreate the QuestionTags relation
+      for (const tagId of tagIds) {
+        await dbUtils.exec("usp_CreateQuestionTag", {
+          questionId: id,
+          tagId,
+        });
+      }
+    }
+
+    //update the question
+    await dbUtils.exec("usp_UpdateQuestion", {
+      id,
+      title,
+      body,
+    });
+
+    const questions = await dbUtils.exec("usp_GetQuestionById", { id });
+
+    return res.status(200).json(formatQuestionTags(questions.recordset)[0]);
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    Upvote a question
+ * @route   PATCH /api/questions/:id/upvote
+ * @access  Private
+ */
+export const upvoteQuestion = async (
+  req: IRequestWithUser,
+  res: Response
+) => {
+  const { id } = req.params;
+
+  const user = req.user as IUser;
+
+  try {
+    const question = await dbUtils.exec("usp_GetQuestionById", { id });
+
+    if (question.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
+
+    const questionUpvote = await dbUtils.exec("usp_GetQuestionUpvote", {
+      questionId: id,
+      userId: user.id,
+    });
+
+    if (questionUpvote.recordset.length > 0) {
+      return res.status(400).json({ message: "Question already upvoted" });
+    }
+
+    await dbUtils.exec("usp_UpvoteQuestion", {
+      questionId: id,
+      userId: user.id,
+    });
+
+    return res.status(200).json({ message: "Question upvoted" });
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/**
+ * @desc    SoftDelete a question
+ * @route   DELETE /api/questions/:id
+ * @access  Private (only the question owner or an admin can delete it)
+ */
+export const softDeleteQuestion = async (
+  req: IRequestWithUser,
+  res: Response
+) => {
+  const { id } = req.params;
+
+  const user = req.user as IUser;
+
+  try {
+    const question = await dbUtils.exec("usp_GetQuestionById", { id });
+
+    if (question.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
+
+    if (question.recordset[0].userId !== user.id && !user.isAdmin) {
+      return res.status(401).json({
+        message:
+          "Unauthorized, only question owner or admin can delete a question",
+      });
+    }
+
+    await dbUtils.exec("usp_SoftDeleteQuestion", { id });
+
+    return res.status(200).json({ message: "Question deleted successfully" });
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    Get all soft deleted questions
+ * @route   GET /api/questions/soft-deleted
+ * @access  Private (only an admin can get all soft deleted questions)
+ */
+export const getSoftDeletedQuestions = async (
+  req: IRequestWithUser,
+  res: Response
+) => {
+  const user = req.user as IUser;
+
+  try {
+    if (!user.isAdmin) {
+      return res.status(401).json({
+        message: "Unauthorized, only admin can get all soft deleted questions",
+      });
+    }
+
+    const questions = await dbUtils.exec("usp_GetSoftDeletedQuestions");
+
+    return res.status(200).json(questions.recordset);
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    Restore a soft deleted question
+ * @route   PATCH /api/questions/:id/restore
+ * @access  Private (only an admin can restore a soft deleted question)
+ */
+export const restoreQuestion = async (req: IRequestWithUser, res: Response) => {
+  const { id } = req.params;
+
+  const user = req.user as IUser;
+
+  try {
+    const question = await dbUtils.exec("usp_GetSoftDeletedQuestionById", {
+      id,
+    });
+
+    if (question.recordset.length === 0) {
+      return res
+        .status(404)
+        .json({ message: `Soft deleted question with ${id} does not exist` });
+    }
+
+    if (!user.isAdmin) {
+      return res.status(401).json({
+        message: "Unauthorized, only admin can restore a soft deleted question",
+      });
+    }
+
+    await dbUtils.exec("usp_RestoreQuestion", { id });
+
+    return res.status(200).json({ message: "Question restored successfully" });
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    HardDelete a question
+ * @route   DELETE /api/questions/:id/hard-delete
+ * @access  Private (only an admin can hard delete a question)
+ */
+export const hardDeleteQuestion = async (
+  req: IRequestWithUser,
+  res: Response
+) => {
+  const { id } = req.params;
+
+  const user = req.user as IUser;
+
+  try {
+    const question = await dbUtils.exec("usp_GetQuestionById", { id });
+
+    if (question.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
+
+    if (!user.isAdmin) {
+      return res.status(401).json({
+        message: "Unauthorized, only admin can hard delete a question",
+      });
+    }
+
+    await dbUtils.exec("usp_HardDeleteQuestion", { id });
+
+    return res.status(200).json({ message: "Question deleted successfully" });
   } catch (error: any) {
     res.status(500).json(error.message);
     CreateLog.error(error);

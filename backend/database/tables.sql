@@ -32,7 +32,7 @@ CREATE TABLE Questions
     isDeleted BIT NOT NULL DEFAULT 0,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userId) REFERENCES Users(id)
+    FOREIGN KEY (userId) REFERENCES Users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Answers
@@ -83,4 +83,3 @@ CREATE TABLE QuestionTags
     FOREIGN KEY (questionId) REFERENCES Questions(id),
     FOREIGN KEY (tagId) REFERENCES Tags(id)
 );
-

@@ -10,3 +10,15 @@ export const QuestionCreateDto = Joi.object({
     })
   ),
 });
+
+export const QuestionUpdateDto = Joi.object({
+  title: Joi.string(),
+  body: Joi.string(),
+  tags: Joi.array().items(
+    Joi.object({
+      name: Joi.string(),
+      body: Joi.string(),
+    })
+  ),
+  isDeleted: Joi.boolean(),
+});

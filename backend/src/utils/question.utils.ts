@@ -1,6 +1,7 @@
 import { IQuestion, IQuestionObject } from "../interfaces/question.interface";
+import { ITag } from "../interfaces/tag.interface";
 
-export const formatQuestions = (questions: IQuestionObject[]): IQuestion[] => {
+export const formatQuestionTags = (questions: IQuestionObject[]): IQuestion[] => {
   return questions.map((question) => {
     const user = {
       id: question.userId,
@@ -13,6 +14,7 @@ export const formatQuestions = (questions: IQuestionObject[]): IQuestion[] => {
     const tags = questions
       .filter((q) => q.questionId === question.questionId)
       .map((q) => {
+        if (q.tagName === null || undefined) return [] as ITag[];
         return {
           id: q.tagId,
           name: q.tagName,
@@ -21,6 +23,7 @@ export const formatQuestions = (questions: IQuestionObject[]): IQuestion[] => {
           updatedAt: q.tagUpdatedAt,
         };
       })
+      .flat()
       .filter((tag, index, self) => {
         return self.findIndex((t) => t.id === tag.id) === index;
       });
