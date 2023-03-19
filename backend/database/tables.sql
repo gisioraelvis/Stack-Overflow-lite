@@ -83,3 +83,131 @@ CREATE TABLE QuestionTags
     FOREIGN KEY (questionId) REFERENCES Questions(id),
     FOREIGN KEY (tagId) REFERENCES Tags(id)
 );
+
+CREATE TABLE Votes
+(
+    id INT PRIMARY KEY IDENTITY(1,1),
+    userId INT NOT NULL,
+    questionId INT,
+    answerId INT,
+    voteType VARCHAR(255) NOT NULL,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES Users(id),
+    FOREIGN KEY (questionId) REFERENCES Questions(id),
+    FOREIGN KEY (answerId) REFERENCES Answers(id)
+);
+
+/* 
+    // check if the user upvoted the question already
+    const questionUpvote = await dbUtils.exec("usp_GetUserQuestionVoteRecord", {
+      userId: user.id,
+      questionId: id,
+      voteType: "upvote",
+    });
+    if (questionUpvote.recordset.length > 0) {
+      return res
+        .status(400)
+        .json({ message: "You already upvoted this question" });
+    }
+
+    // check if the user downvoted the question before
+    const questionDownvote = await dbUtils.exec("usp_GetUserQuestionVoteRecord", {
+      userId: user.id,
+      questionId: id,
+      voteType: "downvote",
+    });
+    if (questionDownvote.recordset.length > 0) {
+      // decrement the downvote count on the question
+      await dbUtils.exec("usp_DecrementQuestionVote", { questionId: id });
+
+      // remove the user downvote record from the Votes table
+      await dbUtils.exec("usp_DeleteUserQuestionVoteRecord", {
+        questionId: id,
+        userId: user.id,
+        voteType: "downvote",
+      });
+    }
+
+    // upvote the question
+    await dbUtils.exec("usp_IncrementQuestionVote", { questionId: id });
+
+    // mark the question as upvoted by the user
+    await dbUtils.exec("usp_RecordUserQuestionVote", {
+      questionId: id,
+      userId: user.id,
+      voteType: "upvote",
+    });
+ */
+
+CREATE OR ALTER PROCEDURE usp_GetUserQuestionVoteRecord
+    @userId INT,
+    @questionId INT,
+    @voteType VARCHAR(255)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT *
+    FROM Votes
+    WHERE userId = @userId AND questionId = @questionId AND voteType = @voteType
+END
+
+CREATE OR ALTER PROCEDURE usp_DecrementQuestionDownVote
+    @questionId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE Questions SET downvotes = downvotes - 1 WHERE id = @questionId
+END
+
+CREATE OR ALTER PROCEDURE usp_DeleteUserQuestionVoteRecord
+    @questionId INT,
+    @userId INT,
+    @voteType VARCHAR(255)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DELETE FROM Votes WHERE questionId = @questionId AND userId = @userId AND voteType = @voteType
+END
+
+CREATE OR ALTER PROCEDURE usp_IncrementQuestionUpVote
+    @questionId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE Questions SET upvotes = upvotes + 1 WHERE id = @questionId
+END
+
+CREATE OR ALTER PROCEDURE usp_RecordUserQuestionVote
+    @questionId INT,
+    @userId INT,
+    @voteType VARCHAR(255)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    INSERT INTO Votes
+        (questionId, userId, voteType)
+    VALUES
+        (@questionId, @userId, @voteType)
+END
+
+CREATE OR ALTER PROCEDURE usp_DecrementQuestionUpVote
+    @questionId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE Questions SET upvotes = upvotes - 1 WHERE id = @questionId
+END
+
+CREATE OR ALTER PROCEDURE usp_IncrementQuestionDownVote
+    @questionId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE Questions SET downvotes = downvotes + 1 WHERE id = @questionId
+END
+
+
+
+
+

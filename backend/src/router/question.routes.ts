@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createQuestion,
+  downvoteQuestion,
   getAllQuestions,
   getQuestionAnswers,
   getQuestionById,
@@ -10,6 +11,7 @@ import {
   restoreQuestion,
   softDeleteQuestion,
   updateQuestion,
+  upvoteQuestion,
   // getQuestionById,
 } from "../controllers/question.controller";
 import {
@@ -42,5 +44,9 @@ questionRoutes
   .delete(authenticateUser, hardDeleteQuestion);
 
 questionRoutes.route("/:id/restore").patch(authenticateUser, restoreQuestion);
+
+questionRoutes.route("/:id/upvote").patch(authenticateUser, upvoteQuestion);
+
+questionRoutes.route("/:id/downvote").patch(authenticateUser, downvoteQuestion);
 
 export default questionRoutes;

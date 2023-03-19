@@ -343,7 +343,74 @@ export const updateQuestion = async (req: IRequestWithUser, res: Response) => {
  * @route   PATCH /api/questions/:id/upvote
  * @access  Private
  */
-export const upvoteQuestion = async (
+export const upvoteQuestion = async (req: IRequestWithUser, res: Response) => {
+  const { id } = req.params;
+
+  const user = req.user as IUser;
+
+  try {
+    const question = await dbUtils.exec("usp_GetQuestionById", { id });
+
+    if (question.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
+
+    // check if the user upvoted the question already
+    const questionUpvote = await dbUtils.exec("usp_GetUserQuestionVoteRecord", {
+      userId: user.id,
+      questionId: id,
+      voteType: "upvote",
+    });
+    if (questionUpvote.recordset.length > 0) {
+      return res
+        .status(400)
+        .json({ message: "You already upvoted this question" });
+    }
+
+    // check if the user downvoted the question before
+    const questionDownvote = await dbUtils.exec(
+      "usp_GetUserQuestionVoteRecord",
+      {
+        userId: user.id,
+        questionId: id,
+        voteType: "downvote",
+      }
+    );
+    if (questionDownvote.recordset.length > 0) {
+      // decrement the downvote count on the question
+      await dbUtils.exec("usp_DecrementQuestionDownVote", { questionId: id });
+
+      // remove the user downvote record from the Votes table
+      await dbUtils.exec("usp_DeleteUserQuestionVoteRecord", {
+        questionId: id,
+        userId: user.id,
+        voteType: "downvote",
+      });
+    }
+
+    // upvote the question
+    await dbUtils.exec("usp_IncrementQuestionUpVote", { questionId: id });
+
+    // mark the question as upvoted by the user
+    await dbUtils.exec("usp_RecordUserQuestionVote", {
+      questionId: id,
+      userId: user.id,
+      voteType: "upvote",
+    });
+
+    return res.status(200).json({ message: "Question upvoted" });
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    Downvote a question
+ * @route   PATCH /api/questions/:id/downvote
+ * @access  Private
+ */
+export const downvoteQuestion = async (
   req: IRequestWithUser,
   res: Response
 ) => {
@@ -358,21 +425,50 @@ export const upvoteQuestion = async (
       return res.status(404).json({ message: "Question does not exist" });
     }
 
-    const questionUpvote = await dbUtils.exec("usp_GetQuestionUpvote", {
-      questionId: id,
+    // check if the user upvoted the question already
+    const questionUpvote = await dbUtils.exec("usp_GetUserQuestionVoteRecord", {
       userId: user.id,
+      questionId: id,
+      voteType: "downvote",
     });
-
     if (questionUpvote.recordset.length > 0) {
-      return res.status(400).json({ message: "Question already upvoted" });
+      return res
+        .status(400)
+        .json({ message: "You already downvoted this question" });
     }
 
-    await dbUtils.exec("usp_UpvoteQuestion", {
+    // check if the user upvoted the question before
+    const questionDownvote = await dbUtils.exec(
+      "usp_GetUserQuestionVoteRecord",
+      {
+        userId: user.id,
+        questionId: id,
+        voteType: "upvote",
+      }
+    );
+    if (questionDownvote.recordset.length > 0) {
+      // decrement the upvote count on the question
+      await dbUtils.exec("usp_DecrementQuestionUpVote", { questionId: id });
+
+      // remove the user upvote record from the Votes table
+      await dbUtils.exec("usp_DeleteUserQuestionVoteRecord", {
+        questionId: id,
+        userId: user.id,
+        voteType: "upvote",
+      });
+    }
+
+    // downvote the question
+    await dbUtils.exec("usp_IncrementQuestionDownVote", { questionId: id });
+
+    // mark the question as downvoted by the user
+    await dbUtils.exec("usp_RecordUserQuestionVote", {
       questionId: id,
       userId: user.id,
+      voteType: "downvote",
     });
 
-    return res.status(200).json({ message: "Question upvoted" });
+    return res.status(200).json({ message: "Question downvoted" });
   } catch (error: any) {
     res.status(500).json(error.message);
     CreateLog.error(error);
