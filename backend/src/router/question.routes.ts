@@ -1,10 +1,12 @@
 import express from "express";
 import {
   getQuestionAnswers,
-  getQuestionAnswerById,
   createQuestionAnswer,
   updateQuestionAnswer,
   deleteQuestionAnswer,
+  getQuestionAnswerById,
+  downvoteAnswer,
+  upvoteAnswer,
 } from "../controllers/answer.controller";
 import {
   getAnswerComments,
@@ -79,7 +81,14 @@ questionRoutes.route("/:id/upvote").patch(authenticateUser, upvoteQuestion);
 
 questionRoutes.route("/:id/downvote").patch(authenticateUser, downvoteQuestion);
 
-// Answer Routes
+/* 
+#################################################################################
+#                                                                               #
+#                               Answer Routes                                   #
+#                                                                               #
+#################################################################################
+ */
+
 questionRoutes.route("/:id/answers").get(getQuestionAnswers);
 
 questionRoutes
@@ -109,6 +118,14 @@ questionRoutes
 questionRoutes
   .route("/:questionId/answers/:answerId/comments")
   .post(authenticateUser, createAnswerComment);
+
+questionRoutes
+  .route("/:id/answers/:answerId/upvote")
+  .patch(authenticateUser, upvoteAnswer);
+
+questionRoutes
+  .route("/:id/answers/:answerId/downvote")
+  .patch(authenticateUser, downvoteAnswer);
 
 questionRoutes
   .route("/:questionId/answers/:answerId/comments/:commentId")

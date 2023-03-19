@@ -164,17 +164,12 @@ BEGIN
     SET NOCOUNT ON;
     UPDATE Questions SET downvotes = downvotes + 1 WHERE id = @questionId
 END
+*/
 
--- answers */
-/* 
-CREATE OR ALTER PROCEDURE usp_HardDeleteQuestionAnswer
-    @id INT
-AS
-BEGIN
-    DELETE FROM Answers
-    WHERE id = @id;
-END
- */
+
+
+
+
 
 
 

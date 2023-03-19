@@ -185,6 +185,134 @@ export const updateQuestionAnswer = async (
   }
 };
 
+/*
+ * @desc    Upvote answer
+ * @route   PATCH /api/questions/:questionId/answers/:answerId/upvote
+ * @access  Private
+ */
+export const upvoteAnswer = async (req: IRequestWithUser, res: Response) => {
+  const { answerId } = req.params;
+
+  const user = req.user as IUser;
+
+  try {
+    const answer = await dbUtils.exec("usp_GetAnswerById", { id: answerId });
+
+    if (answer.recordset.length === 0) {
+      return res.status(404).json({ message: "Answer does not exist" });
+    }
+
+    // check if the user upvoted the answer already
+    const answerUpvote = await dbUtils.exec("usp_GetUserAnswerVoteRecord", {
+      userId: user.id,
+      answerId,
+      voteType: "upvote",
+    });
+    if (answerUpvote.recordset.length > 0) {
+      return res
+        .status(400)
+        .json({ message: "You already upvoted this answer" });
+    }
+
+    // check if the user downvoted the answer before
+    const answerDownvote = await dbUtils.exec("usp_GetUserAnswerVoteRecord", {
+      userId: user.id,
+      answerId,
+      voteType: "downvote",
+    });
+    if (answerDownvote.recordset.length > 0) {
+      // decrement the downvote count on the answer
+      await dbUtils.exec("usp_DecrementAnswerDownVote", { answerId });
+
+      // remove the user downvote record from the Votes table
+      await dbUtils.exec("usp_DeleteUserAnswerVoteRecord", {
+        answerId,
+        userId: user.id,
+        voteType: "downvote",
+      });
+    }
+
+    // upvote the answer
+    await dbUtils.exec("usp_IncrementAnswerUpVote", { answerId });
+
+    // mark the answer as upvoted by the user
+    await dbUtils.exec("usp_RecordUserAnswerVote", {
+      answerId,
+      userId: user.id,
+      voteType: "upvote",
+    });
+
+    return res.status(200).json({ message: "Answer upvoted" });
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/**
+ * @desc    Downvote answer
+ * @route   PATCH /api/questions/:questionId/answers/:answerId/downvote
+ * @access  Private
+ */
+export const downvoteAnswer = async (req: IRequestWithUser, res: Response) => {
+  const { answerId } = req.params;
+
+  const user = req.user as IUser;
+
+  try {
+    const answer = await dbUtils.exec("usp_GetAnswerById", { id: answerId });
+
+    if (answer.recordset.length === 0) {
+      return res.status(404).json({ message: "Answer does not exist" });
+    }
+
+    // check if the user downvoted the answer already
+    const answerDownvote = await dbUtils.exec("usp_GetUserAnswerVoteRecord", {
+      userId: user.id,
+      answerId,
+      voteType: "downvote",
+    });
+    if (answerDownvote.recordset.length > 0) {
+      return res
+        .status(400)
+        .json({ message: "You already downvoted this answer" });
+    }
+
+    // check if the user upvoted the answer before
+    const answerUpvote = await dbUtils.exec("usp_GetUserAnswerVoteRecord", {
+      userId: user.id,
+      answerId,
+      voteType: "upvote",
+    });
+    if (answerUpvote.recordset.length > 0) {
+      // decrement the upvote count on the answer
+      await dbUtils.exec("usp_DecrementAnswerUpVote", { answerId });
+
+      // remove the user upvote record from the Votes table
+      await dbUtils.exec("usp_DeleteUserAnswerVoteRecord", {
+        answerId,
+        userId: user.id,
+        voteType: "upvote",
+      });
+    }
+
+    // downvote the answer
+    await dbUtils.exec("usp_IncrementAnswerDownVote", { answerId });
+
+    // mark the answer as downvoted by the user
+    await dbUtils.exec("usp_RecordUserAnswerVote", {
+      answerId,
+      userId: user.id,
+      voteType: "downvote",
+    });
+
+    return res.status(200).json({ message: "Answer downvoted" });
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
 /**
  * @desc    Delete answer
  * @route   DELETE /api/questions/:questionId/answers/:answerId
