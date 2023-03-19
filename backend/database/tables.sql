@@ -48,7 +48,7 @@ CREATE TABLE Answers
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES Users(id),
-    FOREIGN KEY (questionId) REFERENCES Questions(id)
+    FOREIGN KEY (questionId) REFERENCES Questions(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Comments
@@ -63,7 +63,7 @@ CREATE TABLE Comments
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES Users(id),
     FOREIGN KEY (questionId) REFERENCES Questions(id),
-    FOREIGN KEY (answerId) REFERENCES Answers(id)
+    FOREIGN KEY (answerId) REFERENCES Answers(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Tags
@@ -98,49 +98,7 @@ CREATE TABLE Votes
     FOREIGN KEY (answerId) REFERENCES Answers(id)
 );
 
-/* 
-    // check if the user upvoted the question already
-    const questionUpvote = await dbUtils.exec("usp_GetUserQuestionVoteRecord", {
-      userId: user.id,
-      questionId: id,
-      voteType: "upvote",
-    });
-    if (questionUpvote.recordset.length > 0) {
-      return res
-        .status(400)
-        .json({ message: "You already upvoted this question" });
-    }
-
-    // check if the user downvoted the question before
-    const questionDownvote = await dbUtils.exec("usp_GetUserQuestionVoteRecord", {
-      userId: user.id,
-      questionId: id,
-      voteType: "downvote",
-    });
-    if (questionDownvote.recordset.length > 0) {
-      // decrement the downvote count on the question
-      await dbUtils.exec("usp_DecrementQuestionVote", { questionId: id });
-
-      // remove the user downvote record from the Votes table
-      await dbUtils.exec("usp_DeleteUserQuestionVoteRecord", {
-        questionId: id,
-        userId: user.id,
-        voteType: "downvote",
-      });
-    }
-
-    // upvote the question
-    await dbUtils.exec("usp_IncrementQuestionVote", { questionId: id });
-
-    // mark the question as upvoted by the user
-    await dbUtils.exec("usp_RecordUserQuestionVote", {
-      questionId: id,
-      userId: user.id,
-      voteType: "upvote",
-    });
- */
-
-CREATE OR ALTER PROCEDURE usp_GetUserQuestionVoteRecord
+/* CREATE OR ALTER PROCEDURE usp_GetUserQuestionVoteRecord
     @userId INT,
     @questionId INT,
     @voteType VARCHAR(255)
@@ -207,26 +165,17 @@ BEGIN
     UPDATE Questions SET downvotes = downvotes + 1 WHERE id = @questionId
 END
 
--- answers
+-- answers */
 /* 
-    const answer = await dbUtils.exec("usp_CreateQuestionAnswer", {
-      questionId,
-      userId: user.id,
-      body,
-    });
- */
-CREATE OR ALTER PROCEDURE usp_CreateQuestionAnswer
-    @questionId INT,
-    @userId INT,
-    @body VARCHAR(MAX)
+CREATE OR ALTER PROCEDURE usp_HardDeleteQuestionAnswer
+    @id INT
 AS
 BEGIN
-    INSERT INTO Answers
-        (questionId, userId, body)
-    VALUES
-        (@questionId, @userId, @body)
-    SELECT * FROM Answers WHERE id = SCOPE_IDENTITY()
+    DELETE FROM Answers
+    WHERE id = @id;
 END
+ */
+
 
 
 

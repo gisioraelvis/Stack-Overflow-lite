@@ -1,22 +1,34 @@
 import express from "express";
 import {
-  createQuestion,
+  getQuestionAnswers,
+  getQuestionAnswerById,
   createQuestionAnswer,
+  updateQuestionAnswer,
+  deleteQuestionAnswer,
+} from "../controllers/answer.controller";
+import {
+  getAnswerComments,
+  getAnswerCommentById,
+  createAnswerComment,
+  updateAnswerComment,
+  deleteAnswerComment,
+  getQuestionComments,
+  getQuestionCommentById,
+  createQuestionComment,
+  updateQuestionComment,
+  deleteQuestionComment,
+} from "../controllers/comments.controller";
+import {
+  createQuestion,
   downvoteQuestion,
   getAllQuestions,
-  getQuestionAnswerById,
-  getQuestionAnswerCommentById,
-  getQuestionAnswerComments,
-  getQuestionAnswers,
   getQuestionById,
-  getQuestionComments,
   getSoftDeletedQuestions,
   hardDeleteQuestion,
   restoreQuestion,
   softDeleteQuestion,
   updateQuestion,
   upvoteQuestion,
-  // getQuestionById,
 } from "../controllers/question.controller";
 import {
   authenticateUser,
@@ -34,6 +46,20 @@ questionRoutes
 questionRoutes.route("/:id").get(getQuestionById);
 
 questionRoutes.route("/:id/comments").get(getQuestionComments);
+
+questionRoutes.route("/:id/comments/:commentId").get(getQuestionCommentById);
+
+questionRoutes
+  .route("/:questionId/comments")
+  .post(authenticateUser, createQuestionComment);
+
+questionRoutes
+  .route("/:questionId/comments/:commentId")
+  .put(authenticateUser, updateQuestionComment);
+
+questionRoutes
+  .route("/:questionId/comments/:commentId")
+  .delete(authenticateUser, deleteQuestionComment);
 
 questionRoutes.route("/:id/answers").get(getQuestionAnswers);
 
@@ -60,14 +86,36 @@ questionRoutes
   .route("/:questionId/answers/:answerId")
   .get(getQuestionAnswerById);
 
-questionRoutes.route("/:questionId/answers").post(authenticateUser, createQuestionAnswer);
+questionRoutes
+  .route("/:questionId/answers")
+  .post(authenticateUser, createQuestionAnswer);
 
 questionRoutes
   .route("/:questionId/answers/:answerId/comments")
-  .get(getQuestionAnswerComments);
+  .get(getAnswerComments);
 
 questionRoutes
   .route("/:questionId/answers/:answerId/comments/:commentId")
-  .get(getQuestionAnswerCommentById);
+  .get(getAnswerCommentById);
+
+questionRoutes
+  .route("/:questionId/answers/:answerId")
+  .put(authenticateUser, updateQuestionAnswer);
+
+questionRoutes
+  .route("/:questionId/answers/:answerId")
+  .delete(authenticateUser, deleteQuestionAnswer);
+
+questionRoutes
+  .route("/:questionId/answers/:answerId/comments")
+  .post(authenticateUser, createAnswerComment);
+
+questionRoutes
+  .route("/:questionId/answers/:answerId/comments/:commentId")
+  .put(authenticateUser, updateAnswerComment);
+
+questionRoutes
+  .route("/:questionId/answers/:answerId/comments/:commentId")
+  .delete(authenticateUser, deleteAnswerComment);
 
 export default questionRoutes;
