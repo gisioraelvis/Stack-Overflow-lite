@@ -10,6 +10,7 @@ import { IQuestion, IQuestionObject } from "../interfaces/question.interface";
 import { ITag, ITagObject } from "../interfaces/tag.interface";
 import { QuestionCreateDto, QuestionUpdateDto } from "../dtos/question.dto";
 import { formatQuestionTags } from "../utils/question.utils";
+import { TagCreateDto, TagUpdateDto } from "../dtos/tag.dto";
 
 const dbUtils = new DatabaseUtils();
 

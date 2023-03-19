@@ -19,7 +19,7 @@ import {
   createQuestionComment,
   updateQuestionComment,
   deleteQuestionComment,
-} from "../controllers/comments.controller";
+} from "../controllers/comment.controller";
 import {
   createQuestion,
   downvoteQuestion,

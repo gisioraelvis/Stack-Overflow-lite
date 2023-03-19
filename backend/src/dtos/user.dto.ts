@@ -8,6 +8,7 @@ export const UserSignUpDto = Joi.object({
     "string.email": "Invalid email",
   }),
   password: Joi.string().required(),
+  // TODO: uncomment in production
   // .pattern(
   //   new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$")
   // )

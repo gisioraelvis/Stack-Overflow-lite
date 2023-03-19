@@ -98,73 +98,7 @@ CREATE TABLE Votes
     FOREIGN KEY (answerId) REFERENCES Answers(id)
 );
 
-/* CREATE OR ALTER PROCEDURE usp_GetUserQuestionVoteRecord
-    @userId INT,
-    @questionId INT,
-    @voteType VARCHAR(255)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    SELECT *
-    FROM Votes
-    WHERE userId = @userId AND questionId = @questionId AND voteType = @voteType
-END
 
-CREATE OR ALTER PROCEDURE usp_DecrementQuestionDownVote
-    @questionId INT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    UPDATE Questions SET downvotes = downvotes - 1 WHERE id = @questionId
-END
-
-CREATE OR ALTER PROCEDURE usp_DeleteUserQuestionVoteRecord
-    @questionId INT,
-    @userId INT,
-    @voteType VARCHAR(255)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    DELETE FROM Votes WHERE questionId = @questionId AND userId = @userId AND voteType = @voteType
-END
-
-CREATE OR ALTER PROCEDURE usp_IncrementQuestionUpVote
-    @questionId INT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    UPDATE Questions SET upvotes = upvotes + 1 WHERE id = @questionId
-END
-
-CREATE OR ALTER PROCEDURE usp_RecordUserQuestionVote
-    @questionId INT,
-    @userId INT,
-    @voteType VARCHAR(255)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    INSERT INTO Votes
-        (questionId, userId, voteType)
-    VALUES
-        (@questionId, @userId, @voteType)
-END
-
-CREATE OR ALTER PROCEDURE usp_DecrementQuestionUpVote
-    @questionId INT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    UPDATE Questions SET upvotes = upvotes - 1 WHERE id = @questionId
-END
-
-CREATE OR ALTER PROCEDURE usp_IncrementQuestionDownVote
-    @questionId INT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    UPDATE Questions SET downvotes = downvotes + 1 WHERE id = @questionId
-END
-*/
 
 
 
