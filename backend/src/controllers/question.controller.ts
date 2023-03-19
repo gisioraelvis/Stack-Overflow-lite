@@ -11,7 +11,11 @@ import { ITag, ITagObject } from "../interfaces/tag.interface";
 import { IAnswer, IAnswerObject } from "../interfaces/answer.interface";
 import { IComment, ICommentObject } from "../interfaces/comment.interface";
 import { QuestionCreateDto, QuestionUpdateDto } from "../dtos/question.dto";
-import { formatQuestionTags } from "../utils/question.utils";
+import {
+  formatQuestionComments,
+  formatQuestionTags,
+} from "../utils/question.utils";
+import { AnswerCreateDto, AnswerUpdateDto } from "../dtos/answer.dto";
 
 const dbUtils = new DatabaseUtils();
 
@@ -120,72 +124,7 @@ export const getQuestionComments = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Question does not exist" });
     }
 
-    const formattedQuestionComments: IComment[] = comments.recordset.map(
-      (comment: ICommentObject) => {
-        const user = {
-          id: comment.userId,
-          name: comment.userName,
-          email: comment.userEmail,
-          avatar: comment.userAvatar,
-          isAdmin: comment.userIsAdmin,
-        };
-
-        return {
-          id: comment.commentId,
-          body: comment.commentBody,
-          user,
-          createdAt: comment.commentCreatedAt,
-          updatedAt: comment.commentUpdatedAt,
-        };
-      }
-    );
-
-    return res.status(200).json(formattedQuestionComments);
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-    CreateLog.error(error);
-  }
-};
-
-/**
- * @desc    Get a question answers
- * @route   GET /api/questions/:id/answers
- * @access  Public
- */
-export const getQuestionAnswers = async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  try {
-    const answers = await dbUtils.exec("usp_GetQuestionAnswers", { id });
-
-    if (answers.recordset.length === 0) {
-      return res.status(404).json({ message: "Question does not exist" });
-    }
-
-    const formattedQuestionAnswers: IAnswer[] = answers.recordset.map(
-      (answer: IAnswerObject) => {
-        const user = {
-          id: answer.userId,
-          name: answer.userName,
-          email: answer.userEmail,
-          avatar: answer.userAvatar,
-          isAdmin: answer.userIsAdmin,
-        };
-
-        return {
-          id: answer.answerId,
-          body: answer.answerBody,
-          user,
-          upvotes: answer.answerUpvotes,
-          downvotes: answer.answerDownvotes,
-          isAccepted: answer.answerIsAccepted,
-          createdAt: answer.answerCreatedAt,
-          updatedAt: answer.answerUpdatedAt,
-        };
-      }
-    );
-
-    return res.status(200).json(formattedQuestionAnswers);
+    return res.status(200).json(formatQuestionComments(comments.recordset));
   } catch (error: any) {
     res.status(500).json({ message: error.message });
     CreateLog.error(error);
@@ -406,6 +345,70 @@ export const upvoteQuestion = async (req: IRequestWithUser, res: Response) => {
 };
 
 /*
+ * @desc    Upvote a answer
+ * @route   PATCH /api/answers/:id/upvote
+ * @access  Private
+ */
+export const upvoteAnswer = async (req: IRequestWithUser, res: Response) => {
+  const { id } = req.params;
+
+  const user = req.user as IUser;
+
+  try {
+    const answer = await dbUtils.exec("usp_GetAnswerById", { id });
+
+    if (answer.recordset.length === 0) {
+      return res.status(404).json({ message: "Answer does not exist" });
+    }
+
+    // check if the user upvoted the answer already
+    const answerUpvote = await dbUtils.exec("usp_GetUserAnswerVoteRecord", {
+      userId: user.id,
+      answerId: id,
+      voteType: "upvote",
+    });
+    if (answerUpvote.recordset.length > 0) {
+      return res
+        .status(400)
+        .json({ message: "You already upvoted this answer" });
+    }
+
+    // check if the user downvoted the answer before
+    const answerDownvote = await dbUtils.exec("usp_GetUserAnswerVoteRecord", {
+      userId: user.id,
+      answerId: id,
+      voteType: "downvote",
+    });
+    if (answerDownvote.recordset.length > 0) {
+      // decrement the downvote count on the answer
+      await dbUtils.exec("usp_DecrementAnswerDownVote", { answerId: id });
+
+      // remove the user downvote record from the Votes table
+      await dbUtils.exec("usp_DeleteUserAnswerVoteRecord", {
+        answerId: id,
+        userId: user.id,
+        voteType: "downvote",
+      });
+    }
+
+    // upvote the answer
+    await dbUtils.exec("usp_IncrementAnswerUpVote", { answerId: id });
+
+    // mark the answer as upvoted by the user
+    await dbUtils.exec("usp_RecordUserAnswerVote", {
+      answerId: id,
+      userId: user.id,
+      voteType: "upvote",
+    });
+
+    return res.status(200).json({ message: "Answer upvoted" });
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/*
  * @desc    Downvote a question
  * @route   PATCH /api/questions/:id/downvote
  * @access  Private
@@ -603,6 +606,274 @@ export const hardDeleteQuestion = async (
     await dbUtils.exec("usp_HardDeleteQuestion", { id });
 
     return res.status(200).json({ message: "Question deleted successfully" });
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/* 
+########################################################################################
+#                                                                                      #
+#                             Answer Endpoints                                         #
+#                                                                                      #
+########################################################################################
+*/
+/**
+ * @desc    Get a question answers
+ * @route   GET /api/questions/:id/answers
+ * @access  Public
+ */
+export const getQuestionAnswers = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const answers = await dbUtils.exec("usp_GetQuestionAnswers", { id });
+
+    if (answers.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
+
+    const formattedQuestionAnswers: IAnswer[] = answers.recordset.map(
+      (answer: IAnswerObject) => {
+        const user = {
+          id: answer.userId,
+          name: answer.userName,
+          email: answer.userEmail,
+          avatar: answer.userAvatar,
+          isAdmin: answer.userIsAdmin,
+        };
+
+        return {
+          id: answer.answerId,
+          body: answer.answerBody,
+          user,
+          upvotes: answer.answerUpvotes,
+          downvotes: answer.answerDownvotes,
+          isAccepted: answer.answerIsAccepted,
+          createdAt: answer.answerCreatedAt,
+          updatedAt: answer.answerUpdatedAt,
+        };
+      }
+    );
+
+    return res.status(200).json(formattedQuestionAnswers);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    Get answer by id
+ * @route   GET /api/questions/:questionId/answers/:answerId
+ * @access  Public
+ */
+export const getQuestionAnswerById = async (req: Request, res: Response) => {
+  const { questionId, answerId } = req.params;
+
+  try {
+    const question = await dbUtils.exec("usp_GetQuestionById", {
+      id: questionId,
+    });
+    if (question.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
+
+    const answer = await dbUtils.exec("usp_GetQuestionAnswerById", {
+      questionId,
+      answerId,
+    });
+    if (answer.recordset.length === 0) {
+      return res.status(404).json({
+        message: `Answer id ${answerId} does not exist on question id ${questionId}`,
+      });
+    }
+
+    return res.status(200).json(answer.recordset[0]);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    Get answer comments
+ * @route   GET /api/questions/:questionId/answers/:answerId/comments
+ * @access  Public
+ */
+export const getQuestionAnswerComments = async (
+  req: Request,
+  res: Response
+) => {
+  const { questionId, answerId } = req.params;
+
+  try {
+    const question = await dbUtils.exec("usp_GetQuestionById", {
+      id: questionId,
+    });
+    if (question.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
+
+    const answer = await dbUtils.exec("usp_GetQuestionAnswerById", {
+      questionId,
+      answerId,
+    });
+    if (answer.recordset.length === 0) {
+      return res.status(404).json({
+        message: `Answer id ${answerId} does not exist on question id ${questionId}`,
+      });
+    }
+
+    const comments = await dbUtils.exec("usp_GetAnswerComments", {
+      id: questionId,
+    });
+
+    if (comments.recordset.length === 0) {
+      return res.status(200).json([]);
+    }
+
+    return res.status(200).json(formatQuestionComments(comments.recordset));
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    Get answer comment by id
+ * @route   GET /api/questions/:questionId/answers/:answerId/comments/:commentId
+ * @access  Public
+ */
+export const getQuestionAnswerCommentById = async (
+  req: Request,
+  res: Response
+) => {
+  const { questionId, answerId, commentId } = req.params;
+
+  try {
+    const question = await dbUtils.exec("usp_GetQuestionById", {
+      id: questionId,
+    });
+    if (question.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
+
+    const answer = await dbUtils.exec("usp_GetQuestionAnswerById", {
+      questionId,
+      answerId,
+    });
+    if (answer.recordset.length === 0) {
+      return res.status(404).json({
+        message: `Answer id ${answerId} does not exist on question id ${questionId}`,
+      });
+    }
+
+    const comment = await dbUtils.exec("usp_GetAnswerCommentById", {
+      id: commentId,
+      answerId: answerId,
+    });
+    if (comment.recordset.length === 0) {
+      return res.status(404).json({
+        message: `Comment id ${commentId} does not exist on answer id ${answerId}`,
+      });
+    }
+
+    return res.status(200).json(comment.recordset[0]);
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    Create answer
+ * @route   POST /api/questions/:questionId/answers
+ * @access  Private
+ */
+export const createQuestionAnswer = async (
+  req: IRequestWithUser,
+  res: Response
+) => {
+  const { error } = AnswerCreateDto.validate(req.body);
+  if (error) {
+    return res.status(422).json(error.details[0].message);
+  }
+  const { questionId } = req.params;
+  const { body } = req.body;
+
+  const user = req.user as IUser;
+
+  try {
+    const question = await dbUtils.exec("usp_GetQuestionById", {
+      id: questionId,
+    });
+    if (question.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
+
+    const answer = await dbUtils.exec("usp_CreateQuestionAnswer", {
+      questionId,
+      userId: user.id,
+      body,
+    });
+
+    return res.status(201).json(answer.recordset[0]);
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    Update answer
+ * @route   PUT /api/questions/:questionId/answers/:answerId
+ * @access  Private (only answer owner or admin)
+ */
+export const updateQuestionAnswer = async (
+  req: IRequestWithUser,
+  res: Response
+) => {
+  const { error } = AnswerUpdateDto.validate(req.body);
+  if (error) {
+    return res.status(422).json(error.details[0].message);
+  }
+  const { questionId, answerId } = req.params;
+  const { body } = req.body;
+
+  const user = req.user as IUser;
+
+  try {
+    const question = await dbUtils.exec("usp_GetQuestionById", {
+      id: questionId,
+    });
+    if (question.recordset.length === 0) {
+      return res.status(404).json({ message: "Question does not exist" });
+    }
+
+    const answer = await dbUtils.exec("usp_GetQuestionAnswerById", {
+      questionId,
+      answerId,
+    });
+    if (answer.recordset.length === 0) {
+      return res.status(404).json({
+        message: `Answer id ${answerId} does not exist on question id ${questionId}`,
+      });
+    }
+
+    if (answer.recordset[0].userId !== user.id && !user.isAdmin) {
+      return res.status(403).json({
+        message: `User id ${user.id} is not the owner of answer id ${answerId}`,
+      });
+    }
+
+    const updatedAnswer = await dbUtils.exec("usp_UpdateQuestionAnswer", {
+      id: answerId,
+      body,
+    });
+
+    return res.status(200).json(updatedAnswer.recordset[0]);
   } catch (error: any) {
     res.status(500).json(error.message);
     CreateLog.error(error);

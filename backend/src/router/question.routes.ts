@@ -1,8 +1,12 @@
 import express from "express";
 import {
   createQuestion,
+  createQuestionAnswer,
   downvoteQuestion,
   getAllQuestions,
+  getQuestionAnswerById,
+  getQuestionAnswerCommentById,
+  getQuestionAnswerComments,
   getQuestionAnswers,
   getQuestionById,
   getQuestionComments,
@@ -48,5 +52,22 @@ questionRoutes.route("/:id/restore").patch(authenticateUser, restoreQuestion);
 questionRoutes.route("/:id/upvote").patch(authenticateUser, upvoteQuestion);
 
 questionRoutes.route("/:id/downvote").patch(authenticateUser, downvoteQuestion);
+
+// Answer Routes
+questionRoutes.route("/:id/answers").get(getQuestionAnswers);
+
+questionRoutes
+  .route("/:questionId/answers/:answerId")
+  .get(getQuestionAnswerById);
+
+questionRoutes.route("/:questionId/answers").post(authenticateUser, createQuestionAnswer);
+
+questionRoutes
+  .route("/:questionId/answers/:answerId/comments")
+  .get(getQuestionAnswerComments);
+
+questionRoutes
+  .route("/:questionId/answers/:answerId/comments/:commentId")
+  .get(getQuestionAnswerCommentById);
 
 export default questionRoutes;

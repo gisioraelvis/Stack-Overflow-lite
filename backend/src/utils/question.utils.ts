@@ -1,7 +1,10 @@
+import { IComment, ICommentObject } from "../interfaces/comment.interface";
 import { IQuestion, IQuestionObject } from "../interfaces/question.interface";
 import { ITag } from "../interfaces/tag.interface";
 
-export const formatQuestionTags = (questions: IQuestionObject[]): IQuestion[] => {
+export const formatQuestionTags = (
+  questions: IQuestionObject[]
+): IQuestion[] => {
   return questions.map((question) => {
     const user = {
       id: question.userId,
@@ -39,6 +42,51 @@ export const formatQuestionTags = (questions: IQuestionObject[]): IQuestion[] =>
       createdAt: question.questionCreatedAt,
       updatedAt: question.questionUpdatedAt,
       tags,
+    };
+  });
+};
+
+/* 
+
+    const formattedQuestionComments: IComment[] = comments.recordset.map(
+      (comment: ICommentObject) => {
+        const user = {
+          id: comment.userId,
+          name: comment.userName,
+          email: comment.userEmail,
+          avatar: comment.userAvatar,
+          isAdmin: comment.userIsAdmin,
+        };
+
+        return {
+          id: comment.commentId,
+          body: comment.commentBody,
+          user,
+          createdAt: comment.commentCreatedAt,
+          updatedAt: comment.commentUpdatedAt,
+        };
+      }
+    );
+*/
+
+export const formatQuestionComments = (
+  comments: ICommentObject[]
+): IComment[] => {
+  return comments.map((comment) => {
+    const user = {
+      id: comment.userId,
+      name: comment.userName,
+      email: comment.userEmail,
+      avatar: comment.userAvatar,
+      isAdmin: comment.userIsAdmin,
+    };
+
+    return {
+      id: comment.commentId,
+      body: comment.commentBody,
+      user,
+      createdAt: comment.commentCreatedAt,
+      updatedAt: comment.commentUpdatedAt,
     };
   });
 };

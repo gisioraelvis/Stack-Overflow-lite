@@ -207,6 +207,38 @@ BEGIN
     UPDATE Questions SET downvotes = downvotes + 1 WHERE id = @questionId
 END
 
+-- answers
+/* 
+    const answer = await dbUtils.exec("usp_CreateQuestionAnswer", {
+      questionId,
+      userId: user.id,
+      body,
+    });
+ */
+CREATE OR ALTER PROCEDURE usp_CreateQuestionAnswer
+    @questionId INT,
+    @userId INT,
+    @body VARCHAR(MAX)
+AS
+BEGIN
+    INSERT INTO Answers
+        (questionId, userId, body)
+    VALUES
+        (@questionId, @userId, @body)
+    SELECT * FROM Answers WHERE id = SCOPE_IDENTITY()
+END
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
