@@ -19,13 +19,26 @@ export const sendWelcomeEmail = async () => {
       //   );
       const newUsers = result.recordset as IUser[];
       newUsers.forEach((user) => {
-        const subject = "Welcome to GadgetHub";
-        const html = `<h1>Welcome to GadgetHub</h1>
+        const subject = "Welcome to StackOverflow Lite";
+        const html = `<h1>Welcome to StackOverflow Lite</h1>
             <p>Dear ${user.name},</p>
-            <p>Thank you for registering an account with GadgetHub.</p>
-            <P>We are happy to have you on board and ready to serve you.</P>
-            <P>Happy <a href=${process.env.CLIENT_URL}>Shopping</a> 🎉</P>
-            <p>Regards,<br/>GadgetHub Team</p>`;
+            <p>Thank you for registering.</p>
+            <P>We are happy to have you in the community 🎉</P>
+            <P>
+              You can now:
+              <ul>
+                <li>Ask questions</li>
+                <li>Answer questions</li>
+                <li>Comment on questions and answers</li>
+                <li>Vote on questions and answers</li>
+              </ul>
+            </P>
+            <P>
+              <a href=${process.env.CLIENT_URL}>
+                Click here to visit StackOverflow Lite
+              </a> 
+            </P>
+            <p>Regards,<br/>StackOverflow Lite Team</p>`;
 
         sendEmail(subject, user.email, html);
       });

@@ -235,6 +235,14 @@ export const upvoteAnswer = async (req: IRequestWithUser, res: Response) => {
     // upvote the answer
     await dbUtils.exec("usp_IncrementAnswerUpVote", { answerId });
 
+    // if the user who asked the question upvotes the answer, mark answer accepted
+    const question = await dbUtils.exec("usp_GetQuestionByAnswerId", {
+      answerId,
+    });
+    if (question.recordset[0].userId === user.id) {
+      await dbUtils.exec("usp_MarkAnswerAccepted", { answerId, isAccepted: 1 });
+    }
+
     // mark the answer as upvoted by the user
     await dbUtils.exec("usp_RecordUserAnswerVote", {
       answerId,
@@ -298,6 +306,14 @@ export const downvoteAnswer = async (req: IRequestWithUser, res: Response) => {
 
     // downvote the answer
     await dbUtils.exec("usp_IncrementAnswerDownVote", { answerId });
+
+    // if the user who asked the question downvotes the answer,mark answer not accepted
+    const question = await dbUtils.exec("usp_GetQuestionByAnswerId", {
+      answerId,
+    });
+    if (question.recordset[0].userId === user.id) {
+      await dbUtils.exec("usp_MarkAnswerAccepted", { answerId, isAccepted: 0 });
+    }
 
     // mark the answer as downvoted by the user
     await dbUtils.exec("usp_RecordUserAnswerVote", {

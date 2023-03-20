@@ -24,6 +24,7 @@ import {
   createQuestion,
   downvoteQuestion,
   getAllQuestions,
+  getAllQuestionsWithTags,
   getQuestionById,
   getSoftDeletedQuestions,
   hardDeleteQuestion,
@@ -39,6 +40,7 @@ import {
 
 const questionRoutes = express.Router();
 
+// questionRoutes.route("/").get(getAllQuestionsWithTags);
 questionRoutes.route("/").get(getAllQuestions);
 
 questionRoutes

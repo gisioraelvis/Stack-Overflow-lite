@@ -10,10 +10,8 @@ import { IQuestion, IQuestionObject } from "../interfaces/question.interface";
 import { ITag, ITagObject } from "../interfaces/tag.interface";
 import { QuestionCreateDto, QuestionUpdateDto } from "../dtos/question.dto";
 import { formatQuestionTags } from "../utils/question.utils";
-import { TagCreateDto, TagUpdateDto } from "../dtos/tag.dto";
 
 const dbUtils = new DatabaseUtils();
-
 /**
  * @desc    Get all questions
  * @route   GET /api/questions
@@ -29,7 +27,47 @@ export const getAllQuestions = async (req: Request, res: Response) => {
   };
 
   try {
-    const questions = await dbUtils.exec("usp_GetAllQuestions");
+    const questions = await dbUtils.exec("usp_GetAllQuestions", {
+      page: pagination.page,
+      itemsPerPage: pagination.itemsPerPage,
+    });
+
+    let formatedQuestionWithTags = [] as IQuestion[];
+
+    for (const question of questions.recordset) {
+      await dbUtils
+        .exec("usp_GetQuestionById", {
+          id: question.id,
+        })
+        .then((q) => {
+          const formattedQuestion = formatQuestionTags(q.recordset);
+          formatedQuestionWithTags.push(formattedQuestion[0]);
+        });
+    }
+
+    return res.status(200).json(formatedQuestionWithTags);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+    CreateLog.error(error);
+  }
+};
+
+/**
+ * @desc    Get all questions
+ * @route   GET /api/questions
+ * @access  Public
+ */
+export const getAllQuestionsWithTags = async (req: Request, res: Response) => {
+  // optional pagination query params, page, itemsPerPage
+  const { page, itemsPerPage } = req.query;
+
+  const pagination: IPagination = {
+    page: page ? +page : 1,
+    itemsPerPage: itemsPerPage ? +itemsPerPage : 10,
+  };
+
+  try {
+    const questions = await dbUtils.exec("usp_GetAllQuestionsWithTags");
 
     const formattedQuestions: IQuestion[] = questions.recordset
       .map((question: IQuestionObject) => {

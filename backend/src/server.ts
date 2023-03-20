@@ -36,8 +36,8 @@ app.listen(PORT, () => {
   CreateLog.info(`Server running on http://${HOST}:${PORT}`);
 });
 
-// // send welcome email to newly registered users
-// cron.schedule("*/10 * * * * *", async () => {
-//   // CreateLog.info("New users welcome email cron job");
-//   await sendWelcomeEmail();
-// });
+// send welcome email to newly registered users
+cron.schedule("*/10 * * * * *", async () => {
+  // CreateLog.info("New users welcome email cron job");
+  await sendWelcomeEmail();
+});
