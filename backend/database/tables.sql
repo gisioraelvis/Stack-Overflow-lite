@@ -6,7 +6,6 @@ DROP TABLE IF EXISTS Comments;
 DROP TABLE IF EXISTS Tags;
 DROP TABLE IF EXISTS QuestionTags;
 
-USE StackOverflowLite;
 CREATE TABLE Users
 (
     id INT PRIMARY KEY IDENTITY(1,1),
@@ -69,10 +68,12 @@ CREATE TABLE Comments
 CREATE TABLE Tags
 (
     id INT PRIMARY KEY IDENTITY(1,1),
+    userId INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     body VARCHAR(MAX) NOT NULL,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES Users(id)
 );
 
 CREATE TABLE QuestionTags
@@ -80,8 +81,8 @@ CREATE TABLE QuestionTags
     questionId INT NOT NULL,
     tagId INT NOT NULL,
     PRIMARY KEY (questionId, tagId),
-    FOREIGN KEY (questionId) REFERENCES Questions(id),
-    FOREIGN KEY (tagId) REFERENCES Tags(id)
+    FOREIGN KEY (questionId) REFERENCES Questions(id) ON DELETE CASCADE,
+    FOREIGN KEY (tagId) REFERENCES Tags(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Votes
@@ -97,8 +98,6 @@ CREATE TABLE Votes
     FOREIGN KEY (questionId) REFERENCES Questions(id),
     FOREIGN KEY (answerId) REFERENCES Answers(id)
 );
-
-
 
 
 

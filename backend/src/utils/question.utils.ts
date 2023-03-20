@@ -22,6 +22,7 @@ export const formatQuestionTags = (
           id: q.tagId,
           name: q.tagName,
           body: q.tagBody,
+          userId: q.tagUserId,
           createdAt: q.tagCreatedAt,
           updatedAt: q.tagUpdatedAt,
         };

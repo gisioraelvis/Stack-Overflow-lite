@@ -122,7 +122,11 @@ export const createTag = async (req: IRequestWithUser, res: Response) => {
       return res.status(400).json({ message: "Tag already exists" });
     }
 
-    const newTag = await dbUtils.exec("usp_CreateTag", { name, body });
+    const newTag = await dbUtils.exec("usp_CreateTag", {
+      userId: req.user?.id,
+      name,
+      body,
+    });
 
     return res.status(201).json(newTag.recordset[0]);
   } catch (error: any) {
@@ -134,7 +138,7 @@ export const createTag = async (req: IRequestWithUser, res: Response) => {
 /*
  * @desc    Update a tag
  * @route   PUT /api/tags/:id
- * @access  Private (only admin can update a tag)
+ * @access  Private (only owner or admin can update a tag)
  */
 export const updateTag = async (req: IRequestWithUser, res: Response) => {
   const { error } = TagUpdateDto.validate(req.body);
@@ -154,9 +158,9 @@ export const updateTag = async (req: IRequestWithUser, res: Response) => {
       return res.status(404).json({ message: "Tag does not exist" });
     }
 
-    if (!user.isAdmin) {
+    if (tag.recordset[0].userId !== user.id && !user.isAdmin) {
       return res.status(401).json({
-        message: "Unauthorized, only admin can update a tag",
+        message: "Unauthorized, only tag owner or admin can update a tag",
       });
     }
 
@@ -171,28 +175,31 @@ export const updateTag = async (req: IRequestWithUser, res: Response) => {
 
 /*
  * @desc    Delete a tag
- * @route   DELETE /api/tags/:id
+ * @route   DELETE /api/tags/:tagId
  * @access  Private (only admin can delete a tag)
  */
 export const deleteTag = async (req: IRequestWithUser, res: Response) => {
-  const { id } = req.params;
+  const { tagId } = req.params;
 
   const user = req.user as IUser;
 
   try {
-    const tag = await dbUtils.exec("usp_GetTagById", { id });
+    const tag = await dbUtils.exec("usp_GetTagById", { id: tagId });
 
     if (tag.recordset.length === 0) {
       return res.status(404).json({ message: "Tag does not exist" });
     }
 
-    if (!user.isAdmin) {
+    if (tag.recordset[0].userId !== user.id && !user.isAdmin) {
       return res.status(401).json({
-        message: "Unauthorized, only admin can delete a tag",
+        message: "Unauthorized, only tag owner or admin can delete a tag",
       });
     }
 
-    await dbUtils.exec("usp_HardDeleteTag", { id });
+    // Delete the question-tag/s relation
+    await dbUtils.exec("usp_DeleteQuestionTags", { tagId });
+
+    await dbUtils.exec("usp_HardDeleteTag", { id: tagId });
 
     return res.status(200).json({ message: "Tag deleted successfully" });
   } catch (error: any) {

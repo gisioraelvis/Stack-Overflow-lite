@@ -24,6 +24,6 @@ tagRoutes.route("/").post(authenticateUser, createTag);
 
 tagRoutes.route("/:id").put(authenticateUser, updateTag);
 
-tagRoutes.route("/:id").delete(authenticateUser, deleteTag);
+tagRoutes.route("/:tagId").delete(authenticateUser, deleteTag);
 
 export default tagRoutes;

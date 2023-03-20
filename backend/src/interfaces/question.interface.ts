@@ -36,6 +36,7 @@ export interface IQuestionObject {
   userCreatedAt: string;
   userUpdatedAt: string;
   tagId: number;
+  tagUserId: number;
   tagName: string;
   tagBody: string;
   tagCreatedAt: string;
