@@ -37,7 +37,7 @@ app.listen(PORT, () => {
 });
 
 // send welcome email to newly registered users
-cron.schedule("*/10 * * * * *", async () => {
-  // CreateLog.info("New users welcome email cron job");
-  await sendWelcomeEmail();
-});
+// cron.schedule("*/10 * * * * *", async () => {
+//   // CreateLog.info("New users welcome email cron job");
+//   await sendWelcomeEmail();
+// });
