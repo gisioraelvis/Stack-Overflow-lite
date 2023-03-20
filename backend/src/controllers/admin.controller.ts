@@ -3,10 +3,21 @@ dotenv.config({ path: __dirname + "/../../.env" });
 import { Request, Response } from "express";
 import { DatabaseUtils } from "../utils/db.util";
 import { CreateLog } from "../utils/logger.util";
-import { IUser } from "../interfaces/user.interface";
-import { IRequestWithUser } from "../interfaces/request-with-user.interface";
-import { IPagination } from "../interfaces/pagination.interface";
 
 const dbUtils = new DatabaseUtils();
 
+/*
+ * @desc    Get site analytics
+ * @route   GET /api/admin/analytics
+ * @access  Private (only an admin can get site analytics)
+ */
+export const getAnalytics = async (req: Request, res: Response) => {
+  try {
+    const analytics = await dbUtils.exec("usp_GetAnalytics");
 
+    return res.status(200).json(analytics.recordset[0]);
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};

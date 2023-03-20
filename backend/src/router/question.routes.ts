@@ -1,5 +1,4 @@
 import express from "express";
-import { getSoftDeletedQuestions, hardDeleteQuestion, restoreQuestion } from "../controllers/admin.controller";
 import {
   getQuestionAnswers,
   createQuestionAnswer,
@@ -27,6 +26,9 @@ import {
   getAllQuestions,
   getAllQuestionsWithTags,
   getQuestionById,
+  getSoftDeletedQuestions,
+  hardDeleteQuestion,
+  restoreQuestion,
   softDeleteQuestion,
   updateQuestion,
   upvoteQuestion,
