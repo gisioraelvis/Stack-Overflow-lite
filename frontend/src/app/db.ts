@@ -7,14 +7,26 @@ import { IUser } from './shared/interfaces/IUser';
 import { IAnswer } from './shared/interfaces/IAnswer';
 import { IAnalytics } from './shared/interfaces/IAnalytics';
 
+export interface IFUser {
+  id: number;
+  name: string;
+  avatar: string;
+  questionsCount: number;
+  answersCount: number;
+  tagsCount: number;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+}
 // Users
 export const userFactory = Factory.Sync.makeFactory<IUser>({
   id: Factory.each((i) => i),
   name: Factory.each(() => faker.name.fullName()),
+  email: Factory.each(() => faker.internet.email()),
   avatar: Factory.each(() => faker.image.avatar()),
   questionsCount: Factory.each(() =>
     faker.datatype.number({ min: 0, max: 100 })
   ),
+  isAdmin: false,
   answersCount: Factory.each(() => faker.datatype.number({ min: 0, max: 100 })),
   tagsCount: Factory.each(() => faker.datatype.number({ min: 0, max: 1000 })),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),

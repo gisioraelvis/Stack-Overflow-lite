@@ -25,7 +25,7 @@
                     <p>
                         You have answered&nbsp;
                         <a [routerLink]="['/questions']" [queryParams]="{ filter: 'answered', userId: '1' }">
-                            {{user.answersCount | thousandSeparator}} questions
+                            {{user.answersCount! | thousandSeparator}} questions
                         </a>
                     </p>
                     <p *ngIf="user.answersCount === 0">
@@ -40,7 +40,7 @@
                 <div class="questions">
                     <p>You have asked&nbsp;
                         <a [routerLink]="['/questions']" [queryParams]="{  userId: '1' }">
-                            {{user.questionsCount | thousandSeparator }} questions
+                            {{user.questionsCount! | thousandSeparator }} questions
                         </a>
                     </p>
                     <p *ngIf="user.questionsCount === 0">
@@ -53,7 +53,7 @@
                 <div class="tags">
                     <p>You have participated in&nbsp;
                         <a [routerLink]="['/tags']" [queryParams]="{ userId: '1' }">
-                            {{user.tagsCount | thousandSeparator}} tags
+                            {{user.tagsCount! | thousandSeparator}} tags
                         </a>
                     </p>
                     <p *ngIf="user.tagsCount === 0">You have not participated in any

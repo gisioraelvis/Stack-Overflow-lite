@@ -16,8 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { SafePipeModule } from 'safe-pipe';
 import { FileUploadModule, FileUploader } from 'ng2-file-upload';
-import { API_URL } from 'src/app/constants';
 import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.component';
+import { API_URL } from 'src/app/constants';
 
 @Component({
   selector: 'app-update-profile',
