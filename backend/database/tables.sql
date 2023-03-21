@@ -120,6 +120,3 @@ CREATE TABLE Votes
 
 
 
-
-
-

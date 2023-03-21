@@ -10,3 +10,12 @@ export interface IUser {
   updatedAt?: Date | string;
   createdAt?: Date | string;
 }
+
+export interface IUserAnalytics {
+  totalQuestions: number;
+  totalAnswers: number;
+  totalComments: number;
+  totalTags: number;
+  totalVotes: number;
+  totalAcceptedAnswers: number;
+}

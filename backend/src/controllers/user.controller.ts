@@ -354,6 +354,35 @@ export const updateUserProfile = async (
   }
 };
 
+/*
+ * @desc    Get user site analytics
+ * @route   GET /api/users/:id/analytics
+ * @access  Private - User and Admin
+ */
+export const getUserSiteAnalytics = async (
+  req: IRequestWithUser,
+  res: Response
+) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await dbUtils.exec("usp_FindUserById", { id: userId });
+
+    if (user.recordset.length > 0) {
+      const userSiteAnalytics = await dbUtils.exec("usp_GetUserSiteAnalytics", {
+        userId,
+      });
+
+      return res.status(200).json(userSiteAnalytics.recordset[0]);
+    } else {
+      return res.status(404).json({ message: "User not found" });
+    }
+  } catch (error: any) {
+    res.status(500).json(error.message);
+    CreateLog.error(error);
+  }
+};
+
 /**
  * @desc    Get all users
  * @route   GET /api/users

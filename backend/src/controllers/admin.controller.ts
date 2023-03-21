@@ -13,7 +13,7 @@ const dbUtils = new DatabaseUtils();
  */
 export const getAnalytics = async (req: Request, res: Response) => {
   try {
-    const analytics = await dbUtils.exec("usp_GetAnalytics");
+    const analytics = await dbUtils.exec("usp_GetSiteAnalytics");
 
     return res.status(200).json(analytics.recordset[0]);
   } catch (error: any) {

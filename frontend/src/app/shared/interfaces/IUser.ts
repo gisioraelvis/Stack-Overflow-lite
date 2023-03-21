@@ -60,3 +60,12 @@ export interface IUserState {
   updateProfileSuccess: string;
   updateProfileError: string;
 }
+
+export interface IUserAnalytics {
+  totalQuestions: number;
+  totalAnswers: number;
+  totalComments: number;
+  totalTags: number;
+  totalVotes: number;
+  totalAcceptedAnswers: number;
+}
