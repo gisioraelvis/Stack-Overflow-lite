@@ -11,7 +11,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
-import { IUser } from 'src/app/shared/interfaces/IUser';
+import { IUser, IUserAnalytics } from 'src/app/shared/interfaces/IUser';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -38,6 +39,7 @@ import { IUser } from 'src/app/shared/interfaces/IUser';
 export class UserComponent {
   position: TooltipPosition = 'above';
   @Input() user!: IUser;
+  @Input() userAnalytics!: IUserAnalytics;
   deleteuser() {
     throw new Error('Method not implemented.');
   }

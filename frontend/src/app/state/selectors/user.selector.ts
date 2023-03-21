@@ -1,39 +1,44 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { UserState } from '../reducers/user.reducer';
+import { IUserState } from 'src/app/shared/interfaces/IUser';
 
-const selectUserState = createFeatureSelector<UserState>('user');
+const selectUserState = createFeatureSelector<IUserState>('user');
 
 export const currentUser = createSelector(
   selectUserState,
   (state) => state.user
 );
 
-export const loggedInUser = createSelector(
+export const signedInUser = createSelector(
   selectUserState,
-  (state) => state.loginSuccess
+  (state) => state.user
 );
 
-export const registerSuccess = createSelector(
+export const signUpSuccess = createSelector(
   selectUserState,
-  (state) => state.registerSuccess
+  (state) => state.user
 );
 
-export const registerError = createSelector(
+export const signUpError = createSelector(
   selectUserState,
-  (state) => state.registerError
+  (state) => state.signUpError
 );
 
-export const loginError = createSelector(
+export const SignInError = createSelector(
   selectUserState,
-  (state) => state.loginError
+  (state) => state.signInError
 );
 
-export const updateSuccess = createSelector(
+export const updateProfileSuccess = createSelector(
   selectUserState,
-  (state) => state.updateSuccess
+  (state) => state.updateProfileSuccess
 );
 
-export const updateError = createSelector(
+export const updateProfileError = createSelector(
   selectUserState,
-  (state) => state.updateError
+  (state) => state.updateProfileError
+);
+
+export const userAnalytics = createSelector(
+  selectUserState,
+  (state) => state.userAnalytics
 );

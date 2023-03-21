@@ -25,13 +25,13 @@
     <div class="user-question-count">
         <!-- TODO: Create page for results -->
         <a routerLink="/questions/?userId={{user.id}}">
-            {{user.questionsCount}} Questions
+            {{userAnalytics.totalQuestions}} Questions
         </a>
     </div>
     <div class="user-answers-count">
         <!-- TODO: Create page for results -->
         <a routerLink="/questions/?answered=true&userId={{user.id}}">
-            {{user.answersCount}} Answers
+            {{userAnalytics.totalAnswers}} Answers
         </a>
     </div>
 </div>

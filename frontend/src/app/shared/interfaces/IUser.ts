@@ -37,28 +37,24 @@ export interface IUser {
   id: string | number;
   name: string;
   email: string;
-  avatar?: string;
-  bio?: string;
-  password?: string;
-  isDeleted?: boolean;
+  avatar: string;
+  bio: string;
+  isDeleted: boolean;
   isAdmin: boolean;
-  questionsCount?: number;
-  answersCount?: number;
-  tagsCount?: number;
   updatedAt: Date | string;
   createdAt: Date | string;
-  JWT?: string;
+  JWT: string;
 }
 
 export interface IUserState {
   user: IUser;
   error: string;
-  signInSuccess: IUser;
   signInError: string;
   signUpSuccess: string;
   signUpError: string;
   updateProfileSuccess: string;
   updateProfileError: string;
+  userAnalytics: IUserAnalytics;
 }
 
 export interface IUserAnalytics {

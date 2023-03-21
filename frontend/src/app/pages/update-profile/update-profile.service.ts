@@ -2,7 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_URL } from 'src/app/constants';
-import { IUserProfile, IUserProfileUpdate } from 'src/app/shared/interfaces/IUser';
+import {
+  IUserProfile,
+  IUserProfileUpdate,
+} from 'src/app/shared/interfaces/IUser';
 import { IMessage } from 'src/app/shared/interfaces/IMessage';
 
 @Injectable({

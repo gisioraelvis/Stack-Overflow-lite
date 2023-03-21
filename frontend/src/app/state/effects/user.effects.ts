@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import * as UserActions from '../actions/user.actions';
 import {
   IUser,
+  IUserAnalytics,
   IUserProfile,
   IUserProfileUpdate,
   IUserSignIn,
@@ -14,6 +15,7 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 import { UpdateProfileService } from 'src/app/pages/update-profile/update-profile.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
+import { UserDashBoardService } from 'src/app/pages/user-dashboard/user-dashboard.service';
 
 @Injectable()
 export class UserEffects {
@@ -23,6 +25,7 @@ export class UserEffects {
     private authorizationService: AuthorizationService,
     private updateProfileService: UpdateProfileService,
     private localStorageService: LocalStorageService,
+    private userDashBoardService: UserDashBoardService
   ) {}
 
   signUp$ = createEffect(() => {
@@ -131,6 +134,30 @@ export class UserEffects {
               of(UserActions.updateProfileFailure({ error }))
             )
           );
+      })
+    );
+  });
+
+  getUserAnalytics$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.getUserAnalytics),
+      mergeMap((action) => {
+        const { userId } = action;
+        return this.userDashBoardService.getUserAnalytics(userId).pipe(
+          map((successResponse: IUserAnalytics) => {
+            return UserActions.getUserAnalyticsSuccess({
+              totalQuestions: successResponse.totalQuestions,
+              totalAnswers: successResponse.totalAnswers,
+              totalComments: successResponse.totalComments,
+              totalTags: successResponse.totalTags,
+              totalVotes: successResponse.totalVotes,
+              totalAcceptedAnswers: successResponse.totalAcceptedAnswers,
+            });
+          }),
+          catchError((error) =>
+            of(UserActions.getUserAnalyticsFailure({ error }))
+          )
+        );
       })
     );
   });

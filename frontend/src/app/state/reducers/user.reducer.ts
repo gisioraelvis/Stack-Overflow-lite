@@ -7,20 +7,22 @@ const initialState: IUserState = {
     id: '',
     name: '',
     email: '',
-    password: '',
+    avatar: '',
+    bio: '',
     isAdmin: false,
+    isDeleted: false,
     createdAt: '',
     updatedAt: '',
+    JWT: '',
   },
   error: '',
-  signInSuccess: {
-    id: '',
-    name: '',
-    email: '',
-    password: '',
-    isAdmin: false,
-    createdAt: '',
-    updatedAt: '',
+  userAnalytics: {
+    totalQuestions: 0,
+    totalAnswers: 0,
+    totalComments: 0,
+    totalTags: 0,
+    totalVotes: 0,
+    totalAcceptedAnswers: 0,
   },
   signInError: '',
   signUpSuccess: '',
@@ -33,7 +35,7 @@ export const userReducer = createReducer(
   initialState,
   on(UserActions.signInSuccess, (state, user) => ({
     ...state,
-    signedInUser: user,
+    user,
   })),
   on(UserActions.signInFailure, (state, { error }) => ({
     ...state,
@@ -41,7 +43,7 @@ export const userReducer = createReducer(
   })),
   on(UserActions.signUpSuccess, (state, user) => ({
     ...state,
-    signedInUser: user,
+    user,
   })),
   on(UserActions.signUpFailure, (state, { error }) => ({
     ...state,
@@ -59,5 +61,9 @@ export const userReducer = createReducer(
     ...state,
     signedInUser: user,
   })),
-  on(UserActions.signOut, (state) => ({ ...state, initialState }))
+  on(UserActions.signOut, (state) => ({ ...state, initialState })),
+  on(UserActions.getUserAnalyticsSuccess, (state, userAnalytics) => ({
+    ...state,
+    userAnalytics,
+  }))
 );

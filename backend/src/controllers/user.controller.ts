@@ -363,10 +363,10 @@ export const getUserSiteAnalytics = async (
   req: IRequestWithUser,
   res: Response
 ) => {
-  const userId = req.params.id;
+  const userId = req.params.id as string;
 
   try {
-    const user = await dbUtils.exec("usp_FindUserById", { id: userId });
+    const user = await dbUtils.exec("usp_FindUserById", { id: +userId });
 
     if (user.recordset.length > 0) {
       const userSiteAnalytics = await dbUtils.exec("usp_GetUserSiteAnalytics", {

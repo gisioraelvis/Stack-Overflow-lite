@@ -17,18 +17,17 @@ export interface IFUser {
   createdAt: string | Date;
   updatedAt: string | Date;
 }
+
 // Users
 export const userFactory = Factory.Sync.makeFactory<IUser>({
   id: Factory.each((i) => i),
   name: Factory.each(() => faker.name.fullName()),
   email: Factory.each(() => faker.internet.email()),
   avatar: Factory.each(() => faker.image.avatar()),
-  questionsCount: Factory.each(() =>
-    faker.datatype.number({ min: 0, max: 100 })
-  ),
   isAdmin: false,
-  answersCount: Factory.each(() => faker.datatype.number({ min: 0, max: 100 })),
-  tagsCount: Factory.each(() => faker.datatype.number({ min: 0, max: 1000 })),
+  isDeleted: false,
+  bio: Factory.each(() => faker.lorem.sentence()),
+  JWT: Factory.each(() => faker.datatype.uuid()),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
   updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
 });
