@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+/* import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, of } from 'rxjs';
 import { BookingService } from 'src/app/Services/booking.service';
-import * as BookingsActions from '../Actions/bookingActions';
+import * as BookingsActions from '../actions/bookingActions';
 
 @Injectable()
 export class BookingsEffect {
@@ -83,3 +83,4 @@ export class BookingsEffect {
     );
   });
 }
+ */

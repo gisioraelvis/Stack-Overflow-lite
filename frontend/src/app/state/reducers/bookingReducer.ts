@@ -15,7 +15,7 @@ import {
   getsingleBookingId,
   updateBookingFail,
   updateBookingSuccess,
-} from '../Actions/bookingActions';
+} from '../actions/bookingActions';
 
 export interface BookingInterface {
   bookings: Booking[];

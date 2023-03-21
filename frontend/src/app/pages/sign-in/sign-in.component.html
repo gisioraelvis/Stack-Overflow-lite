@@ -1,24 +1,20 @@
 <div class="sign-in-page">
     <h1>Welcome Back</h1>
     <mat-card>
-        <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="outline">
                 <input matInput placeholder="Email" type="email" formControlName="email" required>
-                <mat-error *ngIf="signInForm.get('email')?.invalid && signInForm.get('email')?.touched">
+                <mat-error *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
                     Please enter a valid email address.
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <input matInput placeholder="Password" type="password" formControlName="password" required>
-                <mat-error *ngIf="signInForm.get('password')?.invalid && signInForm.get('password')?.touched">
-                    Password must be at least 8 characters long,<br>
-                    contain at least one uppercase letter,<br>
-                    one lowercase letter,<br>
-                    one number and<br>
-                    one special character.<br>
+                <mat-error *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+                    Password is required.
                 </mat-error>
             </mat-form-field>
-            <button mat-raised-button type="submit" [disabled]="!signInForm.valid" color="accent">Sign In</button>
+            <button mat-raised-button type="submit" [disabled]="!form.valid" color="accent">Sign In</button>
             <div class="forgot-password">
                 <a routerLink="/forgot-password">Forgot Password?</a>
             </div>

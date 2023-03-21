@@ -10,9 +10,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptorService } from './core/services/token-interceptor.service';
-import { UserEffects } from './state/Effects/user.effects';
-import { userReducer } from './state/Reducers/user.reducer';
+import { TokenInterceptor } from './core/interceptors/token.interceptor';
+import { UserEffects } from './state/effects/user.effects';
+import { userReducer } from './state/reducers/user.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,11 +29,13 @@ import { userReducer } from './state/Reducers/user.reducer';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([UserEffects]),
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptorService,
-    multi: true,
-  },],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

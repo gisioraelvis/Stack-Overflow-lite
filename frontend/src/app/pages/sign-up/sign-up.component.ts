@@ -11,11 +11,15 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { PasswordMatchErrorState } from 'src/app/shared/utils/password-match-error-state';
 import { passwordPatternValidator } from 'src/app/shared/utils/password-pattern-validator';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/state/appState';
+import { signUp } from 'src/app/state/actions/user.actions';
+import { AuthorizationService } from 'src/app/core/services/authorization.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -37,22 +41,22 @@ export class SignUpComponent {
   formOptions: AbstractControlOptions = {
     validators: this.passwordMatchValidator,
   };
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<AppState>,
+    private router: Router,
+    private authorizationService: AuthorizationService
+  ) {}
 
-  signUpForm = this.fb.group(
+  form = this.fb.group(
     {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, passwordPatternValidator]],
+      password: ['', [Validators.required, passwordPatternValidator ]],
       confirmPassword: ['', [Validators.required]],
     },
     this.formOptions
   );
-
-  onSubmit() {
-    // TODO: Implement submit logic
-    console.log(this.signUpForm.value);
-  }
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
@@ -61,4 +65,20 @@ export class SignUpComponent {
   }
 
   passwordMatchErrorState = new PasswordMatchErrorState();
+
+   onSubmit() {
+    if (this.form.valid) {
+      this.store.dispatch(
+        signUp({
+          name: this.form.get('name')!.value!,
+          email: this.form.get('email')!.value!,
+          password: this.form.get('password')!.value!,
+          confirmPassword: this.form.get('confirmPassword')!.value!,
+        })
+      );
+      if (this.authorizationService.isSignedIn) {
+        this.router.navigate(['dashboard']);
+      }
+    }
+  }
 }

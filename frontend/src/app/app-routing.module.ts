@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuardService } from './core/guards/auth-guard.service';
+import { CanDeactiveService } from './core/guards/can-deactive.service';
 
 const routes: Routes = [
   {
@@ -20,6 +22,7 @@ const routes: Routes = [
       import('./pages/ask-question/ask-question.component').then(
         (c) => c.AskQuestionComponent
       ),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'questions/:id',
@@ -75,13 +78,16 @@ const routes: Routes = [
       import('./pages/user-dashboard/user-dashboard.component').then(
         (c) => c.UserDashboardComponent
       ),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'dashboard/edit-profile',
+    canDeactivate: [CanDeactiveService],
     loadComponent: () =>
       import('./pages/update-profile/update-profile.component').then(
         (c) => c.UpdateProfileComponent
       ),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'forgot-password',
@@ -104,6 +110,7 @@ const routes: Routes = [
       import('./pages/admin-dashboard/admin-dashboard.component').then(
         (c) => c.AdminDashboardComponent
       ),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'not-found',

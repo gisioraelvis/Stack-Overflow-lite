@@ -5,25 +5,25 @@
     </div>
     <div class="right-section">
         <mat-card>
-            <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <mat-form-field>
                     <mat-label>Display Name</mat-label>
                     <input matInput formControlName="name">
-                    <mat-error *ngIf="signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched">
+                    <mat-error *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
                         Name is required
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Email</mat-label>
                     <input matInput formControlName="email">
-                    <mat-error *ngIf="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched">
+                    <mat-error *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
                         Please enter a valid email address
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Password</mat-label>
                     <input matInput type="password" formControlName="password">
-                    <mat-error *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched">
+                    <mat-error *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
                         Password must be at least 8 characters long,<br>
                         contain at least one uppercase letter,<br>
                         one lowercase letter,<br>
@@ -36,11 +36,11 @@
                     <input matInput type="password" formControlName="confirmPassword"
                         [errorStateMatcher]="passwordMatchErrorState">
                     <mat-error
-                        *ngIf="(signUpForm.hasError('mismatch') || signUpForm.get('confirmPassword')?.invalid) && signUpForm.get('confirmPassword')?.touched">
+                        *ngIf="(form.hasError('mismatch') || form.get('confirmPassword')?.invalid) && form.get('confirmPassword')?.touched">
                         Passwords do not match
                     </mat-error>
                 </mat-form-field>
-                <button mat-raised-button color="accent" type="submit" [disabled]="!signUpForm.valid">Sign Up</button>
+                <button mat-raised-button color="accent" type="submit" [disabled]="!form.valid">Sign Up</button>
             </form>
         </mat-card>
         <div class="sign-in">

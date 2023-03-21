@@ -1,5 +1,5 @@
-import { UserState } from './Reducers/user.reducer';
+import { IUserState } from '../shared/interfaces/IUser';
 
 export interface AppState {
-  user: UserState;
+  user: IUserState;
 }
