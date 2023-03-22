@@ -9,7 +9,7 @@
     </div>
     <div class="update-form-container">
         <mat-card>
-            <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <!-- <div class="form-group">
                     <label for="file">Change/Profile Image</label>
                     <input type="file" id="file" name="file" ng2FileSelect [uploader]="uploader" />
@@ -21,21 +21,21 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Display Name</mat-label>
                     <input matInput formControlName="name" />
-                    <mat-error *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched">
+                    <mat-error *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
                         Name is required
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Email</mat-label>
                     <input matInput formControlName="email" />
-                    <mat-error *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+                    <mat-error *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
                         Email is required and must be valid
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Password</mat-label>
                     <input matInput type="password" formControlName="password" />
-                    <mat-error *ngIf="profileForm.get('password')?.invalid && profileForm.get('password')?.touched">
+                    <mat-error *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
                         Password must be at least 8 characters long,<br>
                         contain at least one uppercase letter,<br>
                         one lowercase letter,<br>
@@ -47,7 +47,7 @@
                     <mat-label>Confirm Password</mat-label>
                     <input matInput type="password" formControlName="confirmPassword" />
                     <span
-                        *ngIf="(profileForm.hasError('mismatch') && profileForm.get('confirmPassword')?.touched) || (profileForm.get('confirmPassword')?.invalid && profileForm.get('confirmPassword')?.touched)"
+                        *ngIf="(form.hasError('mismatch') && form.get('confirmPassword')?.touched) || (form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched)"
                         class='error'>
                         Passwords must match
                     </span>
@@ -55,10 +55,10 @@
                 <mat-form-field appearance='fill'>
                     <textarea matInput placeholder='About Me' rows='5' cols='20' maxlength='200'
                         formControlName='aboutMe'></textarea>
-                    {{200 - profileForm.controls['aboutMe'].value?.length}} characters left
+                    {{200 - form.controls['aboutMe'].value?.length}} characters left
                 </mat-form-field>
                 <button mat-raised-button color='accent' type='submit'
-                    [disabled]='!profileForm.valid || profileForm.pending'>
+                    [disabled]='!form.valid || form.pending'>
                     Update Profile
                 </button>
             </form>

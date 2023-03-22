@@ -3,6 +3,7 @@ import { IUserState } from 'src/app/shared/interfaces/IUser';
 import * as UserActions from '../actions/user.actions';
 
 const initialState: IUserState = {
+  error: '',
   user: {
     id: '',
     name: '',
@@ -15,7 +16,6 @@ const initialState: IUserState = {
     updatedAt: '',
     JWT: '',
   },
-  error: '',
   userAnalytics: {
     totalQuestions: 0,
     totalAnswers: 0,
@@ -23,12 +23,7 @@ const initialState: IUserState = {
     totalTags: 0,
     totalVotes: 0,
     totalAcceptedAnswers: 0,
-  },
-  signInError: '',
-  signUpSuccess: '',
-  signUpError: '',
-  updateProfileSuccess: '',
-  updateProfileError: '',
+  }
 };
 
 export const userReducer = createReducer(
@@ -49,17 +44,13 @@ export const userReducer = createReducer(
     ...state,
     error,
   })),
-  on(UserActions.loadProfile, (state) => ({
-    ...state,
-    signedInUser: state.user,
-  })),
-  on(UserActions.loadProfileSuccess, (state, user) => ({
-    ...state,
-    signedInUser: user,
-  })),
   on(UserActions.updateProfileSuccess, (state, user) => ({
     ...state,
-    signedInUser: user,
+    user,
+  })),
+  on(UserActions.updateProfileFailure, (state, { error }) => ({
+    ...state,
+    error,
   })),
   on(UserActions.signOut, (state) => ({ ...state, initialState })),
   on(UserActions.getUserAnalyticsSuccess, (state, userAnalytics) => ({

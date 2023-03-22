@@ -1,9 +1,7 @@
 import { createAction, props } from '@ngrx/store';
-import { IMessage } from 'src/app/shared/interfaces/IMessage';
 import {
   IUser,
   IUserAnalytics,
-  IUserProfile,
   IUserProfileUpdate,
   IUserSignIn,
   IUserSignUp,
@@ -35,18 +33,6 @@ export const signUpFailure = createAction(
   props<{ error: string }>()
 );
 
-export const loadProfile = createAction('[User] Load User Profile');
-
-export const loadProfileSuccess = createAction(
-  '[User] Load User Profile Success',
-  props<IUserProfile>()
-);
-
-export const loadProfileFailure = createAction(
-  '[User] Load User Profile Failure',
-  props<{ error: string }>()
-);
-
 export const updateProfile = createAction(
   '[User] Update Profile',
   props<IUserProfileUpdate>()
@@ -54,7 +40,7 @@ export const updateProfile = createAction(
 
 export const updateProfileSuccess = createAction(
   '[User] Update Profile Success',
-  props<IUserProfile>()
+  props<IUser>()
 );
 
 export const updateProfileFailure = createAction(

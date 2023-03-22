@@ -6,7 +6,6 @@ import * as UserActions from '../actions/user.actions';
 import {
   IUser,
   IUserAnalytics,
-  IUserProfile,
   IUserProfileUpdate,
   IUserSignIn,
   IUserSignUp,
@@ -54,7 +53,7 @@ export class UserEffects {
                 isDeleted: successResponse.isDeleted,
                 createdAt: successResponse.createdAt,
                 updatedAt: successResponse.updatedAt,
-                JWT: successResponse.JWT,
+                JWT: successResponse.JWT || '',
               });
             }),
             catchError((error) => of(UserActions.signUpFailure({ error })))
@@ -117,7 +116,7 @@ export class UserEffects {
             isAdmin,
           })
           .pipe(
-            map((successResponse: IUserProfile) => {
+            map((successResponse: IUser) => {
               return UserActions.updateProfileSuccess({
                 id: successResponse.id,
                 name: successResponse.name,
@@ -128,6 +127,7 @@ export class UserEffects {
                 isAdmin: successResponse.isAdmin,
                 updatedAt: successResponse.updatedAt,
                 createdAt: successResponse.createdAt,
+                JWT: '',
               });
             }),
             catchError((error) =>

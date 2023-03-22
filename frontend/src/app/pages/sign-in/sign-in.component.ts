@@ -5,10 +5,9 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { signIn } from 'src/app/state/actions/user.actions';
 import { Store } from '@ngrx/store';
-import { AuthorizationService } from 'src/app/core/services/authorization.service';
-import { AppState } from 'src/app/state/appState';
+import * as UserActions from 'src/app/state/actions/user.actions';
+import * as UserSelectors from 'src/app/state/selectors/user.selectors';
 
 @Component({
   selector: 'app-sign-in',
@@ -27,9 +26,8 @@ import { AppState } from 'src/app/state/appState';
 export class SignInComponent {
   constructor(
     private fb: FormBuilder,
-    private store: Store<AppState>,
+    private store: Store,
     private router: Router,
-    private authorizationService: AuthorizationService
   ) {}
 
   form = this.fb.group({
@@ -40,15 +38,17 @@ export class SignInComponent {
   onSubmit() {
     if (this.form.valid) {
       this.store.dispatch(
-        signIn({
+        UserActions.signIn({
           email: this.form.get('email')!.value!,
           password: this.form.get('password')!.value!,
         })
       );
-      // TODO: fix the navigation delay
-      if (this.authorizationService.isSignedIn) {
-        this.router.navigate(['dashboard']);
-      }
+
+      this.store.select(UserSelectors.currentUser).subscribe((user) => {
+        if (user.id) {
+          this.router.navigate(['/dashboard']);
+        }
+      });
     }
   }
 }

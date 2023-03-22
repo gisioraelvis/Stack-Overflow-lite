@@ -10,27 +10,15 @@ export interface IUserSignUp {
   confirmPassword: string;
 }
 
-export interface IUserProfile {
-  id: string | number;
-  name: string;
-  email: string;
-  avatar: string;
-  bio: string;
-  isDeleted: boolean;
-  isAdmin: boolean;
-  updatedAt: Date | string;
-  createdAt: Date | string;
-}
-
 export interface IUserProfileUpdate {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
-  avatar: string;
-  bio: string;
-  isDeleted: boolean;
-  isAdmin: boolean;
+  avatar?: string;
+  bio?: string;
+  isDeleted?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface IUser {
@@ -48,13 +36,8 @@ export interface IUser {
 
 export interface IUserState {
   user: IUser;
-  error: string;
-  signInError: string;
-  signUpSuccess: string;
-  signUpError: string;
-  updateProfileSuccess: string;
-  updateProfileError: string;
   userAnalytics: IUserAnalytics;
+  error: string;
 }
 
 export interface IUserAnalytics {

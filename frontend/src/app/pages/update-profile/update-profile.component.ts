@@ -15,9 +15,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { SafePipeModule } from 'safe-pipe';
-import { FileUploadModule, FileUploader } from 'ng2-file-upload';
 import { FileUploadComponent } from 'src/app/components/file-upload/file-upload.component';
-import { API_URL } from 'src/app/constants';
+import { Store } from '@ngrx/store';
+import * as UserSelectors from 'src/app/state/selectors/user.selectors';
+import * as UserActions from 'src/app/state/actions/user.actions';
+import { IUser, IUserProfileUpdate } from 'src/app/shared/interfaces/IUser';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-update-profile',
@@ -34,20 +37,23 @@ import { API_URL } from 'src/app/constants';
     MatButtonModule,
     MatCardModule,
     SafePipeModule,
-    FileUploadModule,
     FileUploadComponent,
   ],
 })
 export class UpdateProfileComponent implements OnInit {
-  uploader: FileUploader;
-  imagePreview: any;
+  public form: FormGroup;
+  user$?: Observable<IUser>;
+
   formOptions: AbstractControlOptions = {
     validators: this.passwordMatchValidator,
   };
-  public profileForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private location: Location) {
-    this.profileForm = this.fb.group(
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    private location: Location
+  ) {
+    this.form = this.fb.group(
       {
         name: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
@@ -65,24 +71,16 @@ export class UpdateProfileComponent implements OnInit {
       },
       this.formOptions
     );
-
-    this.uploader = new FileUploader({
-      url: `${API_URL}/upload`,
-      allowedFileType: ['image'],
-    });
   }
   ngOnInit(): void {
-    this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false;
-    };
-    this.uploader.onCompleteItem = (
-      item: any,
-      response: any,
-      status: any,
-      headers: any
-    ) => {
-      console.log('ImageUpload:uploaded:', item, status, response);
-    };
+    this.user$ = this.store.select(UserSelectors.currentUser);
+    this.user$.subscribe((user) => {
+      this.form.patchValue({
+        name: user.name,
+        email: user.email,
+        aboutMe: user.bio,
+      });
+    });
   }
 
   goBack(): void {
@@ -96,19 +94,25 @@ export class UpdateProfileComponent implements OnInit {
       : { mismatch: true };
   }
 
-  onFileSelected() {
-    const file: File = this.uploader.queue[0]._file;
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      this.imagePreview = reader.result;
-    };
-  }
-
   onSubmit() {
-    if (this.profileForm.valid) {
-      // Do something with the form data here
-      console.log(this.profileForm.value);
+    if (this.form.valid) {
+      const user: IUserProfileUpdate = {
+        name: this.form.get('name')!.value!,
+        email: this.form.get('email')!.value!,
+        password: this.form.get('password')!.value!,
+        confirmPassword: this.form.get('confirmPassword')!.value!,
+        bio: this.form.get('aboutMe')!.value!,
+      };
+      this.store.dispatch(UserActions.updateProfile(user));
     }
+
+    // Get the updated user details
+    this.store.select(UserSelectors.currentUser).subscribe((user) => {
+      this.form.patchValue({
+        name: user.name,
+        email: user.email,
+        aboutMe: user.bio,
+      });
+    });
   }
 }

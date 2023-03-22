@@ -16,7 +16,7 @@ import { IUser, IUserAnalytics } from 'src/app/shared/interfaces/IUser';
 import { MatCardModule } from '@angular/material/card';
 import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
 import { Store } from '@ngrx/store';
-import * as UserSelectors from 'src/app/state/selectors/user.selector';
+import * as UserSelectors from 'src/app/state/selectors/user.selectors';
 import * as UserActions from 'src/app/state/actions/user.actions';
 
 @Component({
@@ -54,7 +54,7 @@ export class UserDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(UserSelectors.currentUser).subscribe((user) => {
       this.user = user;
-      if(user.id){
+      if (user.id) {
         this.getUserAnalytics(user.id);
       }
     });
@@ -69,7 +69,7 @@ export class UserDashboardComponent implements OnInit {
     this.store.dispatch(UserActions.getUserAnalytics({ userId }));
     this.store.select(UserSelectors.userAnalytics).subscribe((analytics) => {
       this.userAnalytics = analytics;
-    });    
+    });
     this.loading = false;
   }
 }
