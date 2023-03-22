@@ -25,6 +25,7 @@ import { AppState } from 'src/app/state/appState';
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent {
+  loading = false;
   constructor(
     private fb: FormBuilder,
     private store: Store<AppState>,
@@ -39,6 +40,7 @@ export class SignInComponent {
 
   onSubmit() {
     if (this.form.valid) {
+      this.loading = true;
       this.store.dispatch(
         signIn({
           email: this.form.get('email')!.value!,
@@ -46,7 +48,10 @@ export class SignInComponent {
         })
       );
       if (this.authorizationService.isSignedIn) {
+        this.loading = false;
         this.router.navigate(['dashboard']);
+      }else{
+        this.loading = false;
       }
     }
   }
