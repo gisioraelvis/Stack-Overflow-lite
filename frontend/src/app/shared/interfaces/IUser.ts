@@ -38,6 +38,7 @@ export interface IUserState {
   user: IUser;
   userAnalytics: IUserAnalytics;
   error: string;
+  message: string;
 }
 
 export interface IUserAnalytics {

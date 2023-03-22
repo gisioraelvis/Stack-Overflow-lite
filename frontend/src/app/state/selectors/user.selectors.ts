@@ -17,3 +17,8 @@ export const userAnalytics = createSelector(
   selectUserState,
   (state) => state.userAnalytics
 );
+
+export const responseMessage = createSelector(
+  selectUserState,
+  (state) => state.message
+)

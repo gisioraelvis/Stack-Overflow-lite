@@ -62,3 +62,18 @@ export const getUserAnalyticsFailure = createAction(
   '[User] Get User Analytics Failure',
   props<{ error: string }>()
 );
+
+export const forgotPassword = createAction(
+  '[User] Forgot Password',
+  props<{ email: string }>()
+);
+
+export const forgotPasswordSuccess = createAction(
+  '[User] Forgot Password Success',
+  props<{ message: string }>()
+);
+
+export const forgotPasswordFailure = createAction(
+  '[User] Forgot Password Failure',
+  props<{ error: string }>()
+);

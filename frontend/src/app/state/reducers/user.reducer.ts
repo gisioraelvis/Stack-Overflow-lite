@@ -3,7 +3,6 @@ import { IUserState } from 'src/app/shared/interfaces/IUser';
 import * as UserActions from '../actions/user.actions';
 
 const initialState: IUserState = {
-  error: '',
   user: {
     id: '',
     name: '',
@@ -23,7 +22,9 @@ const initialState: IUserState = {
     totalTags: 0,
     totalVotes: 0,
     totalAcceptedAnswers: 0,
-  }
+  },
+  message: '',
+  error: '',
 };
 
 export const userReducer = createReducer(
@@ -56,5 +57,13 @@ export const userReducer = createReducer(
   on(UserActions.getUserAnalyticsSuccess, (state, userAnalytics) => ({
     ...state,
     userAnalytics,
+  })),
+  on(UserActions.forgotPasswordSuccess, (state, { message }) => ({
+    ...state,
+    message,
+  })),
+  on(UserActions.forgotPasswordFailure, (state, { error }) => ({
+    ...state,
+    error,
   }))
 );

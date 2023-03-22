@@ -15,6 +15,7 @@ import { UpdateProfileService } from 'src/app/pages/update-profile/update-profil
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
 import { UserDashBoardService } from 'src/app/pages/user-dashboard/user-dashboard.service';
+import { IMessage } from 'src/app/shared/interfaces/IMessage';
 
 @Injectable()
 export class UserEffects {
@@ -156,6 +157,25 @@ export class UserEffects {
           }),
           catchError((error) =>
             of(UserActions.getUserAnalyticsFailure({ error }))
+          )
+        );
+      })
+    );
+  });
+
+  forgotPassword$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.forgotPassword),
+      mergeMap((action) => {
+        const { email } = action;
+        return this.authenticationService.forgotPassword(email).pipe(
+          map((successResponse: IMessage) => {
+            return UserActions.forgotPasswordSuccess({
+              message: successResponse.message,
+            });
+          }),
+          catchError((error) =>
+            of(UserActions.forgotPasswordFailure({ error }))
           )
         );
       })
