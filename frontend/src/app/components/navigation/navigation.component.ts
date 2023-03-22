@@ -64,7 +64,7 @@ export class NavigationComponent implements OnInit, DoCheck {
   }
 
   signOut() {
-    this.authorizationService.signOut();
     this.router.navigate(['/']);
+    this.authorizationService.signOut();
   }
 }

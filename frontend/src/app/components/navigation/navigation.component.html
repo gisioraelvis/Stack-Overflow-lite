@@ -11,7 +11,7 @@
         <button mat-raised-button color="accent" routerLink="/dashboard">Dashboard</button>
         <button mat-button (click)="signOut()">Sign Out</button>
       </div>
-      <div class="sign-btns" *ngIf="!isSignedIn&&!isAdmin">
+      <div class="sign-btns" *ngIf="!isSignedIn">
         <button mat-button routerLink="/sign-in">Sign In</button>
         <button mat-raised-button color="accent" routerLink="/sign-up">Sign Up</button>
       </div>
