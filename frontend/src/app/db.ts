@@ -5,7 +5,7 @@ import { IQuestion } from './shared/interfaces/IQuestion';
 import { ITag } from './shared/interfaces/ITag';
 import { IUser } from './shared/interfaces/IUser';
 import { IAnswer } from './shared/interfaces/IAnswer';
-import { IAnalytics } from './shared/interfaces/IAnalytics';
+import { ISiteAnalytics } from './shared/interfaces/IAnalytics';
 
 export interface IFUser {
   id: number;
@@ -110,17 +110,11 @@ export const answerFactory = Factory.Sync.makeFactory<IAnswer>({
 });
 
 // Analytics
-export const analyticsFactory = Factory.Sync.makeFactory<IAnalytics>({
-  userCount: Factory.each(() =>
-    faker.datatype.number({ min: 1000, max: 10000 })
-  ),
-  questionCount: Factory.each(() =>
-    faker.datatype.number({ min: 10000, max: 100000 })
-  ),
-  answerCount: Factory.each(() =>
-    faker.datatype.number({ min: 10000, max: 200000 })
-  ),
-  tagCount: Factory.each(() =>
-    faker.datatype.number({ min: 1000, max: 10000 })
-  ),
+export const analyticsFactory = Factory.Sync.makeFactory<ISiteAnalytics>({
+  totalUsers: Factory.each(() => faker.datatype.number()),
+  totalQuestions: Factory.each(() => faker.datatype.number()),
+  totalAnswers: Factory.each(() => faker.datatype.number()),
+  totalComments: Factory.each(() => faker.datatype.number()),
+  totalTags: Factory.each(() => faker.datatype.number()),
+  totalVotes: Factory.each(() => faker.datatype.number()),
 });

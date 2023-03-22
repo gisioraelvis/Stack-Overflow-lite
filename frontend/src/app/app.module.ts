@@ -13,6 +13,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { UserEffects } from './state/effects/user.effects';
 import { userReducer } from './state/reducers/user.reducer';
+import { siteAnalyticsReducer } from './state/reducers/admin-analytics.reducer';
+import { AdminEffects } from './state/effects/admin-analytics.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,9 +27,10 @@ import { userReducer } from './state/reducers/user.reducer';
     FooterComponent,
     StoreModule.forRoot({
       user: userReducer,
+      siteAnalytics: siteAnalyticsReducer,
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([UserEffects, AdminEffects]),
   ],
   providers: [
     {

@@ -46,7 +46,11 @@ export class SignInComponent {
 
       this.store.select(UserSelectors.currentUser).subscribe((user) => {
         if (user.id) {
-          this.router.navigate(['/dashboard']);
+          if (user.isAdmin) {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
         }
       });
     }

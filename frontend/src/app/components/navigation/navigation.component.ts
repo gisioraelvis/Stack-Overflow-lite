@@ -15,7 +15,6 @@ import { AuthorizationService } from 'src/app/core/services/authorization.servic
 import { IUser } from 'src/app/shared/interfaces/IUser';
 import { Store } from '@ngrx/store';
 import * as UserSelectors from 'src/app/state/selectors/user.selectors';
-import * as UserActions from 'src/app/state/actions/user.actions';
 
 @Component({
   selector: 'app-navigation',
@@ -40,6 +39,7 @@ import * as UserActions from 'src/app/state/actions/user.actions';
 export class NavigationComponent implements OnInit, DoCheck {
   isSignedIn = false;
   username = '';
+  isAdmin = false;
 
   constructor(
     private router: Router,
@@ -50,13 +50,16 @@ export class NavigationComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.store.select(UserSelectors.currentUser).subscribe((user: IUser) => {
       this.username = user.name;
-      console.log(this.username);
+      this.isAdmin = user.isAdmin;
     });
     this.isSignedIn = this.authorizationService.isSignedIn;
   }
 
   ngDoCheck() {
-    this.username = this.authorizationService.getName();
+    this.store.select(UserSelectors.currentUser).subscribe((user: IUser) => {
+      this.username = user.name;
+      this.isAdmin = user.isAdmin;
+    });
     this.isSignedIn = this.authorizationService.isSignedIn;
   }
 

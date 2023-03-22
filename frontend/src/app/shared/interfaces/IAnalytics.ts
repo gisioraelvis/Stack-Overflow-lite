@@ -1,11 +1,3 @@
-export interface IAnalytics {
-    userCount: number;
-    questionCount: number;
-    answerCount: number;
-    tagCount: number;
-}
-
-// TODO: Update to below interface
 export interface ISiteAnalytics {
   totalUsers: number;
   totalQuestions: number;
@@ -13,4 +5,10 @@ export interface ISiteAnalytics {
   totalComments: number;
   totalTags: number;
   totalVotes: number;
+}
+
+export interface ISiteAnalyticsState {
+  siteAnalytics: ISiteAnalytics;
+  error: string;
+  message: string;
 }

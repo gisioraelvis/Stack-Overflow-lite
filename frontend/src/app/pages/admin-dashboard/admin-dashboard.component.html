@@ -1,30 +1,22 @@
 <div class="dashboard-page">
-    <app-progress-spinner *ngIf="loading"></app-progress-spinner>
     <div class="top-section">
-        <ng-container *ngIf="(user$ | async) as user; else error">
-            <div class="user-container">
-                <div class="avatar-container">
-                    <img class="avatar" src="{{user.avatar ? user.avatar : 'assets/images/avatar.png' }}" alt="avatar">
-                </div>
-                <div class="bio">
-                    <h1>{{user.name }}</h1>
-                    <p>Member since&nbsp;{{user.createdAt | timeAgo }}</p>
-                    
-                </div>
+        <div class="user-container">
+            <div class="avatar-container">
+                <img class="avatar" src="{{user.avatar ? user.avatar : 'assets/images/avatar.png'}}" alt="avatar">
             </div>
-            <div class="edit-profile">
-                <button mat-raised-button routerLink="/dashboard/edit-profile" color="accent">
-                    <mat-icon>edit</mat-icon>
-                    <span>Edit Profile</span>
-                </button>
+            <div class="bio">
+                <h1>{{user.name}}</h1>
+                <p>Member since <span>{{user.createdAt | timeAgo}}</span></p>
             </div>
-        </ng-container>
-        <ng-template #error>
-            <div *ngIf="!loading" class="error">
-                <p>Something went wrong. Please try again later.</p>
-            </div>
-        </ng-template>
+        </div>
+        <div class="edit-profile">
+            <button mat-raised-button routerLink="/dashboard/edit-profile" color="accent">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Profile</span>
+            </button>
+        </div>
     </div>
+    <app-progress-spinner *ngIf="loading"></app-progress-spinner>
     <div class="analytics">
         <div class="chart">
             <!-- 
@@ -33,79 +25,77 @@
                 Questions answered over time
                 Tags created over time
              -->
-             <img src="assets/images/analytics-demo.png" alt="">
+            <img src="assets/images/analytics-demo.png" alt="">
         </div>
-        <ng-container *ngIf="(analytics$ | async) as analytics; else error">
-            <div class="cards">
-                <mat-card>
-                    <div class="users">
-                        <p>
-                            <span>
-                                <a routerLink="/users">
-                                    {{analytics.userCount | thousandSeparator}}
-                                </a>
-                            </span>
-                            <br>
-                            Users registered
-                        </p>
-                        <p *ngIf="analytics.userCount === 0">
-                            <a routerLink="/users/register">Register</a>
-                            No users registered yet<br>
-                        </p>
-                    </div>
-                </mat-card>
-                <mat-card>
-                    <div class="questions">
-                        <p>
-                            <span>
-                                <a routerLink="/questions">
-                                    {{analytics.questionCount | thousandSeparator}}
-                                </a>
-                            </span>
-                            <br>
-                            Questions asked
-                        </p>
-                        <p *ngIf="analytics.questionCount === 0">
-                            No questions asked yet<br>
-                            <a routerLink="/questions/ask">Ask Questions</a>
-                        </p>
-                    </div>
-                </mat-card>
-                <mat-card>
-                    <div class="answers">
-                        <p>
-                            <span>
-                                <a [routerLink]="['/questions']" [queryParams]="{ filter: 'answered', userId: '1' }">
-                                    {{analytics.answerCount | thousandSeparator}}
-                                </a>
-                            </span>
-                            <br>
-                            Questions answered
-                        </p>
-                        <p *ngIf="analytics.answerCount === 0">
-                            No questions answered yet<br>
-                            <a routerLink="/questions">Unanswered Questions</a>
-                        </p>
-                    </div>
-                </mat-card>
-                <mat-card>
-                    <div class="tags">
-                        <p>
-                            <span>
-                                <a routerLink="/tags">
-                                    {{analytics.tagCount | thousandSeparator}}
-                                </a>
-                            </span>
-                            <br>
-                            Tags created
-                        </p>
-                        <p *ngIf="analytics.tagCount === 0">
-                            No tags created yet<br>
-                            <a routerLink="/tags">Create Tags</a>
-                        </p>
-                    </div>
-                </mat-card>
-            </div>
-        </ng-container>
+        <div class="cards">
+            <mat-card>
+                <div class="users">
+                    <p>
+                        <span>
+                            <a routerLink="/users">
+                                {{siteAnalytics.totalUsers | thousandSeparator}}
+                            </a>
+                        </span>
+                        <br>
+                        Users registered
+                    </p>
+                    <p *ngIf="siteAnalytics.totalUsers === 0">
+                        <a routerLink="/users/register">Register</a>
+                        No users registered yet<br>
+                    </p>
+                </div>
+            </mat-card>
+            <mat-card>
+                <div class="questions">
+                    <p>
+                        <span>
+                            <a routerLink="/questions">
+                                {{siteAnalytics.totalQuestions | thousandSeparator}}
+                            </a>
+                        </span>
+                        <br>
+                        Questions asked
+                    </p>
+                    <p *ngIf="siteAnalytics.totalQuestions === 0">
+                        No questions asked yet<br>
+                        <a routerLink="/questions/ask">Ask Questions</a>
+                    </p>
+                </div>
+            </mat-card>
+            <mat-card>
+                <div class="answers">
+                    <p>
+                        <span>
+                            <a [routerLink]="['/questions']" [queryParams]="{ filter: 'answered', userId: '1' }">
+                                {{siteAnalytics.totalAnswers | thousandSeparator}}
+                            </a>
+                        </span>
+                        <br>
+                        Questions answered
+                    </p>
+                    <p *ngIf="siteAnalytics.totalAnswers === 0">
+                        No questions answered yet<br>
+                        <a routerLink="/questions">Unanswered Questions</a>
+                    </p>
+                </div>
+            </mat-card>
+            <mat-card>
+                <div class="tags">
+                    <p>
+                        <span>
+                            <a routerLink="/tags">
+                                {{siteAnalytics.totalTags | thousandSeparator}}
+                            </a>
+                        </span>
+                        <br>
+                        Tags created
+                    </p>
+                    <p *ngIf="siteAnalytics.totalTags === 0">
+                        No tags created yet<br>
+                        <a routerLink="/tags">Create Tags</a>
+                    </p>
+                </div>
+            </mat-card>
+        </div>
     </div>
 </div>

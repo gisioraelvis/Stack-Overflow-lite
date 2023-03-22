@@ -14,7 +14,7 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 import { UpdateProfileService } from 'src/app/pages/update-profile/update-profile.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
-import { UserDashBoardService } from 'src/app/pages/user-dashboard/user-dashboard.service';
+import { UserDashBoardService } from 'src/app/pages/user-dashboard/user-analytics.service';
 import { IMessage } from 'src/app/shared/interfaces/IMessage';
 
 @Injectable()

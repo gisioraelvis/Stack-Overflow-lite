@@ -13,10 +13,12 @@ import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/pr
 import { UserComponent } from 'src/app/components/user/user.component';
 import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.pipe';
 import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
-import { Observable, of, delay, tap } from 'rxjs';
-import { analyticsFactory, userFactory } from 'src/app/db';
 import { IUser } from 'src/app/shared/interfaces/IUser';
-import { IAnalytics } from 'src/app/shared/interfaces/IAnalytics';
+import { ISiteAnalytics } from 'src/app/shared/interfaces/IAnalytics';
+import { Store } from '@ngrx/store';
+import * as UserSelectors from 'src/app/state/selectors/user.selectors';
+import * as SiteAnalyticsActions from 'src/app/state/actions/admin-analytics.actions';
+import * as SiteAnalyticsSelectors from 'src/app/state/selectors/admin-analytics.selectors';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -46,37 +48,30 @@ import { IAnalytics } from 'src/app/shared/interfaces/IAnalytics';
 })
 export class AdminDashboardComponent {
   loading: boolean = false;
-  user$?: Observable<IUser>;
-  analytics$?: Observable<IAnalytics>;
+  user!: IUser;
+  siteAnalytics!: ISiteAnalytics;
 
-  constructor(private location: Location) {}
+  constructor(private location: Location, private store: Store) {}
 
   ngOnInit(): void {
-    this.getUser();
-    this.getAnalytics();
+    this.store.select(UserSelectors.currentUser).subscribe((user) => {
+      this.user = user;
+      this.getSiteAnalytics();
+    });
   }
 
   goBack(): void {
     this.location.back();
   }
 
-  getUser() {
+  getSiteAnalytics() {
     this.loading = true;
-    this.user$ = of(userFactory.build()).pipe(
-      delay(500), // simulate 1 second delay
-      tap(() => {
-        this.loading = false;
-      })
-    );
-  }
-
-  getAnalytics() {
-    this.loading = true;
-    this.analytics$ = of(analyticsFactory.build()).pipe(
-      delay(500), // simulate 1 second delay
-      tap(() => {
-        this.loading = false;
-      })
-    );
+    this.store.dispatch(SiteAnalyticsActions.getSiteAnalytics());
+    this.store
+      .select(SiteAnalyticsSelectors.siteAnalytics)
+      .subscribe((analytics) => {
+        this.siteAnalytics = analytics;
+      });
+    this.loading = false;
   }
 }

@@ -11,7 +11,6 @@ import { RouterModule, RouterLink } from '@angular/router';
 import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
 import { UserComponent } from 'src/app/components/user/user.component';
 import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.pipe';
-import { Observable } from 'rxjs';
 import { IUser, IUserAnalytics } from 'src/app/shared/interfaces/IUser';
 import { MatCardModule } from '@angular/material/card';
 import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
