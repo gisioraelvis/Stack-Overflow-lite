@@ -13,9 +13,7 @@ export class UserDashBoardService {
     private httpErrorPopupService: HttpErrorPopupService
   ) {}
 
-  getUserAnalytics(userId: number | string): Observable<IUserAnalytics> {
-    console.log(`getUserAnalytics() called with userId: ${userId}`);
-    
+  getUserAnalytics(userId: number | string): Observable<IUserAnalytics> {    
     return this.http
       .get<IUserAnalytics>(`/users/${userId}/analytics`)
       .pipe(
