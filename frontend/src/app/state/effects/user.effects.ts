@@ -181,4 +181,36 @@ export class UserEffects {
       })
     );
   });
+
+  resetPassword$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.resetPassword),
+      mergeMap((action) => {
+        const { password, confirmPassword, resetToken } = action;
+        return this.authenticationService
+          .resetPassword({ password, confirmPassword, resetToken })
+          .pipe(
+            map((successResponse: IUser) => {
+              this.localStorageService.setJWT(successResponse.JWT!);
+              this.authorizationService.isSignedIn = true;
+              return UserActions.signInSuccess({
+                id: successResponse.id,
+                name: successResponse.name,
+                email: successResponse.email,
+                avatar: successResponse.avatar,
+                bio: successResponse.bio,
+                isAdmin: successResponse.isAdmin,
+                isDeleted: successResponse.isDeleted,
+                createdAt: successResponse.createdAt,
+                updatedAt: successResponse.updatedAt,
+                JWT: successResponse.JWT,
+              });
+            }),
+            catchError((error) =>
+              of(UserActions.resetPasswordFailure({ error }))
+            )
+          );
+      })
+    );
+  });
 }

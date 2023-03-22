@@ -27,7 +27,7 @@ export class SignInComponent {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private router: Router,
+    private router: Router
   ) {}
 
   form = this.fb.group({

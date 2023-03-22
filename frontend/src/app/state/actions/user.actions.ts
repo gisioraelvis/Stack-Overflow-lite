@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import {
+  IPasswordReset,
   IUser,
   IUserAnalytics,
   IUserProfileUpdate,
@@ -77,3 +78,18 @@ export const forgotPasswordFailure = createAction(
   '[User] Forgot Password Failure',
   props<{ error: string }>()
 );
+
+export const resetPassword = createAction(
+  '[User] Reset Password',
+  props<IPasswordReset>()
+);
+
+export const resetPasswordSuccess = createAction(
+  '[User] Reset Password Success',
+  props<IUser>()
+)
+
+export const resetPasswordFailure = createAction(
+  '[User] Reset Password Failure',
+  props<{ error: string }>()
+)

@@ -65,5 +65,13 @@ export const userReducer = createReducer(
   on(UserActions.forgotPasswordFailure, (state, { error }) => ({
     ...state,
     error,
+  })),
+  on(UserActions.resetPasswordSuccess, (state, user) => ({
+    ...state,
+    user,
+  })),
+  on(UserActions.resetPasswordFailure, (state, { error }) => ({
+    ...state,
+    error,
   }))
 );

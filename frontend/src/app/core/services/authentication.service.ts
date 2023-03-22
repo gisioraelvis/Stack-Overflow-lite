@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import {
+  IPasswordReset,
   IUser,
   IUserSignIn,
   IUserSignUp,
@@ -43,5 +44,20 @@ export class AuthenticationService {
         return throwError(() => new Error(error.message));
       })
     );
+  }
+
+  resetPassword(passwordReset: IPasswordReset): Observable<IUser> {
+    const { resetToken, ...rest } = passwordReset; 
+    return this.http
+      .put<IUser>(`/users/reset-password?resetToken=${resetToken}`, rest)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.httpErrorPopupService.showError(
+            error.status,
+            error.error.message
+          );
+          return throwError(() => new Error(error.message));
+        })
+      );
   }
 }

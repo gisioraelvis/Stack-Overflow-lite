@@ -49,3 +49,9 @@ export interface IUserAnalytics {
   totalVotes: number;
   totalAcceptedAnswers: number;
 }
+
+export interface IPasswordReset {
+  resetToken: string;
+  password: string;
+  confirmPassword: string;
+}
