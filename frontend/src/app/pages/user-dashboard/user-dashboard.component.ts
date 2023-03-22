@@ -54,7 +54,9 @@ export class UserDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(UserSelectors.currentUser).subscribe((user) => {
       this.user = user;
-      this.getUserAnalytics(user.id);
+      if(user.id){
+        this.getUserAnalytics(user.id);
+      }
     });
   }
 
