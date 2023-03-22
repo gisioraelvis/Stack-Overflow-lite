@@ -15,6 +15,7 @@ import { AuthorizationService } from 'src/app/core/services/authorization.servic
 import { IUser } from 'src/app/shared/interfaces/IUser';
 import { Store } from '@ngrx/store';
 import * as UserSelectors from 'src/app/state/selectors/user.selectors';
+import * as UserActions from 'src/app/state/actions/user.actions';
 
 @Component({
   selector: 'app-navigation',
@@ -65,6 +66,7 @@ export class NavigationComponent implements OnInit, DoCheck {
 
   signOut() {
     this.router.navigate(['/']);
+    this.store.dispatch(UserActions.signOut());
     this.authorizationService.signOut();
   }
 }
