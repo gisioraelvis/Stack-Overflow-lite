@@ -82,7 +82,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard/edit-profile',
-    // canDeactivate: [CanDeactiveService],
+    canDeactivate: [CanDeactiveService],
     loadComponent: () =>
       import('./pages/update-profile/update-profile.component').then(
         (c) => c.UpdateProfileComponent

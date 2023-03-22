@@ -21,6 +21,7 @@ import * as UserSelectors from 'src/app/state/selectors/user.selectors';
 import * as UserActions from 'src/app/state/actions/user.actions';
 import { IUser, IUserProfileUpdate } from 'src/app/shared/interfaces/IUser';
 import { Observable } from 'rxjs';
+import { CanDeactivateComponent } from 'src/app/core/guards/can-deactive.service';
 
 @Component({
   selector: 'app-update-profile',
@@ -40,9 +41,9 @@ import { Observable } from 'rxjs';
     FileUploadComponent,
   ],
 })
-export class UpdateProfileComponent implements OnInit {
+export class UpdateProfileComponent implements OnInit, CanDeactivateComponent {
   public form: FormGroup;
-  user$?: Observable<IUser>;
+  user?: IUser;
 
   formOptions: AbstractControlOptions = {
     validators: this.passwordMatchValidator,
@@ -73,8 +74,8 @@ export class UpdateProfileComponent implements OnInit {
     );
   }
   ngOnInit(): void {
-    this.user$ = this.store.select(UserSelectors.currentUser);
-    this.user$.subscribe((user) => {
+    this.store.select(UserSelectors.currentUser).subscribe((user) => {
+      this.user = user;
       this.form.patchValue({
         name: user.name,
         email: user.email,
@@ -114,5 +115,17 @@ export class UpdateProfileComponent implements OnInit {
         aboutMe: user.bio,
       });
     });
+  }
+
+  canDeactive(): boolean {
+    if (
+      this.form.value.name !== this.user?.name ||
+      this.form.value.email !== this.user?.email ||
+      this.form.value.aboutMe !== this.user?.bio
+    ) {
+      return confirm('Are you Sure you want to Discard the Changes');
+    } else {
+      return true;
+    }
   }
 }

@@ -10,14 +10,6 @@
     <div class="update-form-container">
         <mat-card>
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <!-- <div class="form-group">
-                    <label for="file">Change/Profile Image</label>
-                    <input type="file" id="file" name="file" ng2FileSelect [uploader]="uploader" />
-                    <img *ngIf="uploader.queue.length > 0" [src]="imagePreview | safe: 'url'" width="100"
-                        height="100" />
-                </div> -->
-                <!-- TODO: https://www.bezkoder.com/angular-material-15-file-upload/ -->
-                <!-- <app-file-upload></app-file-upload> -->
                 <mat-form-field appearance="fill">
                     <mat-label>Display Name</mat-label>
                     <input matInput formControlName="name" />
