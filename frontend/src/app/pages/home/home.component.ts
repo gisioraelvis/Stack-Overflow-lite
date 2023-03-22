@@ -12,6 +12,9 @@ import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/pr
 import { questionFactory } from 'src/app/db';
 import { FilterQuestionsPipe } from 'src/app/shared/pipes/questions-filter.pipe';
 import { SortQuestionsPipe } from 'src/app/shared/pipes/questions-sort.pipe';
+import { Store } from '@ngrx/store';
+import * as questionsActions from 'src/app/state/actions/questions.actions';
+import * as questionsSelectors from 'src/app/state/selectors/questions.selectors';
 
 @Component({
   selector: 'app-home',
@@ -42,8 +45,21 @@ export class HomeComponent implements OnInit {
   searchType?: string = 'Keyword';
   searchTerm?: string;
 
+  constructor(private store: Store) {}
+
   ngOnInit(): void {
-    this.getPage(this.page);
+    this.store.dispatch(
+      questionsActions.getQuestions({
+        page: this.page,
+        itemsPerPage: this.itemsPerPage,
+      })
+    );
+    this.store
+      .select(questionsSelectors.getQuestionsLoading)
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
+    this.questions$ = this.store.select(questionsSelectors.questions);
   }
 
   ngOngChanges(): void {
@@ -70,7 +86,7 @@ export class HomeComponent implements OnInit {
 
   // TODO: implement pagination take page number and items per page
   // /questions?page=1&itemsPerPage=10
-  getPage($event: number) {
+  /*   getPage($event: number) {
     this.page = $event;
     console.log(`Page: ${this.page} Items per page: ${this.itemsPerPage}`);
     this.loading = true;
@@ -81,5 +97,8 @@ export class HomeComponent implements OnInit {
         this.loading = false;
       })
     );
+  } */
+  getPage($event: number) {
+    this.page = $event;
   }
 }

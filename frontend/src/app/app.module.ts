@@ -15,6 +15,8 @@ import { UserEffects } from './state/effects/user.effects';
 import { userReducer } from './state/reducers/user.reducer';
 import { siteAnalyticsReducer } from './state/reducers/admin-analytics.reducer';
 import { AdminEffects } from './state/effects/admin-analytics.effects';
+import { questionsReducer } from './state/reducers/questions.reducer';
+import { QuestionsEffects } from './state/effects/questions.effect';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,9 +30,10 @@ import { AdminEffects } from './state/effects/admin-analytics.effects';
     StoreModule.forRoot({
       user: userReducer,
       siteAnalytics: siteAnalyticsReducer,
+      questions: questionsReducer,
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([UserEffects, AdminEffects]),
+    EffectsModule.forRoot([UserEffects, AdminEffects, QuestionsEffects]),
   ],
   providers: [
     {

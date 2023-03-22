@@ -12,6 +12,9 @@ import { questionFactory } from 'src/app/db';
 import { FilterQuestionsPipe } from 'src/app/shared/pipes/questions-filter.pipe';
 import { SortQuestionsPipe } from 'src/app/shared/pipes/questions-sort.pipe';
 import { SearchComponent } from 'src/app/components/search/search.component';
+import { Store } from '@ngrx/store';
+import * as QuestionsActions from 'src/app/state/actions/questions.actions';
+import * as QuestionsSelectors from 'src/app/state/selectors/questions.selectors';
 
 @Component({
   selector: 'app-questions',
@@ -58,7 +61,7 @@ export class QuestionsComponent implements OnInit {
     (questionCategory) => questionCategory.questionCategorie === 'newest'
   );
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private store: Store) {}
 
   ngOnInit(): void {
     // /questions?filter=answered&userId=1
@@ -121,7 +124,6 @@ export class QuestionsComponent implements OnInit {
     }
   }
 
-  // TODO: implement infinite scroll pagination
   getQuestions() {
     this.loading = true;
     this.questions$ = of(questionFactory.buildList(50)).pipe(
@@ -131,6 +133,12 @@ export class QuestionsComponent implements OnInit {
       })
     );
   }
+  // getQuestions() {
+  //   this.loading = true;
+  //   this.store.dispatch(QuestionsActions.getQuestions());
+  //   this.questions$ = this.store.select(QuestionsSelectors.questions);
+  //   this.loading = false;
+  // }
 
   userQuestions(filter: string | null, userId: string | null) {
     console.log(`filter: ${filter}, userId: ${userId}`);

@@ -17,3 +17,11 @@ export interface IQuestion {
   comments: IComment[];
   answers: IAnswer[];
 }
+
+export interface IQuestionsState {
+  questions: IQuestion[];
+  question: IQuestion | null;
+  loading: boolean;
+  loaded: boolean;
+  error: string;
+}
