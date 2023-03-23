@@ -53,6 +53,47 @@ export const getAllQuestions = async (req: Request, res: Response) => {
 };
 
 /**
+ * @desc    Search questions
+ * @route   GET /api/questions/search?searchTerm=javascript
+ * @access  Public
+ */
+export const searchQuestions = async (req: Request, res: Response) => {
+  // optional pagination query params, page, itemsPerPage
+  const { searchTerm, page, itemsPerPage } = req.query;
+
+  const pagination: IPagination = {
+    page: page ? +page : 1,
+    itemsPerPage: itemsPerPage ? +itemsPerPage : 10,
+  };
+
+  try {
+    const questions = await dbUtils.exec("usp_SearchQuestions", {
+      searchTerm: searchTerm,
+      page: pagination.page,
+      itemsPerPage: pagination.itemsPerPage,
+    });
+
+    let formatedQuestionWithTags = [] as IQuestion[];
+
+    for (const question of questions.recordset) {
+      await dbUtils
+        .exec("usp_GetQuestionById", {
+          id: question.id,
+        })
+        .then((q) => {
+          const formattedQuestion = formatQuestionTags(q.recordset);
+          formatedQuestionWithTags.push(formattedQuestion[0]);
+        });
+    }
+
+    return res.status(200).json(formatedQuestionWithTags);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+    CreateLog.error(error);
+  }
+};
+
+/**
  * @desc    Get all questions
  * @route   GET /api/questions
  * @access  Public
@@ -572,5 +613,3 @@ export const hardDeleteQuestion = async (
     CreateLog.error(error);
   }
 };
-
-

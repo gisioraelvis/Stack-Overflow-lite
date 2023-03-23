@@ -13,10 +13,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { UserEffects } from './state/effects/user.effects';
 import { userReducer } from './state/reducers/user.reducer';
-import { siteAnalyticsReducer } from './state/reducers/admin-analytics.reducer';
-import { AdminEffects } from './state/effects/admin-analytics.effects';
+import { siteAnalyticsReducer } from './state/reducers/site-analytics.reducer';
 import { questionsReducer } from './state/reducers/questions.reducer';
 import { QuestionsEffects } from './state/effects/questions.effect';
+import { SiteAnalyticsEffects } from './state/effects/site-analytics.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +33,7 @@ import { QuestionsEffects } from './state/effects/questions.effect';
       questions: questionsReducer,
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([UserEffects, AdminEffects, QuestionsEffects]),
+    EffectsModule.forRoot([UserEffects, SiteAnalyticsEffects, QuestionsEffects]),
   ],
   providers: [
     {

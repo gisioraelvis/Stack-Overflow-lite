@@ -17,7 +17,7 @@ import { IUser } from 'src/app/shared/interfaces/IUser';
 import { ISiteAnalytics } from 'src/app/shared/interfaces/IAnalytics';
 import { Store } from '@ngrx/store';
 import * as UserSelectors from 'src/app/state/selectors/user.selectors';
-import * as SiteAnalyticsActions from 'src/app/state/actions/admin-analytics.actions';
+import * as SiteAnalyticsActions from 'src/app/state/actions/site-analytics.actions';
 import * as SiteAnalyticsSelectors from 'src/app/state/selectors/admin-analytics.selectors';
 
 @Component({

@@ -25,8 +25,31 @@ export class QuestionsEffects {
               questions: successResponse,
             });
           }),
-          catchError((error) => of(QuestionsActions.loadQuestionsFailure({ error })))
+          catchError((error) =>
+            of(QuestionsActions.loadQuestionsFailure({ error }))
+          )
         );
+      })
+    );
+  });
+
+  searchQuestions$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(QuestionsActions.searchQuestions),
+      mergeMap((action) => {
+        const { searchTerm, page, itemsPerPage } = action;
+        return this.questionsService
+          .searchQuestions({ searchTerm, pagination: { page, itemsPerPage } })
+          .pipe(
+            map((successResponse: IQuestion[]) => {
+              return QuestionsActions.searchQuestionsSuccess({
+                questions: successResponse,
+              });
+            }),
+            catchError((error) =>
+              of(QuestionsActions.searchQuestionsFailure({ error }))
+            )
+          );
       })
     );
   });

@@ -2,22 +2,22 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import * as SiteAnalyticsActions from '../actions/admin-analytics.actions';
+import * as SiteAnalyticsActions from '../actions/site-analytics.actions';
 import { ISiteAnalytics } from 'src/app/shared/interfaces/IAnalytics';
-import { AdminDashBoardService } from 'src/app/pages/admin-dashboard/admin-analytics.service';
+import { SiteAnalyticsService } from 'src/app/shared/services/site-analytics.service';
 
 @Injectable()
-export class AdminEffects {
+export class SiteAnalyticsEffects {
   constructor(
     private actions$: Actions,
-    private adminDashBoardService: AdminDashBoardService
+    private siteAnalyticsService: SiteAnalyticsService
   ) {}
 
   siteAnalytics$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(SiteAnalyticsActions.getSiteAnalytics),
       mergeMap(() => {
-        return this.adminDashBoardService.getSiteAnalytics().pipe(
+        return this.siteAnalyticsService.getSiteAnalytics().pipe(
           map((successResponse: ISiteAnalytics) => {
             return SiteAnalyticsActions.getSiteAnalyticsSuccess({
               totalUsers: successResponse.totalUsers,

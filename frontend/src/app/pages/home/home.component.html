@@ -42,5 +42,5 @@
     </ng-template>
 </div>
 <div class="pagination" *ngIf="questions$ | async ">
-    <pagination-controls (pageChange)="getPage($event)" id="home-page"></pagination-controls>
+    <pagination-controls (pageChange)="onPageChange($event)" id="home-page"></pagination-controls>
 </div>

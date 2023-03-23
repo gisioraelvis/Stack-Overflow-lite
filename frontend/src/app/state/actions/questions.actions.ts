@@ -27,8 +27,21 @@ export const upvoteQuestion = createAction(
   props<{ questionId: string; userId: string }>()
 );
 
-// searchQuestions
 export const searchQuestions = createAction(
-    '[Questions] Search Questions',
-    props<{ searchTerm: string; page: number; itemsPerPage: number }>()
+  '[Questions] Search Questions',
+  props<{
+    searchTerm: string | undefined | null;
+    page: number;
+    itemsPerPage: number;
+  }>()
+);
+
+export const searchQuestionsSuccess = createAction(
+  '[Questions] Search Questions Success',
+  props<{ questions: IQuestion[] }>()
+);
+
+export const searchQuestionsFailure = createAction(
+  '[Questions] Search Questions Failure',
+  props<{ error: string }>()
 );

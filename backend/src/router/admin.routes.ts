@@ -7,8 +7,9 @@ import {
 
 const adminRoutes = express.Router();
 
-adminRoutes
+/* adminRoutes
   .route("/analytics")
-  .get(authenticateUser, authorizeAdmin, getAnalytics);
+  .get(authenticateUser, authorizeAdmin, getAnalytics); */
+adminRoutes.route("/analytics").get(getAnalytics);
 
 export default adminRoutes;

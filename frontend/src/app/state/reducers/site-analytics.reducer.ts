@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { ISiteAnalyticsState } from 'src/app/shared/interfaces/IAnalytics';
-import * as SiteAnalyticsActions from '../actions/admin-analytics.actions';
+import * as SiteAnalyticsActions from '../actions/site-analytics.actions';
 
 const initialSiteAnalyticsState: ISiteAnalyticsState = {
   siteAnalytics: {

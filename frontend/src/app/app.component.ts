@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as questionsActions from 'src/app/state/actions/questions.actions';
 import { AppState } from './state/appState';
+import * as questionsActions from 'src/app/state/actions/questions.actions';
+import * as SiteAnalyticsActions from 'src/app/state/actions/site-analytics.actions';
 
 @Component({
   selector: 'app-root',
@@ -17,5 +18,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(
       questionsActions.getQuestions({ page: 1, itemsPerPage: 10 })
     );
+
+    this.store.dispatch(SiteAnalyticsActions.getSiteAnalytics());
   }
 }

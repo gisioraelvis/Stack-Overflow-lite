@@ -1,5 +1,6 @@
 import { IAnswer } from './IAnswer';
 import { IComment } from './IComment';
+import { IPagination } from './IPagination';
 import { ITag } from './ITag';
 import { IUser } from './IUser';
 
@@ -24,4 +25,9 @@ export interface IQuestionsState {
   loading: boolean;
   loaded: boolean;
   error: string;
+}
+
+export interface IQuestionSearch {
+  searchTerm: string | undefined | null;
+  pagination: IPagination;
 }

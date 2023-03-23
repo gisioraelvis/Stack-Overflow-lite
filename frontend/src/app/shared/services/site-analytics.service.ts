@@ -7,23 +7,18 @@ import { ISiteAnalytics } from 'src/app/shared/interfaces/IAnalytics';
 @Injectable({
   providedIn: 'root',
 })
-export class AdminDashBoardService {
+export class SiteAnalyticsService {
   constructor(
     private http: HttpClient,
     private httpErrorPopupService: HttpErrorPopupService
   ) {}
 
-  getSiteAnalytics(): Observable<ISiteAnalytics> {    
-    return this.http
-      .get<ISiteAnalytics>(`/admin/analytics`)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          this.httpErrorPopupService.showError(
-            error.status,
-            error.error.message
-          );
-          return throwError(() => new Error(error.message));
-        })
-      );
+  getSiteAnalytics(): Observable<ISiteAnalytics> {
+    return this.http.get<ISiteAnalytics>(`/admin/analytics`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.httpErrorPopupService.showError(error.status, error.error.message);
+        return throwError(() => new Error(error.message));
+      })
+    );
   }
 }
