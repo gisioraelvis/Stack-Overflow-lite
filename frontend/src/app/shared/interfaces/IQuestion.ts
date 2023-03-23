@@ -11,7 +11,7 @@ export interface IQuestion {
   user: IUser;
   upvotes: number;
   downvotes: number;
-  answersCount: number;
+  totalAnswers: number;
   createdAt: string | Date;
   updatedAt: string | Date;
   tags: ITag[];

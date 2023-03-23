@@ -37,11 +37,11 @@ export class SortQuestionsPipe implements PipeTransform {
         );
         break;
       case 'Most Answered':
-        sortedQuestions.sort((a, b) => b.answersCount - a.answersCount);
+        sortedQuestions.sort((a, b) => b.totalAnswers - a.totalAnswers);
         break;
       case 'Unanswered':
         sortedQuestions = sortedQuestions.filter(
-          (question) => question.answersCount === 0
+          (question) => question.totalAnswers === 0
         );
         break;
       default:

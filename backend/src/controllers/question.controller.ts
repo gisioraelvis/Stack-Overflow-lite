@@ -6,8 +6,7 @@ import { CreateLog } from "../utils/logger.util";
 import { IUser } from "../interfaces/user.interface";
 import { IRequestWithUser } from "../interfaces/request-with-user.interface";
 import { IPagination } from "../interfaces/pagination.interface";
-import { IQuestion, IQuestionObject } from "../interfaces/question.interface";
-import { ITag, ITagObject } from "../interfaces/tag.interface";
+import { IQuestion } from "../interfaces/question.interface";
 import { QuestionCreateDto, QuestionUpdateDto } from "../dtos/question.dto";
 import { formatQuestionTags } from "../utils/question.utils";
 
@@ -40,6 +39,7 @@ export const getAllQuestions = async (req: Request, res: Response) => {
           id: question.id,
         })
         .then((q) => {
+          console.log(q.recordset);
           const formattedQuestion = formatQuestionTags(q.recordset);
           formatedQuestionWithTags.push(formattedQuestion[0]);
         });
@@ -98,7 +98,7 @@ export const searchQuestions = async (req: Request, res: Response) => {
  * @route   GET /api/questions
  * @access  Public
  */
-export const getAllQuestionsWithTags = async (req: Request, res: Response) => {
+/* export const getAllQuestionsWithTags = async (req: Request, res: Response) => {
   // optional pagination query params, page, itemsPerPage
   const { page, itemsPerPage } = req.query;
 
@@ -160,7 +160,7 @@ export const getAllQuestionsWithTags = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
     CreateLog.error(error);
   }
-};
+}; */
 
 /**
  * @desc    Get a question by id

@@ -39,6 +39,7 @@ export const formatQuestionTags = (
       user,
       upvotes: question.questionUpvotes,
       downvotes: question.questionDownvotes,
+      totalAnswers: question.questionTotalAnswers,
       isDeleted: question.questionIsDeleted,
       createdAt: question.questionCreatedAt,
       updatedAt: question.questionUpdatedAt,

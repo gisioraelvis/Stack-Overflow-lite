@@ -6,7 +6,7 @@
                 <span class="count">{{question.upvotes}}</span>
             </div>
             <div class="answers-count">
-                <span class="count">{{question.answersCount}}</span>
+                <span class="count">{{question.totalAnswers}}</span>
                 answers
             </div>
             <div class="voting thumbs-downs">
@@ -36,7 +36,7 @@
     </div>
     <div class="answer-btn">
         <button mat-raised-button color="accent" routerLink="/questions/{{question.id}}" appToScroll="add-answer">
-            {{question.answersCount > 0 ? 'Add Answer' : 'Be The First To Answer'}}
+            {{question.totalAnswers > 0 ? 'Add Answer' : 'Be The First To Answer'}}
         </button>
     </div>
 </mat-card>

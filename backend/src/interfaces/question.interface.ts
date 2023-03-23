@@ -1,5 +1,3 @@
-import { IAnswer } from "./answer.interface";
-import { IComment } from "./comment.interface";
 import { ITag } from "./tag.interface";
 import { IUser } from "./user.interface";
 
@@ -10,6 +8,7 @@ export interface IQuestion {
   user: IUser;
   upvotes: number;
   downvotes: number;
+  totalAnswers: number;
   isDeleted?: boolean;
   createdAt: string | Date;
   updatedAt: string | Date;
@@ -23,6 +22,7 @@ export interface IQuestionObject {
   questionBody: string;
   questionUpvotes: number;
   questionDownvotes: number;
+  questionTotalAnswers: number;
   questionIsDeleted: boolean;
   questionCreatedAt: string;
   questionUpdatedAt: string;
