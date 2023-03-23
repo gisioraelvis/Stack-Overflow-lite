@@ -4,17 +4,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule, RouterLink, ActivatedRoute } from '@angular/router';
 import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
-import { Observable, of, delay, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IQuestion } from 'src/app/shared/interfaces/IQuestion';
 import { QuestionComponent } from 'src/app/components/question/question.component';
 import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.pipe';
-import { questionFactory } from 'src/app/db';
 import { FilterQuestionsPipe } from 'src/app/shared/pipes/questions-filter.pipe';
 import { SortQuestionsPipe } from 'src/app/shared/pipes/questions-sort.pipe';
 import { SearchComponent } from 'src/app/components/search/search.component';
 import { Store } from '@ngrx/store';
-import * as QuestionsActions from 'src/app/state/actions/questions.actions';
-import * as QuestionsSelectors from 'src/app/state/selectors/questions.selectors';
+import * as questionsActions from 'src/app/state/actions/questions.actions';
+import * as questionsSelectors from 'src/app/state/selectors/questions.selectors';
+import * as SiteAnalyticsActions from 'src/app/state/actions/site-analytics.actions';
+import * as SiteAnalyticsSelectors from 'src/app/state/selectors/admin-analytics.selectors';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-questions',
@@ -31,6 +33,7 @@ import * as QuestionsSelectors from 'src/app/state/selectors/questions.selectors
     MatButtonModule,
     MatTabsModule,
     SearchComponent,
+    NgxPaginationModule,
   ],
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css'],
@@ -38,6 +41,8 @@ import * as QuestionsSelectors from 'src/app/state/selectors/questions.selectors
 export class QuestionsComponent implements OnInit {
   loading: boolean = false;
   page: number = 1;
+  itemsPerPage: number = 10;
+  totalItems?: number;
   questions$?: Observable<IQuestion[]>;
   sortBy: string = 'Newest';
 
@@ -64,18 +69,39 @@ export class QuestionsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private store: Store) {}
 
   ngOnInit(): void {
+    this.store.dispatch(
+      questionsActions.getQuestions({
+        page: this.page,
+        itemsPerPage: this.itemsPerPage,
+      })
+    );
+
+    this.store
+      .select(questionsSelectors.getQuestionsLoading)
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
+
+    this.store
+      .select(SiteAnalyticsSelectors.siteAnalytics)
+      .subscribe((analytics) => {
+        console.log('analytics', analytics);
+
+        this.totalItems = analytics.totalQuestions;
+      });
+
+    this.store.dispatch(SiteAnalyticsActions.getSiteAnalytics());
+
     // /questions?filter=answered&userId=1
     const filter = this.route.snapshot.queryParamMap.get('filter');
     const userId = this.route.snapshot.queryParamMap.get('userId');
-
-    // /questions?filter=answered&userId=1
-    if ((filter || userId) && !this.searchTerm) {
-      this.userQuestions(filter, userId);
+    if (filter && userId && !this.searchTerm) {
+      this.userQuestions(filter, userId!);
     }
 
     // /questions?filter=unanswered
     if (filter === 'unanswered') {
-      this.getQuestions();
+      this.questions$ = this.store.select(questionsSelectors.questions);
       this.sortBy = 'Unanswered';
       this.selectedquestionCategory = this.questionCategories.findIndex(
         (questionCategory) =>
@@ -85,7 +111,7 @@ export class QuestionsComponent implements OnInit {
 
     // /questions?filter=answered
     if (filter === 'answered') {
-      this.getQuestions();
+      this.questions$ = this.store.select(questionsSelectors.questions);
       this.sortBy = 'Most Answered';
       this.selectedquestionCategory = this.questionCategories.findIndex(
         (questionCategory) => questionCategory.questionCategorie === 'answered'
@@ -96,7 +122,7 @@ export class QuestionsComponent implements OnInit {
     const tag = this.route.snapshot.queryParamMap.get('tag');
     if (tag) {
       this.searchTerm = tag;
-      this.getQuestions();
+      this.questions$ = this.store.select(questionsSelectors.questions);
     }
 
     // /questions?searchType=Keyword&search=searchTerm
@@ -105,12 +131,12 @@ export class QuestionsComponent implements OnInit {
     if (searchType && searchTerm) {
       this.searchType = searchType;
       this.searchTerm = searchTerm;
-      this.getQuestions();
+      this.questions$ = this.store.select(questionsSelectors.questions);
     }
 
     // /questions
     if (!filter && !userId) {
-      this.getQuestions();
+      this.questions$ = this.store.select(questionsSelectors.questions);
     }
   }
 
@@ -120,50 +146,64 @@ export class QuestionsComponent implements OnInit {
 
   ngOnChanges() {
     if (this.searchTerm) {
-      this.getSearchQuestions(this.searchTerm);
+      this.searchQuestions(this.searchTerm);
     }
   }
 
-  getQuestions() {
-    this.loading = true;
-    this.questions$ = of(questionFactory.buildList(50)).pipe(
-      delay(500), // simulate delay
-      tap(() => {
-        this.loading = false;
-      })
-    );
-  }
-  // getQuestions() {
-  //   this.loading = true;
-  //   this.store.dispatch(QuestionsActions.getQuestions());
-  //   this.questions$ = this.store.select(QuestionsSelectors.questions);
-  //   this.loading = false;
-  // }
-
-  userQuestions(filter: string | null, userId: string | null) {
-    console.log(`filter: ${filter}, userId: ${userId}`);
-    this.loading = true;
-    this.questions$ = of(questionFactory.buildList(50)).pipe(
-      delay(500), // simulate delay
-      tap(() => {
-        this.loading = false;
-      })
-    );
-
+  userQuestions(filter: string | null, userId: string) {
     if (filter) {
       this.selectedquestionCategory = this.questionCategories.findIndex(
         (questionCategory) => questionCategory.questionCategorie === filter
       );
     }
+
+    this.store
+      .select(questionsSelectors.getQuestionsLoading)
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
+
+    this.store.dispatch(
+      questionsActions.getQuestionsByUser({
+        userId: userId,
+        pagination: { page: this.page, itemsPerPage: this.itemsPerPage },
+      })
+    );
+
+    this.questions$ = this.store.select(questionsSelectors.questions);
   }
 
-  getSearchQuestions(searchTerm: string) {
-    this.loading = true;
-    // TODO: implement search
-    this.questions$ = of(questionFactory.buildList(50)).pipe(
-      delay(500), // simulate delay
-      tap(() => {
-        this.loading = false;
+  searchQuestions(searchTerm: string | undefined | null) {
+    this.store
+      .select(questionsSelectors.getQuestionsLoading)
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
+
+    this.store.dispatch(
+      questionsActions.searchQuestions({
+        searchTerm: searchTerm,
+        page: this.page,
+        itemsPerPage: this.itemsPerPage,
+      })
+    );
+
+    this.questions$ = this.store.select(questionsSelectors.questions);
+  }
+
+  onPageChange($event: number) {
+    this.page = $event;
+
+    this.store
+      .select(questionsSelectors.getQuestionsLoading)
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
+
+    this.store.dispatch(
+      questionsActions.getQuestions({
+        page: this.page,
+        itemsPerPage: this.itemsPerPage,
       })
     );
   }

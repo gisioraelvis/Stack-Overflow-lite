@@ -24,8 +24,8 @@ import {
   createQuestion,
   downvoteQuestion,
   getAllQuestions,
-  getAllQuestionsWithTags,
   getQuestionById,
+  getQuestionsByUserId,
   getSoftDeletedQuestions,
   hardDeleteQuestion,
   restoreQuestion,
@@ -45,6 +45,8 @@ const questionRoutes = express.Router();
 questionRoutes.route("/").get(getAllQuestions);
 
 questionRoutes.route("/search").get(searchQuestions);
+
+questionRoutes.route("/user/:userId").get(getQuestionsByUserId);
 
 questionRoutes
   .route("/soft-deleted")

@@ -48,4 +48,23 @@ export class QuestionsService {
         })
       );
   }
+
+  getQuestionsByUser(
+    userId: string,
+    pagination: IPagination
+  ): Observable<IQuestion[]> {
+    return this.http
+      .get<IQuestion[]>(
+        `/questions/user/${userId}?page=${pagination.page}&itemsPerPage=${pagination.itemsPerPage}`
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.httpErrorPopupService.showError(
+            error.status,
+            error.error.message
+          );
+          return throwError(() => new Error(error.message));
+        })
+      );
+  }
 }

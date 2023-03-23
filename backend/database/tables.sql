@@ -98,24 +98,3 @@ CREATE TABLE Votes
     FOREIGN KEY (questionId) REFERENCES Questions(id),
     FOREIGN KEY (answerId) REFERENCES Answers(id)
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

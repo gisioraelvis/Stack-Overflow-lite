@@ -53,4 +53,25 @@ export class QuestionsEffects {
       })
     );
   });
+
+  getQuestionsByUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(QuestionsActions.getQuestionsByUser),
+      mergeMap((action) => {
+        const { userId, pagination } = action;
+        return this.questionsService
+          .getQuestionsByUser(userId, pagination)
+          .pipe(
+            map((successResponse: IQuestion[]) => {
+              return QuestionsActions.getQuestionsByUserSuccess({
+                questions: successResponse,
+              });
+            }),
+            catchError((error) =>
+              of(QuestionsActions.getQuestionsByUserFailure({ error }))
+            )
+          );
+      })
+    );
+  });
 }

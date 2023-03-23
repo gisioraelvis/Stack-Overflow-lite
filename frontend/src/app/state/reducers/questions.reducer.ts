@@ -57,5 +57,25 @@ export const questionsReducer = createReducer(
       loading: false,
       error,
     };
+  }),
+  on(QuestionsActions.getQuestionsByUser, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+  on(QuestionsActions.getQuestionsByUserSuccess, (state, { questions }) => {
+    return {
+      ...state,
+      loading: false,
+      questions: [...questions],
+    };
+  }),
+  on(QuestionsActions.getQuestionsByUserFailure, (state, { error }) => {
+    return {
+      ...state,
+      loading: false,
+      error,
+    };
   })
 );

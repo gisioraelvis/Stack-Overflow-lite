@@ -45,3 +45,18 @@ export const searchQuestionsFailure = createAction(
   '[Questions] Search Questions Failure',
   props<{ error: string }>()
 );
+
+export const getQuestionsByUser = createAction(
+  '[Questions] Get User Questions',
+  props<{ userId: string; pagination: IPagination }>()
+);
+
+export const getQuestionsByUserSuccess = createAction(
+  '[Questions] Get User Questions Success',
+  props<{ questions: IQuestion[] }>()
+);
+
+export const getQuestionsByUserFailure = createAction(
+  '[Questions] Get User Questions Failure',
+  props<{ error: string }>()
+);

@@ -1,9 +1,10 @@
 <div class="questions-page">
-    <app-progress-spinner *ngIf="loading"></app-progress-spinner>
     <ng-container *ngIf="(questions$ | async ) as questions; else noquestions">
         <div class="top-section">
             <div class="questions-heading">
-                <h1>All Questions <span class="questions-count">({{questions.length | thousandSeparator}})</span></h1>
+                <h1 *ngIf="!loading">Total Questions
+                    <span class="questions-count">({{totalItems! | thousandSeparator}})</span>
+                </h1>
             </div>
             <div class="ask-question">
                 <button mat-raised-button routerLink="/questions/ask" color="accent">Ask a Question</button>
@@ -17,17 +18,21 @@
                 <mat-tab *ngFor="let questionCategorie of questionCategories" [label]="questionCategorie.label">
                     <div class="questions" *ngIf="questions.length>0; else noquestions">
                         <app-question class="question"
-                            *ngFor="let question of questions | filterQuestions: searchType: searchTerm | sortQuestions: sortBy"
+                            *ngFor="let question of questions | filterQuestions: searchType: searchTerm | sortQuestions: sortBy | paginate: { id: 'questions-page', currentPage: page, itemsPerPage, totalItems}"
                             [question]="question" searchTermHighlight="{{searchTerm}}"></app-question>
                     </div>
                 </mat-tab>
             </mat-tab-group>
         </div>
     </ng-container>
+    <app-progress-spinner *ngIf="loading"></app-progress-spinner>
     <ng-template #noquestions>
         <div class="no-questions" *ngIf="!loading">
             <p>There are no questions yet. Be the first to add a question.</p>
             <button mat-raised-button routerLink="/questions/ask" color="accent">Add a question</button>
         </div>
     </ng-template>
+</div>
+<div class="pagination" *ngIf="questions$ | async ">
+    <pagination-controls (pageChange)="onPageChange($event)" id="questions-page"></pagination-controls>
 </div>

@@ -39,7 +39,6 @@ export const getAllQuestions = async (req: Request, res: Response) => {
           id: question.id,
         })
         .then((q) => {
-          console.log(q.recordset);
           const formattedQuestion = formatQuestionTags(q.recordset);
           formatedQuestionWithTags.push(formattedQuestion[0]);
         });
@@ -178,6 +177,56 @@ export const getQuestionById = async (req: Request, res: Response) => {
     }
 
     return res.status(200).json(formatQuestionTags(questions.recordset)[0]);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+    CreateLog.error(error);
+  }
+};
+
+/*
+ * @desc    Get all questions by user id
+ * @route   GET /questions/user/:userId?page=page&itemsPerPage=itemsPerPage
+ * @access  Public
+ */
+export const getQuestionsByUserId = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const { page, itemsPerPage } = req.query;
+
+  const pagination: IPagination = {
+    page: page ? +page : 1,
+    itemsPerPage: itemsPerPage ? +itemsPerPage : 10,
+  };
+
+  try {
+    const user = await dbUtils.exec("usp_FindUserById", { id: userId });
+    if (user.recordset.length === 0) {
+      return res.status(404).json({ message: "User does not exist" });
+    }
+
+    const questions = await dbUtils.exec("usp_GetQuestionsByUserId", {
+      userId,
+      page: pagination.page,
+      itemsPerPage: pagination.itemsPerPage,
+    });
+    if (questions.recordset.length === 0) {
+      // empty array
+      return res.status(200).json([]);
+    }
+
+    let formatedQuestionWithTags = [] as IQuestion[];
+
+    for (const question of questions.recordset) {
+      await dbUtils
+        .exec("usp_GetQuestionById", {
+          id: question.id,
+        })
+        .then((q) => {
+          const formattedQuestion = formatQuestionTags(q.recordset);
+          formatedQuestionWithTags.push(formattedQuestion[0]);
+        });
+    }
+
+    return res.status(200).json(formatedQuestionWithTags);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
     CreateLog.error(error);
