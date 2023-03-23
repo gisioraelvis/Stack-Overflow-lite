@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserComponent } from 'src/app/components/user/user.component';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { IUser } from 'src/app/shared/interfaces/IUser';
-import { delay, Observable, of, tap } from 'rxjs';
-import { userFactory } from 'src/app/db';
+import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +14,12 @@ import { RouterModule, RouterLink } from '@angular/router';
 import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
 import { SearchComponent } from 'src/app/components/search/search.component';
 import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.pipe';
+import { Store } from '@ngrx/store';
+import * as usersActions from 'src/app/state/actions/user.actions';
+import * as usersSelectors from 'src/app/state/selectors/user.selectors';
+import * as SiteAnalyticsActions from 'src/app/state/actions/site-analytics.actions';
+import * as SiteAnalyticsSelectors from 'src/app/state/selectors/admin-analytics.selectors';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-users',
@@ -36,13 +41,17 @@ import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.p
     MatTabsModule,
     ProgressSpinnerComponent,
     ThousandSeparatorPipe,
+    NgxPaginationModule,
   ],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
-  position: TooltipPosition = 'above';
   loading: boolean = false;
+  page: number = 1;
+  itemsPerPage: number = 10;
+  totalItems?: number;
+  position: TooltipPosition = 'above';
   users$?: Observable<IUser[]>;
 
   userCategories: {
@@ -58,17 +67,45 @@ export class UsersComponent implements OnInit {
   ];
   selecteduserCategory: string = 'popular';
 
-  ngOnInit(): void {
-    this.getUsers();
-  }
+  constructor(private store: Store) {}
 
-  getUsers() {
-    this.loading = true;
-    this.users$ = of(userFactory.buildList(50)).pipe(
-      delay(500), // simulate 1 second delay
-      tap(() => {
-        this.loading = false;
+  ngOnInit(): void {
+    this.store.dispatch(
+      usersActions.getUsers({
+        page: this.page,
+        itemsPerPage: this.itemsPerPage,
       })
     );
+
+    this.store.select(usersSelectors.getUsersLoading).subscribe((loading) => {
+      this.loading = loading;
+    });
+
+    this.store
+      .select(SiteAnalyticsSelectors.siteAnalytics)
+      .subscribe((analytics) => {
+        this.totalItems = analytics.totalUsers;
+      });
+
+    this.store.dispatch(SiteAnalyticsActions.getSiteAnalytics());
+
+    this.users$ = this.store.select(usersSelectors.users);
+  }
+
+  onPageChange($event: number) {
+    this.page = $event;
+
+    this.store.select(usersSelectors.getUsersLoading).subscribe((loading) => {
+      this.loading = loading;
+    });
+
+    this.store.dispatch(
+      usersActions.getUsers({
+        page: this.page,
+        itemsPerPage: this.itemsPerPage,
+      })
+    );
+
+    this.users$ = this.store.select(usersSelectors.users);
   }
 }

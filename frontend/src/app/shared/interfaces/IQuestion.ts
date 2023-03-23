@@ -1,8 +1,8 @@
 import { IAnswer } from './IAnswer';
 import { IComment } from './IComment';
-import { IPagination } from './IPagination';
 import { ITag } from './ITag';
 import { IUser } from './IUser';
+import { IPagination } from './shared';
 
 export interface IQuestion {
   id: number;

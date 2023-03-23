@@ -35,10 +35,13 @@ export interface IUser {
 }
 
 export interface IUserState {
+  loading: boolean;
+  loaded: boolean;
+  users: IUser[];
   user: IUser;
   userAnalytics: IUserAnalytics;
-  error: string;
   message: string;
+  error: string;
 }
 
 export interface IUserAnalytics {

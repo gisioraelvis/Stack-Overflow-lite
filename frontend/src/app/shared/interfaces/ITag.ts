@@ -1,4 +1,4 @@
-import { IPagination } from './IPagination';
+import { IPagination } from "./shared";
 
 export interface ITag {
   id: number;
@@ -16,11 +16,6 @@ export interface ITagsState {
   loading: boolean;
   loaded: boolean;
   error: string;
-}
-
-export interface ITagSearch {
-  searchTerm: string | undefined | null;
-  pagination: IPagination;
 }
 
 export interface ITagByUser {

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IPagination } from 'src/app/shared/interfaces/IPagination';
+import { IPagination } from 'src/app/shared/interfaces/shared';
 import { IDeleteSuccess, ITag } from 'src/app/shared/interfaces/ITag';
 
 export const getTags = createAction('[Tags] Get Tags', props<IPagination>());

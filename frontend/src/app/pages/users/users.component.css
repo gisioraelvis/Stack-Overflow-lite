@@ -65,45 +65,9 @@
   background-color: #ff6f00;
 }
 
-/* 
-<div class="user-dashboard-page">
-    <div class="top-section">
-        <div class="user-container">
-            <div class="avatar-container">
-                <img class="avatar" src="assets/images/avatar.png" alt="avatar">
-            </div>
-            <div class="user-bio">
-                <h1>Username</h1>
-                <p>Member since 2019</p>
-            </div>
-        </div>
-        <div class="edit-profile">
-            <button mat-raised-button routerLink="/dashboard/edit-profile" color="accent">
-                <mat-icon>edit</mat-icon>
-                <span>Edit Profile</span>
-            </button>
-        </div>
-    </div>
-    <div class="analytics">
-        <!-- Answers, Questions, Tags -->
-        <div class="answers">
-            <p>You have answered <span>0</span> questions</p>
-            <p *ngIf="user.answers.length === 0">You have not answered any questions yet
-                <span><a routerLink="/questions?filter=unanswered">Unanswered Questions</a></span>
-            </p>
-        </div>
-        <div class="questions">
-            <p>You have asked <span>0</span> questions</p>
-            <p *ngIf="user.questions.length === 0">You have not asked any questions yet
-                <span><a routerLink="/questions/ask">Ask Questions</a></span>
-            </p>
-        </div>
-        <div class="tags">
-            <p>You have participated in<span>0</span> tags</p>
-            <p *ngIf="user.tags.length === 0">You have not participated in any
-                <span><a routerLink="/tags">Tags</a></span>
-            </p>
-        </div>
-    </div>
-</div>
-*/
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IPagination } from 'src/app/shared/interfaces/IPagination';
+import { IPagination } from 'src/app/shared/interfaces/shared';
 import { IQuestion } from 'src/app/shared/interfaces/IQuestion';
 
 export const getQuestions = createAction(

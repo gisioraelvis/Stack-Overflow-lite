@@ -16,6 +16,8 @@ import { LocalStorageService } from 'src/app/core/services/local-storage.service
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
 import { UserDashBoardService } from 'src/app/pages/user-dashboard/user-analytics.service';
 import { IMessage } from 'src/app/shared/interfaces/IMessage';
+import { UsersService } from 'src/app/pages/users/users.service';
+import { IDeleteSuccess } from 'src/app/shared/interfaces/ITag';
 
 @Injectable()
 export class UserEffects {
@@ -25,7 +27,8 @@ export class UserEffects {
     private authorizationService: AuthorizationService,
     private updateProfileService: UpdateProfileService,
     private localStorageService: LocalStorageService,
-    private userDashBoardService: UserDashBoardService
+    private userDashBoardService: UserDashBoardService,
+    private usersService: UsersService
   ) {}
 
   signUp$ = createEffect(() => {
@@ -210,6 +213,72 @@ export class UserEffects {
               of(UserActions.resetPasswordFailure({ error }))
             )
           );
+      })
+    );
+  });
+
+  getUsers$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.getUsers),
+      mergeMap((action) => {
+        const { page, itemsPerPage } = action;
+        return this.usersService.getUsers({ page, itemsPerPage }).pipe(
+          map((successResponse: IUser[]) => {
+            return UserActions.getUsersSuccess({ users: successResponse });
+          }),
+          catchError((error) => of(UserActions.getUsersFailure({ error })))
+        );
+      })
+    );
+  });
+
+  getUserById$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.getUserById),
+      mergeMap((action) => {
+        const { id } = action;
+        return this.usersService.getUserById(id).pipe(
+          map((successResponse: IUser) => {
+            return UserActions.getUserByIdSuccess({ user: successResponse });
+          }),
+          catchError((error) => of(UserActions.getUserByIdFailure({ error })))
+        );
+      })
+    );
+  });
+
+  searchUsers$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.searchUsers),
+      mergeMap((action) => {
+        const { searchTerm, page, itemsPerPage } = action;
+        return this.usersService
+          .searchUsers({ searchTerm, pagination: { page, itemsPerPage } })
+          .pipe(
+            map((successResponse: IUser[]) => {
+              return UserActions.searchUsersSuccess({ users: successResponse });
+            }),
+            catchError((error) => of(UserActions.searchUsersFailure({ error })))
+          );
+      })
+    );
+  });
+
+  deleteUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.deleteUser),
+      mergeMap((action) => {
+        const { id } = action;
+        return this.usersService.deleteUser(id).pipe(
+          map((successResponse: IDeleteSuccess) => {
+            const { id, message } = successResponse;
+            return UserActions.deleteUserSuccess({
+              id,
+              message,
+            });
+          }),
+          catchError((error) => of(UserActions.deleteUserFailure({ error })))
+        );
       })
     );
   });

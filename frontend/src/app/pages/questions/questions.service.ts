@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpErrorPopupService } from 'src/app/components/http-error-popup/http-error-popup.service';
-import { IPagination } from 'src/app/shared/interfaces/IPagination';
+import { IPagination } from 'src/app/shared/interfaces/shared';
 import {
   IQuestion,
   IQuestionSearch,

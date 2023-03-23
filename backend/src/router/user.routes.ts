@@ -21,7 +21,9 @@ import {
 
 const userRoutes = express.Router();
 
-userRoutes.route("/").get(authenticateUser, authorizeAdmin, getAllUsers);
+// userRoutes.route("/").get(authenticateUser, authorizeAdmin, getAllUsers);
+userRoutes.route("/").get(getAllUsers);
+
 
 userRoutes
   .route("/soft-deleted")

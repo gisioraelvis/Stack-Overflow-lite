@@ -1,4 +1,6 @@
 import { createAction, props } from '@ngrx/store';
+import { IPagination } from 'src/app/shared/interfaces/shared';
+import { IDeleteSuccess } from 'src/app/shared/interfaces/ITag';
 import {
   IPasswordReset,
   IUser,
@@ -87,9 +89,77 @@ export const resetPassword = createAction(
 export const resetPasswordSuccess = createAction(
   '[User] Reset Password Success',
   props<IUser>()
-)
+);
 
 export const resetPasswordFailure = createAction(
   '[User] Reset Password Failure',
   props<{ error: string }>()
-)
+);
+
+export const getUsers = createAction(
+  '[Users] Get Users',
+  props<IPagination>()
+);
+
+export const getUsersSuccess = createAction(
+  '[Users] Get Users Success',
+  props<{ users: IUser[] }>()
+);
+
+export const getUsersFailure = createAction(
+  '[Users] Get Users Failure',
+  props<{ error: string }>()
+);
+
+export const getUserById = createAction(
+  '[Users] Get User',
+  props<{ id: number | string }>()
+);
+
+export const getUserByIdSuccess = createAction(
+  '[Users] Get User Success',
+  props<{ user: IUser }>()
+);
+
+export const getUserByIdFailure = createAction(
+  '[Users] Get User Failure',
+  props<{ error: string }>()
+);
+
+export const searchUsers = createAction(
+  '[Users] Search Users',
+  props<{
+    searchTerm: string | undefined | null;
+    page: number;
+    itemsPerPage: number;
+  }>()
+);
+
+export const searchUsersSuccess = createAction(
+  '[Users] Search Users Success',
+  props<{ users: IUser[] }>()
+);
+
+export const searchUsersFailure = createAction(
+  '[Users] Search Users Failure',
+  props<{ error: string }>()
+);
+
+export const deleteUser = createAction(
+  '[Users] Delete User',
+  props<{ id: string | number }>()
+);
+
+export const deleteUserSuccess = createAction(
+  '[Users] Delete User Success',
+  props<IDeleteSuccess>()
+);
+
+export const deleteUserFailure = createAction(
+  '[Users] Delete User Failure',
+  props<{ error: string }>()
+);
+
+export const clearUsers = createAction('[Users] Clear Users');
+export const clearUser = createAction('[Users] Clear User');
+export const clearError = createAction('[Users] Clear Error');

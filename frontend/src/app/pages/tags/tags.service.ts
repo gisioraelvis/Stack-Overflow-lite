@@ -2,12 +2,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpErrorPopupService } from 'src/app/components/http-error-popup/http-error-popup.service';
-import { IPagination } from 'src/app/shared/interfaces/IPagination';
+import { IPagination, ISearch } from 'src/app/shared/interfaces/shared';
 import { IQuestion } from 'src/app/shared/interfaces/IQuestion';
 import {
   IDeleteSuccess,
   ITag,
-  ITagSearch,
   ITagUpdate,
 } from 'src/app/shared/interfaces/ITag';
 
@@ -73,7 +72,7 @@ export class TagsService {
     );
   }
 
-  searchTags(tagsSearch: ITagSearch): Observable<ITag[]> {
+  searchTags(tagsSearch: ISearch): Observable<ITag[]> {
     return this.http
       .get<ITag[]>(
         `/tags/search?searchTerm=${tagsSearch.searchTerm}&page=${tagsSearch.pagination.page}&itemsPerPage=${tagsSearch.pagination.itemsPerPage}`
