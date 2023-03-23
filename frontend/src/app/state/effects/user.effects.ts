@@ -58,6 +58,15 @@ export class UserEffects {
                 createdAt: successResponse.createdAt,
                 updatedAt: successResponse.updatedAt,
                 JWT: successResponse.JWT || '',
+                userAnalytics: {
+                  totalQuestions: successResponse.userAnalytics.totalQuestions,
+                  totalAnswers: successResponse.userAnalytics.totalAnswers,
+                  totalComments: successResponse.userAnalytics.totalComments,
+                  totalTags: successResponse.userAnalytics.totalTags,
+                  totalVotes: successResponse.userAnalytics.totalVotes,
+                  totalAcceptedAnswers:
+                    successResponse.userAnalytics.totalAcceptedAnswers,
+                },
               });
             }),
             catchError((error) => of(UserActions.signUpFailure({ error })))
@@ -86,6 +95,15 @@ export class UserEffects {
               createdAt: successResponse.createdAt,
               updatedAt: successResponse.updatedAt,
               JWT: successResponse.JWT,
+              userAnalytics: {
+                totalQuestions: successResponse.userAnalytics.totalQuestions,
+                totalAnswers: successResponse.userAnalytics.totalAnswers,
+                totalComments: successResponse.userAnalytics.totalComments,
+                totalTags: successResponse.userAnalytics.totalTags,
+                totalVotes: successResponse.userAnalytics.totalVotes,
+                totalAcceptedAnswers:
+                  successResponse.userAnalytics.totalAcceptedAnswers,
+              },
             });
           }),
           catchError((error) => of(UserActions.signInFailure({ error })))
@@ -132,6 +150,15 @@ export class UserEffects {
                 updatedAt: successResponse.updatedAt,
                 createdAt: successResponse.createdAt,
                 JWT: '',
+                userAnalytics: {
+                  totalQuestions: successResponse.userAnalytics.totalQuestions,
+                  totalAnswers: successResponse.userAnalytics.totalAnswers,
+                  totalComments: successResponse.userAnalytics.totalComments,
+                  totalTags: successResponse.userAnalytics.totalTags,
+                  totalVotes: successResponse.userAnalytics.totalVotes,
+                  totalAcceptedAnswers:
+                    successResponse.userAnalytics.totalAcceptedAnswers,
+                },
               });
             }),
             catchError((error) =>
@@ -207,6 +234,15 @@ export class UserEffects {
                 createdAt: successResponse.createdAt,
                 updatedAt: successResponse.updatedAt,
                 JWT: successResponse.JWT,
+                userAnalytics: {
+                  totalQuestions: successResponse.userAnalytics.totalQuestions,
+                  totalAnswers: successResponse.userAnalytics.totalAnswers,
+                  totalComments: successResponse.userAnalytics.totalComments,
+                  totalTags: successResponse.userAnalytics.totalTags,
+                  totalVotes: successResponse.userAnalytics.totalVotes,
+                  totalAcceptedAnswers:
+                    successResponse.userAnalytics.totalAcceptedAnswers,
+                },
               });
             }),
             catchError((error) =>

@@ -3,7 +3,7 @@
     <ng-container *ngIf="(users$ | async ) as users; else noUsers">
         <div class="top-section">
             <div class="users-heading">
-                <h1>Users <span>({{users.length | thousandSeparator}})</span></h1>
+                <h1>Users <span>({{totalItems | thousandSeparator}})</span></h1>
             </div>
             <div class="sign-up">
                 <button mat-raised-button routerLink="/sign-up" color="accent">Join Community</button>
@@ -14,7 +14,7 @@
                 <mat-tab *ngFor="let userCategorie of userCategories" [label]="userCategorie.label">
 
                     <div class="users" *ngIf="users.length>0; else noUsers">
-                        <app-user class="user" *ngFor="let user of users | paginate: { id: 'users-page', currentPage: page, itemsPerPage, totalItems}" [user]="user"></app-user>
+                        <app-user class="user" *ngFor="let user of users | sortUsers: sortBy | paginate: { id: 'users-page', currentPage: page, itemsPerPage, totalItems}" [user]="user"></app-user>
                     </div>
                 </mat-tab>
             </mat-tab-group>

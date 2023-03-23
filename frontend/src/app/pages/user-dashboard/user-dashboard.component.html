@@ -24,7 +24,7 @@
                 <div class="answers">
                     <p *ngIf="userAnalytics.totalAnswers > 0">
                         You have answered&nbsp;
-                        <a [routerLink]="['/questions']" [queryParams]="{ filter: 'answered', userId: '1' }">
+                        <a [routerLink]="['/questions']" [queryParams]="{ filter: 'answered', userId: user.id }">
                             {{userAnalytics.totalAnswers | thousandSeparator}} questions
                         </a>
                     </p>

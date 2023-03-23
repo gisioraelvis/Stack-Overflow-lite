@@ -20,6 +20,7 @@ import * as usersSelectors from 'src/app/state/selectors/user.selectors';
 import * as SiteAnalyticsActions from 'src/app/state/actions/site-analytics.actions';
 import * as SiteAnalyticsSelectors from 'src/app/state/selectors/admin-analytics.selectors';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SortUsersPipe } from 'src/app/shared/pipes/users-sort.pipe';
 
 @Component({
   selector: 'app-users',
@@ -41,6 +42,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MatTabsModule,
     ProgressSpinnerComponent,
     ThousandSeparatorPipe,
+    SortUsersPipe,
     NgxPaginationModule,
   ],
   templateUrl: './users.component.html',
@@ -50,9 +52,10 @@ export class UsersComponent implements OnInit {
   loading: boolean = false;
   page: number = 1;
   itemsPerPage: number = 10;
-  totalItems?: number;
+  totalItems: number = 0;
   position: TooltipPosition = 'above';
   users$?: Observable<IUser[]>;
+  sortBy: string = 'Newest';
 
   userCategories: {
     label: string;

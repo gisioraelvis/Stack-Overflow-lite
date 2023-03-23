@@ -32,6 +32,7 @@ export interface IUser {
   updatedAt: Date | string;
   createdAt: Date | string;
   JWT: string;
+  userAnalytics: IUserAnalytics;
 }
 
 export interface IUserState {

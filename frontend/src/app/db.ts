@@ -28,6 +28,14 @@ export const userFactory = Factory.Sync.makeFactory<IUser>({
   isDeleted: false,
   bio: Factory.each(() => faker.lorem.sentence()),
   JWT: Factory.each(() => faker.datatype.uuid()),
+  userAnalytics: Factory.each(() => ({
+    totalQuestions: faker.datatype.number({ min: 0, max: 100 }),
+    totalAnswers: faker.datatype.number({ min: 0, max: 100 }),
+    totalComments: faker.datatype.number({ min: 0, max: 100 }),
+    totalTags: faker.datatype.number({ min: 0, max: 100 }),
+    totalVotes: faker.datatype.number({ min: 0, max: 100 }),
+    totalAcceptedAnswers: faker.datatype.number({ min: 0, max: 100 }),
+  })),
   createdAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
   updatedAt: Factory.each(() => faker.date.between('2023-01-01', '2023-03-31')),
 });

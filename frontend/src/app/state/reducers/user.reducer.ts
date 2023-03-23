@@ -17,6 +17,14 @@ const initialState: IUserState = {
     createdAt: '',
     updatedAt: '',
     JWT: '',
+    userAnalytics: {
+      totalQuestions: 0,
+      totalAnswers: 0,
+      totalComments: 0,
+      totalTags: 0,
+      totalVotes: 0,
+      totalAcceptedAnswers: 0,
+    },
   },
   userAnalytics: {
     totalQuestions: 0,

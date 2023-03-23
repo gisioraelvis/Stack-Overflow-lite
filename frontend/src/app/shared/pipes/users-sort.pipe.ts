@@ -2,30 +2,38 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IUser } from '../interfaces/IUser';
 
 @Pipe({
+  standalone: true,
   name: 'sortUsers',
 })
 export class SortUsersPipe implements PipeTransform {
   transform(users: IUser[], sortBy: string): IUser[] {
-    if (!sortBy) {
+    if (!users || users.length === 0 || !sortBy) {
       return users;
     }
 
+    let sortedUsers = [...users];
+
     switch (sortBy) {
       case 'Username (A-Z)':
-        return users.sort((a, b) => a.name.localeCompare(b.name));
+        return sortedUsers.sort((a, b) => a.name.localeCompare(b.name));
       case 'Username (Z-A)':
-        return users.sort((a, b) => b.name.localeCompare(a.name));
+        return sortedUsers.sort((a, b) => b.name.localeCompare(a.name));
       case 'Newest':
-        return users.sort(
+        return sortedUsers.sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
       case 'Most Questions Asked':
-        return users.sort((a, b) => b.questionsCount - a.questionsCount);
+        return sortedUsers.sort(
+          (a, b) =>
+            b.userAnalytics.totalQuestions - a.userAnalytics.totalQuestions
+        );
       case 'Most Answers Given':
-        return users.sort((a, b) => b.answersCount - a.answersCount);
+        return sortedUsers.sort(
+          (a, b) => b.userAnalytics.totalAnswers - a.userAnalytics.totalAnswers
+        );
       default:
-        return users;
+        return sortedUsers;
     }
   }
 }

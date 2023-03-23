@@ -12,7 +12,8 @@ import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 import { IUser, IUserAnalytics } from 'src/app/shared/interfaces/IUser';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as userActions from 'src/app/state/actions/user.actions';
 
 @Component({
   selector: 'app-user',
@@ -40,8 +41,11 @@ export class UserComponent {
   position: TooltipPosition = 'above';
   @Input() user!: IUser;
   @Input() userAnalytics!: IUserAnalytics;
+
+  constructor(private store: Store) {}
+
   deleteuser() {
-    throw new Error('Method not implemented.');
+    this.store.dispatch(userActions.deleteUser({ id: this.user.id }));
   }
   edituser() {
     throw new Error('Method not implemented.');

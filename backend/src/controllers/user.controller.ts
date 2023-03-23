@@ -402,9 +402,29 @@ export const getAllUsers = async (req: Request, res: Response) => {
       page: pagination.page,
       itemsPerPage: pagination.itemsPerPage,
     });
+    // for each user get the user's site analytics
+    const usersWithSiteAnalytics = await Promise.all(
+      users.recordset.map(async (user) => {
+        const userSiteAnalytics = await dbUtils.exec(
+          "usp_GetUserSiteAnalytics",
+          {
+            userId: user.id,
+          }
+        );
+        return {
+          ...user,
+          userAnalytics: { ...userSiteAnalytics.recordset[0] },
+        };
+      })
+    );
+
+    // exclude admin from the users i.e isAdmin
+    const filteredUsers = usersWithSiteAnalytics.filter(
+      (user) => user.isAdmin === false
+    );
 
     // returns the users else if ther's none yet an empty array is returned
-    return res.status(200).json(users.recordset);
+    return res.status(200).json(filteredUsers);
   } catch (error: any) {
     res.status(500).json(error.message);
     CreateLog.error(error);
@@ -449,10 +469,16 @@ export const getUserById = async (req: Request, res: Response) => {
 
   try {
     const user = await dbUtils.exec("usp_FindUserById", { id: userId });
-
     if (user.recordset.length > 0) {
+      const userSiteAnalytics = await dbUtils.exec("usp_GetUserSiteAnalytics", {
+        userId,
+      });
       delete user.recordset[0].password;
-      return res.status(200).json(user.recordset[0]);
+
+      return res.status(200).json({
+        ...user.recordset[0],
+        userAnalytics: { ...userSiteAnalytics.recordset[0] },
+      });
     } else {
       return res
         .status(404)

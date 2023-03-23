@@ -24,14 +24,15 @@
     </div>
     <div class="user-question-count">
         <!-- TODO: Create page for results -->
-        <a routerLink="/questions/?userId={{user.id}}">
-            {{userAnalytics.totalQuestions}} Questions
+        <!-- [routerLink]="['/questions']" [queryParams]="{ filter: 'Tag', tag: tag.name } -->
+        <a [routerLink]="['/questions']" [queryParams]="{ filter: 'newest', userId: user.id  }">
+            {{user.userAnalytics.totalQuestions}} Questions
         </a>
     </div>
     <div class="user-answers-count">
         <!-- TODO: Create page for results -->
-        <a routerLink="/questions/?answered=true&userId={{user.id}}">
-            {{userAnalytics.totalAnswers}} Answers
+        <a [routerLink]="['/questions']" [queryParams]="{ filter: 'answered', userId: user.id }">
+            {{user.userAnalytics.totalAnswers}} Answers
         </a>
     </div>
 </div>

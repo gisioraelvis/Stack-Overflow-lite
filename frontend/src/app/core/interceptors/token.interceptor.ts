@@ -19,7 +19,7 @@ export class TokenInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = this.localStorageService.getJWT() || '';
+    const token = this.localStorageService.getJWT() || undefined;
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
