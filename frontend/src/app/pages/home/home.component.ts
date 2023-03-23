@@ -48,12 +48,12 @@ export class HomeComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(
-      questionsActions.getQuestions({
-        page: this.page,
-        itemsPerPage: this.itemsPerPage,
-      })
-    );
+    // this.store.dispatch(
+    //   questionsActions.getQuestions({
+    //     page: this.page,
+    //     itemsPerPage: this.itemsPerPage,
+    //   })
+    // );
     this.store
       .select(questionsSelectors.getQuestionsLoading)
       .subscribe((loading) => {
