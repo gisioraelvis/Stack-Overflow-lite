@@ -3,17 +3,17 @@ import { IPagination } from 'src/app/shared/interfaces/IPagination';
 import { IQuestion } from 'src/app/shared/interfaces/IQuestion';
 
 export const getQuestions = createAction(
-  '[Questions] Load Questions',
+  '[Questions] Get Questions',
   props<IPagination>()
 );
 
 export const getQuestionsSuccess = createAction(
-  '[Questions] Load Questions Success',
+  '[Questions] Get Questions Success',
   props<{ questions: IQuestion[] }>()
 );
 
-export const loadQuestionsFailure = createAction(
-  '[Questions] Load Questions Failure',
+export const getQuestionsFailure = createAction(
+  '[Questions] Get Questions Failure',
   props<{ error: string }>()
 );
 
@@ -60,3 +60,22 @@ export const getQuestionsByUserFailure = createAction(
   '[Questions] Get User Questions Failure',
   props<{ error: string }>()
 );
+
+export const deleteQuestion = createAction(
+  '[Questions] Delete Question',
+  props<{ id: string | number }>()
+);
+
+export const deleteQuestionSuccess = createAction(
+  '[Questions] Delete Question Success',
+  props<{ id: number; message: string }>()
+);
+
+export const deleteQuestionFailure = createAction(
+  '[Questions] Delete Question Failure',
+  props<{ error: string }>()
+);
+
+export const clearQuestions = createAction('[Questions] Clear Questions');
+export const clearError = createAction('[Questions] Clear Error');
+export const clearSuccess = createAction('[Questions] Clear Success');

@@ -14,6 +14,8 @@ import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.pipe';
 import { HighlightDirective } from 'src/app/shared/directives/highlight.directive';
+import { Store } from '@ngrx/store';
+import * as tagsActions from 'src/app/state/actions/tags.actions';
 
 @Component({
   selector: 'app-tag',
@@ -44,9 +46,13 @@ export class TagComponent {
   @Input() tag!: ITag;
   @Input() searchTermHighlight?: string;
 
+  constructor(private store: Store) {}
+
   deleteTag() {
-    throw new Error('Method not implemented.');
+    this.store.dispatch(tagsActions.deleteTag({ id: this.tag.id }));
   }
+
+  // TODO: Implement edit tag
   editTag() {
     throw new Error('Method not implemented.');
   }

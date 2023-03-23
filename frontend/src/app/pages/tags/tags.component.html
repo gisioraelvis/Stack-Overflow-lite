@@ -23,7 +23,7 @@
                 <ng-container *ngIf="(tags$ | async ) as tags; else noTags">
                     <div class="tags" *ngIf="tags.length>0; else noTags">
                         <app-tag class="tag"
-                            *ngFor="let tag of tags | filterTags:searchType:searchTerm | sortTags: sortBy" [tag]="tag"
+                            *ngFor="let tag of tags | filterTags:searchType:searchTerm | sortTags: sortBy | paginate: { id: 'tags-page', currentPage: page, itemsPerPage, totalItems}" [tag]="tag" 
                             searchTermHighlight="{{searchTerm}}">
                         </app-tag>
                     </div>
@@ -37,4 +37,7 @@
             </mat-tab>
         </mat-tab-group>
     </div>
+</div>
+<div class="pagination" *ngIf="tags$ | async ">
+    <pagination-controls (pageChange)="onPageChange($event)" id="tags-page"></pagination-controls>
 </div>

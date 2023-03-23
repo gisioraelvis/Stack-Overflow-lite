@@ -85,8 +85,6 @@ export class QuestionsComponent implements OnInit {
     this.store
       .select(SiteAnalyticsSelectors.siteAnalytics)
       .subscribe((analytics) => {
-        console.log('analytics', analytics);
-
         this.totalItems = analytics.totalQuestions;
       });
 
@@ -174,21 +172,23 @@ export class QuestionsComponent implements OnInit {
   }
 
   searchQuestions(searchTerm: string | undefined | null) {
-    this.store
-      .select(questionsSelectors.getQuestionsLoading)
-      .subscribe((loading) => {
-        this.loading = loading;
-      });
+    if (searchTerm) {
+      this.store
+        .select(questionsSelectors.getQuestionsLoading)
+        .subscribe((loading) => {
+          this.loading = loading;
+        });
 
-    this.store.dispatch(
-      questionsActions.searchQuestions({
-        searchTerm: searchTerm,
-        page: this.page,
-        itemsPerPage: this.itemsPerPage,
-      })
-    );
+      this.store.dispatch(
+        questionsActions.searchQuestions({
+          searchTerm: searchTerm,
+          page: this.page,
+          itemsPerPage: this.itemsPerPage,
+        })
+      );
 
-    this.questions$ = this.store.select(questionsSelectors.questions);
+      this.questions$ = this.store.select(questionsSelectors.questions);
+    }
   }
 
   onPageChange($event: number) {

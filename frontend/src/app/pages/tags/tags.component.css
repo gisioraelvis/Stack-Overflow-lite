@@ -69,3 +69,10 @@
 .no-tags button:hover {
   background-color: #ff6f00;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}

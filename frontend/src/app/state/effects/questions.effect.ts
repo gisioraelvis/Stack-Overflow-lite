@@ -14,7 +14,7 @@ export class QuestionsEffects {
     private questionsService: QuestionsService
   ) {}
 
-  loadQuestions$ = createEffect(() => {
+  getQuestions$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(QuestionsActions.getQuestions),
       mergeMap((action) => {
@@ -26,7 +26,7 @@ export class QuestionsEffects {
             });
           }),
           catchError((error) =>
-            of(QuestionsActions.loadQuestionsFailure({ error }))
+            of(QuestionsActions.getQuestionsFailure({ error }))
           )
         );
       })

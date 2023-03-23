@@ -11,12 +11,17 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { TagComponent } from 'src/app/components/tag/tag.component';
-import { delay, Observable, of, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ITag } from 'src/app/shared/interfaces/ITag';
 import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
-import { tagFactory } from 'src/app/db';
 import { FilterTagsPipe } from 'src/app/shared/pipes/tags-filter.pipe';
 import { SortTagsPipe } from 'src/app/shared/pipes/tags-sort.pipe';
+import { Store } from '@ngrx/store';
+import * as tagsActions from 'src/app/state/actions/tags.actions';
+import * as tagsSelectors from 'src/app/state/selectors/tags.selectors';
+import * as SiteAnalyticsActions from 'src/app/state/actions/site-analytics.actions';
+import * as SiteAnalyticsSelectors from 'src/app/state/selectors/admin-analytics.selectors';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-tags',
@@ -39,12 +44,16 @@ import { SortTagsPipe } from 'src/app/shared/pipes/tags-sort.pipe';
     ProgressSpinnerComponent,
     FilterTagsPipe,
     SortTagsPipe,
+    NgxPaginationModule,
   ],
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.css'],
 })
 export class TagsComponent implements OnInit {
   loading: boolean = false;
+  page: number = 1;
+  itemsPerPage: number = 10;
+  totalItems?: number;
   position: TooltipPosition = 'above';
   tags$?: Observable<ITag[]>;
   searchType: string = 'Name';
@@ -67,9 +76,27 @@ export class TagsComponent implements OnInit {
     (tagCategory) => tagCategory.tagCategorie === 'popular'
   );
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private store: Store) {}
 
   ngOnInit(): void {
+    this.store.dispatch(
+      tagsActions.getTags({
+        page: this.page,
+        itemsPerPage: this.itemsPerPage,
+      })
+    );
+
+    this.store.select(tagsSelectors.getTagsLoading).subscribe((loading) => {
+      this.loading = loading;
+    });
+
+    this.store
+      .select(SiteAnalyticsSelectors.siteAnalytics)
+      .subscribe((analytics) => {
+        this.totalItems = analytics.totalTags;
+      });
+
+    this.store.dispatch(SiteAnalyticsActions.getSiteAnalytics());
     // /tags?userId=1
     const userId = this.route.snapshot.queryParamMap.get('userId');
     if (userId) {
@@ -77,7 +104,18 @@ export class TagsComponent implements OnInit {
     }
 
     if (!userId) {
-      this.getTags();
+      this.store.select(tagsSelectors.getTagsLoading).subscribe((loading) => {
+        this.loading = loading;
+      });
+
+      this.store.dispatch(
+        tagsActions.getTags({
+          page: this.page,
+          itemsPerPage: this.itemsPerPage,
+        })
+      );
+
+      this.tags$ = this.store.select(tagsSelectors.tags);
     }
   }
 
@@ -88,32 +126,53 @@ export class TagsComponent implements OnInit {
     this.sortBy = this.tagCategories[this.selectedTagCategory].label;
   }
 
-  // TODO: Impliment infinite scroll pagination
-  getTags() {
-    this.loading = true;
-    this.tags$ = of(tagFactory.buildList(50)).pipe(
-      delay(500), // simulate delay
-      tap(() => {
-        this.loading = false;
-      })
-    );
-  }
+  getUserTags(userId: number | string) {
+    this.store.select(tagsSelectors.getTagsLoading).subscribe((loading) => {
+      this.loading = loading;
+    });
 
-  getUserTags(userId: number) {
-    console.log(`tags by userId:${userId}`);
-    this.loading = true;
-    this.tags$ = of(tagFactory.buildList(50)).pipe(
-      delay(500), // simulate delay
-      tap(() => {
-        this.loading = false;
+    this.store.dispatch(
+      tagsActions.getTagsByUser({
+        userId: userId,
+        pagination: { page: this.page, itemsPerPage: this.itemsPerPage },
       })
     );
+
+    this.tags$ = this.store.select(tagsSelectors.tags);
   }
 
   searchTags(searchTerm: string | undefined | null) {
-    if(searchTerm) {
-      console.log(`searching for tags with searchTerm: ${searchTerm}`);
-      this.getTags(); // TODO: Impliment search
+    if (searchTerm) {
+      this.store.select(tagsSelectors.getTagsLoading).subscribe((loading) => {
+        this.loading = loading;
+      });
+
+      this.store.dispatch(
+        tagsActions.searchTags({
+          searchTerm: searchTerm,
+          page: this.page,
+          itemsPerPage: this.itemsPerPage,
+        })
+      );
+
+      this.tags$ = this.store.select(tagsSelectors.tags);
     }
+  }
+
+  onPageChange($event: number) {
+    this.page = $event;
+
+    this.store.select(tagsSelectors.getTagsLoading).subscribe((loading) => {
+      this.loading = loading;
+    });
+
+    this.store.dispatch(
+      tagsActions.getTags({
+        page: this.page,
+        itemsPerPage: this.itemsPerPage,
+      })
+    );
+
+    this.tags$ = this.store.select(tagsSelectors.tags);
   }
 }

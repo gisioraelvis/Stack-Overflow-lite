@@ -17,6 +17,8 @@ import { siteAnalyticsReducer } from './state/reducers/site-analytics.reducer';
 import { questionsReducer } from './state/reducers/questions.reducer';
 import { QuestionsEffects } from './state/effects/questions.effect';
 import { SiteAnalyticsEffects } from './state/effects/site-analytics.effects';
+import { tagsReducer } from './state/reducers/tags.reducer';
+import { TagsEffects } from './state/effects/tags.effect';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,9 +33,15 @@ import { SiteAnalyticsEffects } from './state/effects/site-analytics.effects';
       user: userReducer,
       siteAnalytics: siteAnalyticsReducer,
       questions: questionsReducer,
+      tags: tagsReducer,
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([UserEffects, SiteAnalyticsEffects, QuestionsEffects]),
+    EffectsModule.forRoot([
+      UserEffects,
+      SiteAnalyticsEffects,
+      QuestionsEffects,
+      TagsEffects,
+    ]),
   ],
   providers: [
     {

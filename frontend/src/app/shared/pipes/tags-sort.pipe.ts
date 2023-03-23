@@ -8,24 +8,26 @@ import { ITag } from '../interfaces/ITag';
 export class SortTagsPipe implements PipeTransform {
   transform(tags: ITag[], sortBy: string): ITag[] {
     // console.log(`SortTagsPipe - sortBy: ${sortBy}`);
-    if (!sortBy) {
+    if (!tags || tags.length === 0 || !sortBy) {
       return tags;
     }
 
+    let sortedTags = [...tags];
+
     switch (sortBy) {
       case 'Name (A-Z)':
-        return tags.sort((a, b) => a.name.localeCompare(b.name));
+        return sortedTags.sort((a, b) => a.name.localeCompare(b.name));
       case 'Name (Z-A)':
-        return tags.sort((a, b) => b.name.localeCompare(a.name));
+        return sortedTags.sort((a, b) => b.name.localeCompare(a.name));
       case 'Newest':
-        return tags.sort(
+        return sortedTags.sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
       case 'Most Used':
-        return tags.sort((a, b) => b.questionsCount - a.questionsCount);
+        return sortedTags.sort((a, b) => b.totalQuestions - a.totalQuestions);
       default:
-        return tags;
+        return sortedTags;
     }
   }
 }

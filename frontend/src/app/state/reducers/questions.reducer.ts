@@ -25,7 +25,7 @@ export const questionsReducer = createReducer(
       questions: [...questions],
     };
   }),
-  on(QuestionsActions.loadQuestionsFailure, (state, { error }) => {
+  on(QuestionsActions.getQuestionsFailure, (state, { error }) => {
     return {
       ...state,
       loading: false,
@@ -76,6 +76,24 @@ export const questionsReducer = createReducer(
       ...state,
       loading: false,
       error,
+    };
+  }),
+  on(QuestionsActions.clearQuestions, (state) => {
+    return {
+      ...state,
+      questions: [],
+    };
+  }),
+  on(QuestionsActions.clearError, (state) => {
+    return {
+      ...state,
+      error: '',
+    };
+  }),
+  on(QuestionsActions.clearSuccess, (state) => {
+    return {
+      ...state,
+      success: '',
     };
   })
 );
