@@ -5,7 +5,7 @@ import { IUser } from './IUser';
 import { IPagination } from './shared';
 
 export interface IQuestion {
-  id: number;
+  id: number | string;
   title: string;
   body: string;
   user: IUser;
@@ -21,7 +21,7 @@ export interface IQuestion {
 
 export interface IQuestionsState {
   questions: IQuestion[];
-  question: IQuestion | null;
+  question: IQuestion;
   loading: boolean;
   loaded: boolean;
   error: string;
@@ -30,4 +30,18 @@ export interface IQuestionsState {
 export interface IQuestionSearch {
   searchTerm: string | undefined | null;
   pagination: IPagination;
+}
+
+export interface IAskQuestion {
+  title: string;
+  body: string;
+  tags: string[];
+}
+
+// update question
+export interface IUpdateQuestion {
+  id: number;
+  title: string;
+  body: string;
+  tags: string[];
 }

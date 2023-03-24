@@ -12,3 +12,21 @@ export interface IAnswer {
   updatedAt: string | Date;
   comments: IComment[];
 }
+
+export interface IAddAnswer {
+  questionId: number | string;
+  body: string;
+}
+
+export interface IUpdateAnswer {
+  questionId: number | string;
+  answerId: number | string;
+  body: string;
+}
+
+export interface IUpdateAnswerComment {
+  commentId: string,
+  body: string
+  answerId: string,
+  questionId: string,
+}
