@@ -19,7 +19,11 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { map, Observable, startWith } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as QuestionsActions from 'src/app/state/actions/questions.actions';
+import * as QuestionsSelectors from 'src/app/state/selectors/questions.selectors';
+import { IAskQuestion } from 'src/app/shared/interfaces/IQuestion';
 
 @Component({
   selector: 'app-ask-question',
@@ -46,10 +50,15 @@ export class AskQuestionComponent {
   filteredTags: Observable<string[]>;
   tags: string[] = ['Angular'];
   allTags: string[] = ['Angular', 'JavaScript', 'TypeScript', 'HTML', 'CSS'];
+  tagsDemo = [{ name: 'Angular', body: 'Tag body' }];
 
   @ViewChild('tagInput') tagInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       title: ['', Validators.required],
       details: ['', Validators.required],
@@ -69,12 +78,18 @@ export class AskQuestionComponent {
     return this.form.controls;
   }
 
-  // TODO: Submit to the backend
   onSubmit() {
-    // if (this.form.valid) {
-    //   console.log(this.form.value);
-    // }
-    console.log(this.form.value);
+    const question: IAskQuestion = {
+      title: this.form.get('title')!.value!,
+      body: this.form.get('details')!.value!,
+      tags: this.tagsDemo,
+    };
+
+    this.store.dispatch(QuestionsActions.askQuestion({ question }));
+
+    this.form.reset();
+
+    this.router.navigate(['/questions']);
   }
 
   add(event: MatChipInputEvent): void {

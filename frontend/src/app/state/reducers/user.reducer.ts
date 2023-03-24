@@ -40,49 +40,75 @@ const initialState: IUserState = {
 
 export const userReducer = createReducer(
   initialState,
-  on(UserActions.signInSuccess, (state, user) => ({
+  on(UserActions.signInLoading, (state) => ({
     ...state,
+    loading: true,
+    loaded: false,
+  })),
+  on(UserActions.signInSuccess, (state, { user }) => ({
+    ...state,
+    loading: false,
+    loaded: true,
     user,
   })),
   on(UserActions.signInFailure, (state, { error }) => ({
     ...state,
+    loading: false,
+    loaded: false,
     error,
   })),
-  on(UserActions.signUpSuccess, (state, user) => ({
+  on(UserActions.signUpSuccess, (state, { user }) => ({
     ...state,
+    loading: false,
+    loaded: true,
     user,
   })),
   on(UserActions.signUpFailure, (state, { error }) => ({
     ...state,
+    loading: false,
+    loaded: false,
     error,
   })),
-  on(UserActions.updateProfileSuccess, (state, user) => ({
+  on(UserActions.updateProfileSuccess, (state, { user }) => ({
     ...state,
+    loading: false,
+    loaded: true,
     user,
   })),
   on(UserActions.updateProfileFailure, (state, { error }) => ({
     ...state,
+    loading: false,
+    loaded: false,
     error,
   })),
-  on(UserActions.signOut, (state) => ({ ...state, user: initialState.user })),
-  on(UserActions.getUserAnalyticsSuccess, (state, userAnalytics) => ({
+  on(UserActions.signOut, (state) => ({
     ...state,
-    userAnalytics,
+    loading: false,
+    loaded: false,
+    user: initialState.user,
   })),
   on(UserActions.forgotPasswordSuccess, (state, { message }) => ({
     ...state,
+    loading: false,
+    loaded: true,
     message,
   })),
   on(UserActions.forgotPasswordFailure, (state, { error }) => ({
     ...state,
+    loading: false,
+    loaded: false,
     error,
   })),
-  on(UserActions.resetPasswordSuccess, (state, user) => ({
+  on(UserActions.resetPasswordSuccess, (state, { user }) => ({
     ...state,
+    loading: false,
+    loaded: true,
     user,
   })),
   on(UserActions.resetPasswordFailure, (state, { error }) => ({
     ...state,
+    loading: false,
+    loaded: false,
     error,
   })),
   on(UserActions.getUsers, (state) => ({

@@ -32,10 +32,15 @@ export interface IQuestionSearch {
   pagination: IPagination;
 }
 
+interface ITagObject {
+  name: string;
+  body: string;
+}
+
 export interface IAskQuestion {
   title: string;
   body: string;
-  tags: string[];
+  tags: ITagObject[];
 }
 
 // update question

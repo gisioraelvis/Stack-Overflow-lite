@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, catchError, concatMap } from 'rxjs/operators';
+import { map, mergeMap, catchError, concatMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as UserActions from '../actions/user.actions';
 import {
@@ -48,25 +48,7 @@ export class UserEffects {
               this.localStorageService.setJWT(successResponse.JWT!);
               this.authorizationService.isSignedIn = true;
               return UserActions.signInSuccess({
-                id: successResponse.id,
-                name: successResponse.name,
-                email: successResponse.email,
-                avatar: successResponse.avatar,
-                bio: successResponse.bio,
-                isAdmin: successResponse.isAdmin,
-                isDeleted: successResponse.isDeleted,
-                createdAt: successResponse.createdAt,
-                updatedAt: successResponse.updatedAt,
-                JWT: successResponse.JWT || '',
-                userAnalytics: {
-                  totalQuestions: successResponse.userAnalytics.totalQuestions,
-                  totalAnswers: successResponse.userAnalytics.totalAnswers,
-                  totalComments: successResponse.userAnalytics.totalComments,
-                  totalTags: successResponse.userAnalytics.totalTags,
-                  totalVotes: successResponse.userAnalytics.totalVotes,
-                  totalAcceptedAnswers:
-                    successResponse.userAnalytics.totalAcceptedAnswers,
-                },
+                user: successResponse,
               });
             }),
             catchError((error) => of(UserActions.signUpFailure({ error })))
@@ -85,25 +67,7 @@ export class UserEffects {
             this.localStorageService.setJWT(successResponse.JWT!);
             this.authorizationService.isSignedIn = true;
             return UserActions.signInSuccess({
-              id: successResponse.id,
-              name: successResponse.name,
-              email: successResponse.email,
-              avatar: successResponse.avatar,
-              bio: successResponse.bio,
-              isAdmin: successResponse.isAdmin,
-              isDeleted: successResponse.isDeleted,
-              createdAt: successResponse.createdAt,
-              updatedAt: successResponse.updatedAt,
-              JWT: successResponse.JWT,
-              userAnalytics: {
-                totalQuestions: successResponse.userAnalytics.totalQuestions,
-                totalAnswers: successResponse.userAnalytics.totalAnswers,
-                totalComments: successResponse.userAnalytics.totalComments,
-                totalTags: successResponse.userAnalytics.totalTags,
-                totalVotes: successResponse.userAnalytics.totalVotes,
-                totalAcceptedAnswers:
-                  successResponse.userAnalytics.totalAcceptedAnswers,
-              },
+              user: successResponse,
             });
           }),
           catchError((error) => of(UserActions.signInFailure({ error })))
@@ -140,25 +104,7 @@ export class UserEffects {
           .pipe(
             map((successResponse: IUser) => {
               return UserActions.updateProfileSuccess({
-                id: successResponse.id,
-                name: successResponse.name,
-                email: successResponse.email,
-                avatar: successResponse.avatar,
-                bio: successResponse.bio,
-                isDeleted: successResponse.isDeleted,
-                isAdmin: successResponse.isAdmin,
-                updatedAt: successResponse.updatedAt,
-                createdAt: successResponse.createdAt,
-                JWT: '',
-                userAnalytics: {
-                  totalQuestions: successResponse.userAnalytics.totalQuestions,
-                  totalAnswers: successResponse.userAnalytics.totalAnswers,
-                  totalComments: successResponse.userAnalytics.totalComments,
-                  totalTags: successResponse.userAnalytics.totalTags,
-                  totalVotes: successResponse.userAnalytics.totalVotes,
-                  totalAcceptedAnswers:
-                    successResponse.userAnalytics.totalAcceptedAnswers,
-                },
+                user: successResponse,
               });
             }),
             catchError((error) =>
@@ -224,25 +170,7 @@ export class UserEffects {
               this.localStorageService.setJWT(successResponse.JWT!);
               this.authorizationService.isSignedIn = true;
               return UserActions.signInSuccess({
-                id: successResponse.id,
-                name: successResponse.name,
-                email: successResponse.email,
-                avatar: successResponse.avatar,
-                bio: successResponse.bio,
-                isAdmin: successResponse.isAdmin,
-                isDeleted: successResponse.isDeleted,
-                createdAt: successResponse.createdAt,
-                updatedAt: successResponse.updatedAt,
-                JWT: successResponse.JWT,
-                userAnalytics: {
-                  totalQuestions: successResponse.userAnalytics.totalQuestions,
-                  totalAnswers: successResponse.userAnalytics.totalAnswers,
-                  totalComments: successResponse.userAnalytics.totalComments,
-                  totalTags: successResponse.userAnalytics.totalTags,
-                  totalVotes: successResponse.userAnalytics.totalVotes,
-                  totalAcceptedAnswers:
-                    successResponse.userAnalytics.totalAcceptedAnswers,
-                },
+                user: successResponse,
               });
             }),
             catchError((error) =>

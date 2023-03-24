@@ -12,9 +12,14 @@ import {
 
 export const signIn = createAction('[User] Sign In', props<IUserSignIn>());
 
+export const signInLoading = createAction(
+  '[User] Sign In Loading',
+  props<{ loading: boolean }>()
+);
+
 export const signInSuccess = createAction(
   '[User] Sign In Success',
-  props<IUser>()
+  props<{ user: IUser }>()
 );
 
 export const signInFailure = createAction(
@@ -28,7 +33,7 @@ export const signUp = createAction('[User] Sign Up', props<IUserSignUp>());
 
 export const signUpSuccess = createAction(
   '[User] Sign Up Success',
-  props<IUser>()
+  props<{ user: IUser }>()
 );
 
 export const signUpFailure = createAction(
@@ -43,7 +48,7 @@ export const updateProfile = createAction(
 
 export const updateProfileSuccess = createAction(
   '[User] Update Profile Success',
-  props<IUser>()
+  props<{ user: IUser }>()
 );
 
 export const updateProfileFailure = createAction(
@@ -88,7 +93,7 @@ export const resetPassword = createAction(
 
 export const resetPasswordSuccess = createAction(
   '[User] Reset Password Success',
-  props<IUser>()
+  props<{user: IUser}>()
 );
 
 export const resetPasswordFailure = createAction(
@@ -96,10 +101,7 @@ export const resetPasswordFailure = createAction(
   props<{ error: string }>()
 );
 
-export const getUsers = createAction(
-  '[Users] Get Users',
-  props<IPagination>()
-);
+export const getUsers = createAction('[Users] Get Users', props<IPagination>());
 
 export const getUsersSuccess = createAction(
   '[Users] Get Users Success',

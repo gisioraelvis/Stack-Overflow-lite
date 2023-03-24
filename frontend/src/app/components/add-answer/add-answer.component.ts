@@ -35,7 +35,7 @@ import { RouterModule } from '@angular/router';
 })
 export class AddAnswerComponent {
   answerForm: FormGroup;
-  @Input() questionId!: number;
+  @Input() questionId!: number | string;
 
   constructor(private fb: FormBuilder) {
     this.answerForm = this.fb.group({

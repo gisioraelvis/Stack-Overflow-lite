@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Store } from '@ngrx/store';
 import * as UserActions from 'src/app/state/actions/user.actions';
 import * as UserSelectors from 'src/app/state/selectors/user.selectors';
+import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -19,11 +20,13 @@ import * as UserSelectors from 'src/app/state/selectors/user.selectors';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+    ProgressSpinnerComponent,
   ],
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent {
+  loading = false;
   constructor(
     private fb: FormBuilder,
     private store: Store,
@@ -43,6 +46,10 @@ export class SignInComponent {
           password: this.form.get('password')!.value!,
         })
       );
+
+      this.store.select(UserSelectors.signInLoading).subscribe((loading) => {
+        this.loading = loading;
+      });
 
       this.store.select(UserSelectors.currentUser).subscribe((user) => {
         if (user.id) {

@@ -83,9 +83,12 @@ export class QuestionsService {
   }
 
   askQuestion(question: IAskQuestion): Observable<IQuestion> {
+    console.log(question);
     return this.http.post<IQuestion>('/questions/ask', question).pipe(
       catchError((error: HttpErrorResponse) => {
         this.httpErrorPopupService.showError(error.status, error.error.message);
+        console.log(error);
+
         return throwError(() => new Error(error.message));
       })
     );

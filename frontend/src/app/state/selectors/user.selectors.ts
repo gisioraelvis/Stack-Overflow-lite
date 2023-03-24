@@ -8,6 +8,31 @@ export const currentUser = createSelector(
   (state) => state.user
 );
 
+export const signInSuccess = createSelector(
+  selectUserState,
+  (state) => state.user
+);
+
+export const signInLoading = createSelector(
+  selectUserState,
+  (state) => state.loading
+);
+
+export const signInLoaded = createSelector(
+  selectUserState,
+  (state) => state.loaded
+);
+
+export const signInFailure = createSelector(
+  selectUserState,
+  (state) => state.error
+);
+
+export const signUpSuccess = createSelector(
+  selectUserState,
+  (state) => state.user
+);
+
 export const userProfile = createSelector(
   selectUserState,
   (state) => state.user
@@ -65,4 +90,4 @@ export const getUserError = createSelector(
 export const responseMessage = createSelector(
   selectUserState,
   (state) => state.message
-)
+);
