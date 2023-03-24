@@ -17,7 +17,9 @@ import { AddAnswerComponent } from 'src/app/components/add-answer/add-answer.com
 import { TimeAgoPipe } from 'src/app/shared/pipes/time-ago.pipe';
 import { MatCardModule } from '@angular/material/card';
 import { ScrollToDirective } from 'src/app/shared/directives/scroll-to.directive';
-import { questionFactory } from 'src/app/db';
+import { Store } from '@ngrx/store';
+import * as questionsActions from 'src/app/state/actions/questions.actions';
+import * as questionsSelectors from 'src/app/state/selectors/questions.selectors';
 
 @Component({
   selector: 'app-question-page',
@@ -47,28 +49,36 @@ import { questionFactory } from 'src/app/db';
   styleUrls: ['./question.component.css'],
 })
 export class QuestionComponentPage implements OnInit {
-  id?: Number;
+  id?: number | string;
   loading: boolean = false;
   question$?: Observable<IQuestion>;
 
-  constructor(private route: ActivatedRoute, private location: Location) {}
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    private store: Store
+  ) {}
+
   ngOnInit(): void {
     // question/?id=1
-    this.id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    this.question$ = this.getQuestion(this.id);
+    this.id = this.route.snapshot.paramMap.get('id')!;
+
+    this.store.dispatch(
+      questionsActions.getQuestionById({
+        id: this.id,
+      })
+    );
+
+    this.store
+      .select(questionsSelectors.getQuestionByIdLoading)
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
+
+    this.question$ = this.store.select(questionsSelectors.question);
   }
 
   goBack(): void {
     this.location.back();
-  }
-
-  getQuestion(id: Number): Observable<IQuestion> {
-    this.loading = true;
-    return of(questionFactory.build()).pipe(
-      delay(500), // simulate delay
-      tap(() => {
-        this.loading = false;
-      })
-    );
   }
 }

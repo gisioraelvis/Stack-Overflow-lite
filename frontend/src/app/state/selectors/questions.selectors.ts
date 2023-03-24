@@ -49,6 +49,11 @@ export const getQuestionByIdLoading = createSelector(
   (state: IQuestionsState) => state.loading
 );
 
+export const question = createSelector(
+  selectQuestionsState,
+  (state: IQuestionsState) => state.question
+);
+
 export const getQuestionByIdError = createSelector(
   selectQuestionsState,
   (state: IQuestionsState) => state.error
