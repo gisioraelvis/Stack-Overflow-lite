@@ -215,7 +215,6 @@ export class QuestionsService {
     return this.http
       .get<IComment[]>(`/questions/${questionId}/answers/${answerId}/comments`)
       .pipe(
-        tap((comments) => console.log(comments)),
         catchError((error: HttpErrorResponse) => {
           this.httpErrorPopupService.showError(
             error.status,

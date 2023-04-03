@@ -231,7 +231,7 @@ export const getAnswerComments = async (req: Request, res: Response) => {
     }
 
     const comments = await dbUtils.exec("usp_GetAnswerComments", {
-      id: questionId,
+      id: answerId,
     });
 
     if (comments.recordset.length === 0) {

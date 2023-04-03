@@ -331,9 +331,9 @@ export const questionsReducer = createReducer(
           answers: state.question.answers.map((answer) => {
             return {
               ...answer,
-              comments: comments.filter(
-                (comment) => comment.answerId === answer.id
-              ),
+              comments: comments
+                .filter((comment) => comment.answerId === answer.id)
+                .map((comment) => comment),
             };
           }),
         },

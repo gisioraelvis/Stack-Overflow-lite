@@ -72,9 +72,7 @@
                 <!-- <h2>Answers({{question.answers.length}})</h2> -->
             </div>
             <div class="answers">
-                <!-- <div class="answers" *ngIf="question.answers.length>0"> -->
                 <app-answer class="answer" *ngFor="let answer of question.answers" [answer]="answer"></app-answer>
-                <!-- </div> -->
             </div>
             <div class="add-answer-section" id="add-answer">
                 <h2>Your Answer</h2>

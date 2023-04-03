@@ -20,7 +20,7 @@
             <div class="user-info">
                 <img src="{{answer.user.avatar}}" alt="{{answer.user.name}}">
                 <!-- TODO: Add Time Ago Pipe, should factor modified date i.e if modified use the updatedAt -->
-                &nbsp;{{answer.user.name}} asked {{answer.createdAt | timeAgo}}
+                &nbsp;{{answer.user.name}} posted {{answer.createdAt | timeAgo}}
             </div>
         </div>
     </div>
@@ -29,12 +29,10 @@
     <div class="comments-title">
         <h2>Comments</h2>
     </div>
-    <!-- <div class="question-comments" *ngIf="answer.comments.length>0"> -->
         <!-- TODO: Pass the type of comment and the id -->
         <app-comment class="question-comment" *ngFor="let comment of answer.comments" [comment]="comment"></app-comment>
     </div>
     <div class="add-comment">
         <app-add-comment [for]="'answer'" [id]="answer.id"></app-add-comment>
     </div>
-<!-- </div> -->
 <mat-divider></mat-divider>

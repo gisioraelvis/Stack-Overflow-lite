@@ -7,6 +7,7 @@ import { IUser } from "../interfaces/user.interface";
 import { IRequestWithUser } from "../interfaces/request-with-user.interface";
 import { IAnswer, IAnswerObject } from "../interfaces/answer.interface";
 import { AnswerCreateDto, AnswerUpdateDto } from "../dtos/answer.dto";
+import { formatQuestionComments } from "../utils/question.utils";
 
 const dbUtils = new DatabaseUtils();
 
@@ -47,6 +48,19 @@ export const getQuestionAnswers = async (req: Request, res: Response) => {
         };
       }
     );
+
+    for (let i = 0; i < formattedQuestionAnswers.length; i++) {
+      const comments = await dbUtils.exec("usp_GetAnswerComments", {
+        id: formattedQuestionAnswers[i].id,
+      });
+      if (comments.recordset.length === 0) {
+        formattedQuestionAnswers[i].comments = [];
+      } else {
+        formattedQuestionAnswers[i].comments = formatQuestionComments(
+          comments.recordset
+        );
+      }
+    }
 
     return res.status(200).json(formattedQuestionAnswers);
   } catch (error: any) {
