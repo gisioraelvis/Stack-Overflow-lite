@@ -50,3 +50,8 @@ export interface IUpdateQuestion {
   body: string;
   tags: string[];
 }
+
+export interface IQuestionWithCommentsAndAnswers extends IQuestion {
+  comments: IComment[];
+  answers: IAnswer[];
+}

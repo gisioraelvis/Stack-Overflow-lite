@@ -85,6 +85,8 @@ export const formatQuestionComments = (
 
     return {
       id: comment.commentId,
+      questionId: comment.commentQuestionId,
+      answerId: comment.commentAnswerId,
       body: comment.commentBody,
       user,
       createdAt: comment.commentCreatedAt,

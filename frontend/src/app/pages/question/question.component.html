@@ -7,7 +7,7 @@
         </div>
     </div>
     <app-progress-spinner *ngIf="loading"></app-progress-spinner>
-    <ng-container *ngIf="(question$ | async ) as question; else noquestion">
+    <ng-container *ngIf="question; else noquestion">
         <div class="question-section">
             <mat-card class="question-card">
                 <div class="question">
@@ -56,8 +56,8 @@
                 <h2>Comments</h2>
             </div>
             <app-progress-spinner *ngIf="loading"></app-progress-spinner>
-            <div class="question-comments" *ngIf="question.comments.length>0">
-                <!-- TODO: Pass the type of comment and the id -->
+            <div class="question-comments">
+                <!-- TODO: Pass the type of comment and the id  -->
                 <app-comment class="question-comment" *ngFor="let comment of question.comments"
                     [comment]="comment"></app-comment>
             </div>
@@ -69,12 +69,12 @@
         <div class="answers-section">
             <app-progress-spinner *ngIf="loading"></app-progress-spinner>
             <div class="answers-title">
-                <h2>Answers({{question.answers.length}})</h2>
+                <!-- <h2>Answers({{question.answers.length}})</h2> -->
             </div>
             <div class="answers">
-                <div class="answers" *ngIf="question.answers.length>0">
-                    <app-answer class="answer" *ngFor="let answer of question.answers" [answer]="answer"></app-answer>
-                </div>
+                <!-- <div class="answers" *ngIf="question.answers.length>0"> -->
+                <app-answer class="answer" *ngFor="let answer of question.answers" [answer]="answer"></app-answer>
+                <!-- </div> -->
             </div>
             <div class="add-answer-section" id="add-answer">
                 <h2>Your Answer</h2>

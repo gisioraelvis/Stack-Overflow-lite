@@ -22,7 +22,7 @@ export const getQuestionAnswers = async (req: Request, res: Response) => {
     const answers = await dbUtils.exec("usp_GetQuestionAnswers", { id });
 
     if (answers.recordset.length === 0) {
-      return res.status(404).json({ message: "Question does not exist" });
+      return res.status(200).json([]);
     }
 
     const formattedQuestionAnswers: IAnswer[] = answers.recordset.map(

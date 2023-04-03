@@ -22,7 +22,7 @@ export const getQuestionComments = async (req: Request, res: Response) => {
     const comments = await dbUtils.exec("usp_GetQuestionComments", { id });
 
     if (comments.recordset.length === 0) {
-      return res.status(404).json({ message: "Question does not exist" });
+      return res.status(200).json([]);
     }
 
     return res.status(200).json(formatQuestionComments(comments.recordset));

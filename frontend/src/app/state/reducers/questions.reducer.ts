@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { IQuestionsState } from 'src/app/shared/interfaces/IQuestion';
 import * as QuestionsActions from '../actions/questions.actions';
+import { Q } from '@angular/cdk/keycodes';
 
 export const initialState: IQuestionsState = {
   questions: [],
@@ -34,7 +35,36 @@ export const initialState: IQuestionsState = {
     createdAt: '',
     updatedAt: '',
     tags: [],
-    comments: [],
+    comments: [
+      {
+        id: 0,
+        body: '',
+        createdAt: '',
+        updatedAt: '',
+        questionId: 0,
+        answerId: 0,
+        user: {
+          id: 0,
+          name: '',
+          email: '',
+          avatar: '',
+          bio: '',
+          isDeleted: false,
+          isAdmin: false,
+          updatedAt: '',
+          createdAt: '',
+          JWT: '',
+          userAnalytics: {
+            totalQuestions: 0,
+            totalAnswers: 0,
+            totalComments: 0,
+            totalTags: 0,
+            totalVotes: 0,
+            totalAcceptedAnswers: 0,
+          },
+        },
+      },
+    ],
     answers: [
       {
         id: 0,
@@ -261,6 +291,29 @@ export const questionsReducer = createReducer(
       error,
     };
   }),
+  on(QuestionsActions.getQuestionAnswers, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+  on(QuestionsActions.getQuestionAnswersSuccess, (state, { answers }) => {
+    return {
+      ...state,
+      loading: false,
+      question: {
+        ...state.question,
+        answers,
+      },
+    };
+  }),
+  on(QuestionsActions.getQuestionAnswersFailure, (state, { error }) => {
+    return {
+      ...state,
+      loading: false,
+      error,
+    };
+  }),
   on(QuestionsActions.getQuestionAnswerComments, (state) => {
     return {
       ...state,
@@ -276,13 +329,12 @@ export const questionsReducer = createReducer(
         question: {
           ...state.question,
           answers: state.question.answers.map((answer) => {
-            if (answer.id === comments[0].answerId) {
-              return {
-                ...answer,
-                comments,
-              };
-            }
-            return answer;
+            return {
+              ...answer,
+              comments: comments.filter(
+                (comment) => comment.answerId === answer.id
+              ),
+            };
           }),
         },
       };

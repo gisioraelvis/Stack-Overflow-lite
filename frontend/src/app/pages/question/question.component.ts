@@ -6,7 +6,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ProgressSpinnerComponent } from 'src/app/components/progress-spinner/progress-spinner.component';
 import { ThousandSeparatorPipe } from 'src/app/shared/pipes/thousand-separator.pipe';
-import { delay, Observable, of, tap } from 'rxjs';
 import { IQuestion } from 'src/app/shared/interfaces/IQuestion';
 import { QuestionComponent } from 'src/app/components/question/question.component';
 import { CommentComponent } from 'src/app/components/comment/comment.component';
@@ -51,23 +50,18 @@ import * as questionsSelectors from 'src/app/state/selectors/questions.selectors
 export class QuestionComponentPage implements OnInit {
   id?: number | string;
   loading: boolean = false;
-  question$?: Observable<IQuestion>;
+  question?: IQuestion;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private store: Store
   ) {}
-
   ngOnInit(): void {
     // question/?id=1
     this.id = this.route.snapshot.paramMap.get('id')!;
 
-    this.store.dispatch(
-      questionsActions.getQuestionById({
-        id: this.id,
-      })
-    );
+    this.store.dispatch(questionsActions.getQuestionById({ id: this.id }));
 
     this.store
       .select(questionsSelectors.getQuestionByIdLoading)
@@ -75,7 +69,34 @@ export class QuestionComponentPage implements OnInit {
         this.loading = loading;
       });
 
-    this.question$ = this.store.select(questionsSelectors.question);
+    // comments
+    this.store.dispatch(
+      questionsActions.getQuestionComments({ questionId: this.id! })
+    );
+
+    this.store
+      .select(questionsSelectors.getQuestionCommentsLoading)
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
+
+    // answers
+    this.store.dispatch(
+      questionsActions.getQuestionAnswers({ questionId: this.id! })
+    );
+
+    this.store
+      .select(questionsSelectors.getQuestionAnswersLoading)
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
+
+    // question
+    this.store
+      .select(questionsSelectors.getQuestionById)
+      .subscribe((question) => {
+        this.question = question;
+      });
   }
 
   goBack(): void {
