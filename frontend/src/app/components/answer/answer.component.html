@@ -29,10 +29,12 @@
     <div class="comments-title">
         <h2>Comments</h2>
     </div>
+    <div class="question-comments">
         <!-- TODO: Pass the type of comment and the id -->
         <app-comment class="question-comment" *ngFor="let comment of answer.comments" [comment]="comment"></app-comment>
     </div>
-    <div class="add-comment">
-        <app-add-comment [for]="'answer'" [id]="answer.id"></app-add-comment>
-    </div>
+</div>
+<div class="add-comment">
+    <app-add-comment [for]="'answer'" [id]="answer.id"></app-add-comment>
+</div>
 <mat-divider></mat-divider>
