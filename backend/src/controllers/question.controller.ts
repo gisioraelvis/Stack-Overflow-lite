@@ -44,6 +44,14 @@ export const getAllQuestions = async (req: Request, res: Response) => {
         });
     }
 
+    // insert totalAnswers from the questions.recordset to the formatedQuestionWithTags
+    formatedQuestionWithTags = formatedQuestionWithTags.map((question) => {
+      const totalAnswers = questions.recordset.find(
+        (q) => q.id === question.id
+      )?.totalAnswers;
+      return { ...question, totalAnswers };
+    });
+
     return res.status(200).json(formatedQuestionWithTags);
   } catch (error: any) {
     res.status(500).json({ message: error.message });

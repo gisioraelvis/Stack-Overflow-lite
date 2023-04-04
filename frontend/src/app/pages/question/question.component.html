@@ -17,8 +17,7 @@
                             <span class="count">{{question.upvotes}}</span>
                         </div>
                         <div class="answers-count">
-                            <span class="count">{{question.totalAnswers}}</span>
-                            answers
+                            <!-- <span class="count">{{question.answers.length}}</span> answers -->
                         </div>
                         <div class="voting thumbs-downs">
                             <button mat-icon-button><mat-icon>thumb_down</mat-icon></button>
@@ -70,6 +69,7 @@
             <app-progress-spinner *ngIf="loading"></app-progress-spinner>
             <div class="answers-title">
                 <!-- <h2>Answers({{question.answers.length}})</h2> -->
+                <h2>Answers</h2>
             </div>
             <div class="answers">
                 <app-answer class="answer" *ngFor="let answer of question.answers" [answer]="answer"></app-answer>
