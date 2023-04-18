@@ -26,6 +26,7 @@ RESTful API with:
 - EJS - for email templates
 - Node Cron - background services
 - MSSQL(Stored Procedures & Queries only, no ORM)
+- MSSQL(Stored Procedures & Queries only, no ORM)
 - JWT - authentication and authorization
 - Bcrypt - password hashing
 - Dotenv - environment variables
