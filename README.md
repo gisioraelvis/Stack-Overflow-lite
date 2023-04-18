@@ -62,15 +62,19 @@ RESTful API with:
 
 #### Frontend
 
+1. Clone the repository.
+2. Run `npm install` to install the dependencies.
+3. Start the development server with `ng serve -o`.
+4. If the browser does not open automatically, navigate to http://localhost:4200.
+
 #### Backend
 
 1. Clone the repository.
-2. Run npm install to install the dependencies.
+2. Run `npm install` to install the dependencies.
 3. Create a database in MSSQL and update the database configuration in .env.
-4. Run the database migration scripts to create the necessary tables and stored procedures.
-5. Start the server with npm run dev.
-6. Send API requests to http://localhost:5500 using the [Postman collection](#)
-   or any other API client.
+4. Run the sql scripts in the database folder to create the db, necessary tables and stored procedures.
+5. Start the server with `npm run start:dev`.
+6. Send API requests to http://localhost:5500. Find included Postman collection in the root folder.
 
 ### Screenshots
 
