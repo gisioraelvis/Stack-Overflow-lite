@@ -97,10 +97,10 @@ Contributions to this project are welcome. For major changes, please open an iss
 
 This project was inspired by Stack Overflow. Special thanks to the Stack Overflow team for creating such a useful resource for developers around the world.
 
-Special thanks to [THJitu](https://thejitu.com) for the opportunity to learn and grow as a developer and to our instructor during the program Mr. [Jonathan Ndambuki](https://www.linkedin.com/in/jonathan-ndambuki-84630a219/) for his guidance and support throughout the program. 🙏🏾
+Special thanks to [THE Jitu](https://thejitu.com) for the opportunity to learn and grow as a developer and to our instructor during the program Mr. [Jonathan Ndambuki](https://www.linkedin.com/in/jonathan-ndambuki-84630a219/) for his guidance and support throughout the program. 🙏🏾
 
-Shoutout to my fellow Cohort 9 trainees for the collaborations, encouragement, friendship and memories we made together. 🤗
+Shoutout to my fellow trainees for the collaborations, encouragement, friendship and memories we made together. 🤗
 
-Was an awesome experience and I'm glad to have been part of it. 🥳
+Was an awesome experience and I'm glad to have been part of Cohort 9. 🥳
 
 We did it! 🎉🎉🎉
