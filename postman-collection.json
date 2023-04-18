@@ -1,0 +1,1589 @@
+{
+	"info": {
+		"_postman_id": "1a92e08c-d6eb-4dc0-9fe2-907c03e6c864",
+		"name": "StackOverflowLite",
+		"description": "MERN ecommerce webapp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25698047"
+	},
+	"item": [
+		{
+			"name": "Auth & User",
+			"item": [
+				{
+					"name": "SignIn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"JWT\", pm.response.json().JWT);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"email\": \"admin@example.com\",\n \"password\": \"@AveryStrongPassword23*\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/signin",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"JWT\", pm.response.json().JWT);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Joe\",\n    \"email\": \"jonathan@gmail.com\",\n    \"password\": \"@AveryStrongPassword23*\",\n    \"confirmPassword\": \"@AveryStrongPassword23*\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/signup",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserProfile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\n        \"name\": \"John Doe\",\n        \"email\": \"johndoee@example.com\",\n        \"avatar\": \"avatar.svg\",\n        \"bio\": \"User bio update by admin\",\n        \"isDeleted\": true,\n        \"isAdmin\": false\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ForgotPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"email\": \"maugoelvis254@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/forgot-password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PasswordReset",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"@AveryStrongPassword23*\",\n    \"confirmPassword\": \"@AveryStrongPassword23*\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/reset-password?resetToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwibmFtZSI6IkVsdmlzIiwiZW1haWwiOiJtYXVnb2VsdmlzMjU0QGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzg5ODUxNzEsImV4cCI6MTY3ODk4ODc3MX0.TKCkznXw1YKTWxntFcTTKihq6uuwMUbSnh_K-LuLUvk",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "resetToken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwibmFtZSI6IkVsdmlzIiwiZW1haWwiOiJtYXVnb2VsdmlzMjU0QGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzg5ODUxNzEsImV4cCI6MTY3ODk4ODc3MX0.TKCkznXw1YKTWxntFcTTKihq6uuwMUbSnh_K-LuLUvk"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserSIteAnalytics",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Questions",
+			"item": [
+				{
+					"name": "AllQuestions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions?page=1&itemsPerPage=5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "itemsPerPage",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionComments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/1/comments",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionAnswers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/2/answers",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"2",
+								"answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Question",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Test question title\",\n    \"body\": \"Test question body\",\n    \"tags\": [\n        {\n            \"name\": \"tag1\",\n            \"body\": \"tag 1 body\"\n        },\n          {\n            \"name\": \"tag2\",\n            \"body\": \"tag 2 body\"\n        },\n          {\n            \"name\": \"tag3\",\n            \"body\": \"tag 3 body\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/questions/ask",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"ask"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Question",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"How do I create a user in SQL Server...?\",\n    \"body\": \"I am trying to create a user in SQL Server but I am getting an error. Can someone help me?\",\n    \"tags\": [\n        {\n            \"name\": \"SQL\",\n            \"body\": \"SQL is a standard language for storing, manipulating and retrieving data in databases.\"\n        },\n        {\n            \"name\": \"MySQL\",\n            \"body\": \"MySQL is an open-source relational database management system.\"\n        },\n        {\n            \"name\": \"SQL Server\",\n            \"body\": \"SQL Server is a relational database management system developed by Microsoft.\"\n        },\n        {\n            \"name\": \"Oracle\",\n            \"body\": \"Oracle is a relational database management system developed by Oracle Corporation.\"\n        },\n        {\n            \"name\": \"PostgreSQL\",\n            \"body\": \"PostgreSQL is a powerful, open source object-relational database system.\"\n        },\n        {\n            \"name\": \"MongoDB\",\n            \"body\": \"MongoDB is a cross-platform document-oriented database program.\"\n        }\n    ],\n    \"isDeleted\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/questions/10",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SoftQuestion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/10",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RestoreQuestion - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/31/restore",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"31",
+								"restore"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SoftDeletedQuestions - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/soft-deleted",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"soft-deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpvoteQuestion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/2/upvote",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"2",
+								"upvote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DownVoteQuestion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/2/downvote",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"2",
+								"downvote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionCommentById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/1/comments/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionComment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body\": \"Test comment for questions 1..\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/questions/2002/comments",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"2002",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionComment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body\": \"Test update question comment for questions 1, comment 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/questions/1/comments/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionComment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/1/comments/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionAnswerById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/1/answers/3",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"answers",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionsSearch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/search?searchTerm=javascript",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"search"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "javascript"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionsByUserId",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Answers",
+			"item": [
+				{
+					"name": "AnswerComments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/1/answers/3/comments",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"answers",
+								"3",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpvoteAnswer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/answers/37/upvote",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"answers",
+								"37",
+								"upvote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionAnswerById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/2002/answers/2002",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"2002",
+								"answers",
+								"2002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AllQuestionAnswers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/1/answers",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AnswerCommentById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/1/answers/1/comments/37",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"answers",
+								"1",
+								"comments",
+								"37"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionAnswer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body\": \"Test create answer for question 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/questions/2002/answers",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"2002",
+								"answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionAnswer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body\": \"Answer update test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/questions/1/answers/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"answers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QuestionAnswer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/1/answers/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"answers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AnswerComment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body\": \"Test create answer comment for question 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/questions/1/answers/3/comments",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"answers",
+								"3",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AnswerComment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body\": \"Test update answer comment for questions/1/answers/3/comments/59\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/questions/1/answers/3/comments/59",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"answers",
+								"3",
+								"comments",
+								"59"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AnswerComment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/1/answers/3/comments/59",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"1",
+								"answers",
+								"3",
+								"comments",
+								"59"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpvoteAnswer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/2002/answers/2002/upvote",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"2002",
+								"answers",
+								"2002",
+								"upvote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DownvoteAnswer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/2002/answers/2002/downvote",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"2002",
+								"answers",
+								"2002",
+								"downvote"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tags",
+			"item": [
+				{
+					"name": "AllTags",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/tags?page=1&itemsPerPage=10",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"tags"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "itemsPerPage",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TagById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/tags/38",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								"38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchTagsByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/tags/search?tagName=ang",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								"search"
+							],
+							"query": [
+								{
+									"key": "tagName",
+									"value": "ang"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tag",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Tag 3\",\n    \"body\": \"Tag create test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/tags",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tag",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Tag 1\",\n    \"body\": \"Tag update test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/tags/5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tag",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/tags/5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "User - Hard Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/users/1003",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1003"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/users/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\n        \"name\": \"John Do\",\n        \"email\": \"johndo@example.com\",\n        \"avatar\": \"avatar.svg\",\n        \"bio\": \"User bio update by admin\",\n        \"isDeleted\": false,\n        \"isAdmin\": false\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/users?page=2&itemsPerPage=10",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "itemsPerPage",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AllSoftDeletedUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/users/soft-deleted?page=1&itemsPerPage=5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"soft-deleted"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "itemsPerPage",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HardQuestion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/questions/20/hard-delete",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"questions",
+								"20",
+								"hard-delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SiteAnalytics",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "localhost:5500"
+		},
+		{
+			"key": "JWT",
+			"value": ""
+		}
+	]
+}
